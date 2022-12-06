@@ -19,6 +19,7 @@ class InstanceSearchResultWidget extends StatelessWidget {
         color: Colors.red,
       );
     }
+
     return CachedNetworkImage(
       imageUrl: thumbnail!,
       width: double.infinity,

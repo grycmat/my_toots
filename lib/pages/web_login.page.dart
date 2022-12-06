@@ -40,10 +40,10 @@ class _WebLoginPageState extends State<WebLoginPage> {
                 if (navigation.url.startsWith('com.mytoots://oauth')) {
                   var uri = Uri.parse(navigation.url);
                   var code = uri.queryParameters['code'];
-                  _apiService.userToken = code!;
+                  _apiService.userAuthCode = code!;
 
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const MyAccountPage()));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => MyAccountPage()));
                 }
                 return NavigationDecision.navigate;
               });

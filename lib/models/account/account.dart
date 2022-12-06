@@ -8,18 +8,18 @@ class Account {
   String username;
   String acct;
   String displayName;
-  bool? locked;
-  bool? bot;
-  DateTime? createdAt;
+  bool locked;
+  bool bot;
+  DateTime createdAt;
   String? note;
-  String? url;
-  String? avatar;
-  String? avatarStatic;
+  String url;
+  String avatar;
+  String avatarStatic;
   String? header;
   String? headerStatic;
-  int? followersCount;
-  int? followingCount;
-  int? statusesCount;
+  int followersCount;
+  int followingCount;
+  int statusesCount;
   DateTime? lastStatusAt;
   List<Emoji>? emojis;
   List<Field>? fields;
@@ -29,18 +29,18 @@ class Account {
     required this.username,
     required this.acct,
     required this.displayName,
-    this.locked,
-    this.bot,
-    this.createdAt,
+    required this.locked,
+    required this.bot,
+    required this.createdAt,
     this.note,
-    this.url,
-    this.avatar,
-    this.avatarStatic,
+    required this.url,
+    required this.avatar,
+    required this.avatarStatic,
     this.header,
     this.headerStatic,
-    this.followersCount,
-    this.followingCount,
-    this.statusesCount,
+    required this.followersCount,
+    required this.followingCount,
+    required this.statusesCount,
     this.lastStatusAt,
     this.emojis,
     this.fields,
@@ -56,20 +56,18 @@ class Account {
         username: data['username'] as String,
         acct: data['acct'] as String,
         displayName: data['display_name'] as String,
-        locked: data['locked'] as bool?,
-        bot: data['bot'] as bool?,
-        createdAt: data['created_at'] == null
-            ? null
-            : DateTime.parse(data['created_at'] as String),
+        locked: data['locked'] as bool,
+        bot: data['bot'] as bool,
+        createdAt: DateTime.parse(data['created_at'] as String),
         note: data['note'] as String?,
-        url: data['url'] as String?,
-        avatar: data['avatar'] as String?,
-        avatarStatic: data['avatar_static'] as String?,
+        url: data['url'] as String,
+        avatar: data['avatar'] as String,
+        avatarStatic: data['avatar_static'] as String,
         header: data['header'] as String?,
         headerStatic: data['header_static'] as String?,
-        followersCount: data['followers_count'] as int?,
-        followingCount: data['following_count'] as int?,
-        statusesCount: data['statuses_count'] as int?,
+        followersCount: data['followers_count'] as int,
+        followingCount: data['following_count'] as int,
+        statusesCount: data['statuses_count'] as int,
         lastStatusAt: data['last_status_at'] == null
             ? null
             : DateTime.parse(data['last_status_at'] as String),

@@ -7,11 +7,13 @@ import 'package:my_toots/models/o_auth_response.dart';
 @singleton
 class ApiService {
   CreatedApp? _createdApp;
-  OAuthResponse? _oAuth;
-  String? _userToken;
+  OAuthResponse? _appOAuth;
+  String? _userAuthCode;
   String? _instance;
+  OAuthResponse? _userOAuth;
 
-  set userToken(String token) => _userToken = token;
+  set userAuthCode(String token) => _userAuthCode = token;
+  set userOAuth(OAuthResponse resp) => _userOAuth = resp;
 
   Future<Response> getPublicApi(String instance) {
     return Dio().get('https://$instance/api/v1/timelines/public');
@@ -57,17 +59,31 @@ class ApiService {
     _createdApp = app;
     var tokenResponse = await getOAuthToken(instance, app);
     var oAuth = OAuthResponse.fromMap(tokenResponse.data);
-    _oAuth = oAuth;
+    _appOAuth = oAuth;
 
     return {'app': app, 'oAuth': oAuth};
   }
 
   String getLoginUrl(String instance) {
-    return 'https://$instance/oauth/authorize?client_id=${_createdApp!.clientId}&redirect_uri=com.mytoots://oauth&response_type=code';
+    return 'https://$instance/oauth/authorize?client_id=${_createdApp!.clientId}&redirect_uri=com.mytoots://oauth&response_type=code&scope=read+write+follow+push';
   }
 
   Future<Response> getMe() {
-    return Dio().get('https://$_instance/api/v1/accounts/verify_credentials',
-        options: Options(headers: {'Authorization': 'Bearer $_userToken'}));
+    return Dio().get(
+      'https://$_instance/api/v1/accounts/verify_credentials',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userOAuth!.accessToken}'}),
+    );
+  }
+
+  Future<Response> authorizeUser() {
+    return Dio().post('https://$_instance/oauth/token', data: {
+      'client_id': _createdApp!.clientId,
+      'client_secret': _createdApp!.clientSecret,
+      'redirect_uri': 'com.mytoots://oauth',
+      'grant_type': 'authorization_code',
+      'code': _userAuthCode,
+      'scope': 'read write follow push'
+    });
   }
 }

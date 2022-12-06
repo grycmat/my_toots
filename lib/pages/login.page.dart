@@ -59,37 +59,44 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                  prefixText: 'https://',
-                  border: const OutlineInputBorder(),
-                  labelText: 'Find Instance',
-                  suffix: _isSearching
-                      ? const SizedBox(
-                          width: 25,
-                          height: 25,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3,
-                          ))
-                      : null),
-            ),
-            Expanded(
-              flex: 1,
-              child: ListView.builder(
-                  itemCount: _instances?.length,
-                  itemBuilder: (context, index) => _instances != null
-                      ? InstanceSearchResultWidget(instance: _instances![index])
-                      : CircularProgressIndicator()),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/background.jpg'), fit: BoxFit.cover),
         ),
-      )),
+        child: Center(
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                    prefixText: 'https://',
+                    border: const OutlineInputBorder(),
+                    labelText: 'Find Instance',
+                    suffix: _isSearching
+                        ? const SizedBox(
+                            width: 25,
+                            height: 25,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                            ))
+                        : null),
+              ),
+              Expanded(
+                flex: 1,
+                child: ListView.builder(
+                    itemCount: _instances?.length,
+                    itemBuilder: (context, index) => _instances != null
+                        ? InstanceSearchResultWidget(
+                            instance: _instances![index])
+                        : CircularProgressIndicator()),
+              ),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }
