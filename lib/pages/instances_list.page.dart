@@ -8,15 +8,15 @@ import 'package:my_toots/models/search_instances/search_instances.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/instance_search_result.widget.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class InstancesListPage extends StatefulWidget {
+  const InstancesListPage({Key? key}) : super(key: key);
   static const String routeName = '/login';
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<InstancesListPage> createState() => _InstancesListPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _InstancesListPageState extends State<InstancesListPage> {
   final _controller = TextEditingController();
   final _apiService = getIt<ApiService>();
   bool _isSearching = false;
@@ -30,10 +30,13 @@ class _LoginPageState extends State<LoginPage> {
       if (_debounce?.isActive ?? false) _debounce?.cancel();
       _debounce = Timer(const Duration(milliseconds: 300), () {
         if (_controller.text.length > 2) {
-          _isSearching = true;
+          setState(() {
+            _isSearching = true;
+          });
           _apiService.searchInstances(_controller.text).then((value) {
             _isSearching = false;
             setState(() {
+              _isSearching = false;
               _instances = SearchInstances.fromMap(value.data).instances;
             });
           });
@@ -81,17 +84,18 @@ class _LoginPageState extends State<LoginPage> {
                             height: 25,
                             child: CircularProgressIndicator(
                               strokeWidth: 3,
-                            ))
+                            ),
+                          )
                         : null),
               ),
               Expanded(
                 flex: 1,
                 child: ListView.builder(
-                    itemCount: _instances?.length,
-                    itemBuilder: (context, index) => _instances != null
-                        ? InstanceSearchResultWidget(
-                            instance: _instances![index])
-                        : CircularProgressIndicator()),
+                  itemCount: _instances?.length,
+                  itemBuilder: (context, index) => _instances != null
+                      ? InstanceSearchResultWidget(instance: _instances![index])
+                      : CircularProgressIndicator(),
+                ),
               ),
             ],
           ),

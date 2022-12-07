@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/created_app.dart';
 import 'package:my_toots/models/o_auth_response.dart';
+import 'package:my_toots/models/public_timline/account.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @singleton
 class ApiService {
@@ -54,12 +59,16 @@ class ApiService {
 
   Future<Map<String, Object>> prepareAppCredentials(String instance) async {
     _instance = instance;
+    final prefs = getIt.get<SharedPreferences>();
+    prefs.setString('instance', instance);
     var createAppResponse = await createApp(instance);
     var app = CreatedApp.fromMap(createAppResponse.data);
     _createdApp = app;
+    prefs.setString('app', jsonEncode(app));
     var tokenResponse = await getOAuthToken(instance, app);
     var oAuth = OAuthResponse.fromMap(tokenResponse.data);
     _appOAuth = oAuth;
+    prefs.setString('appOAuth', jsonEncode(oAuth));
 
     return {'app': app, 'oAuth': oAuth};
   }
@@ -68,12 +77,16 @@ class ApiService {
     return 'https://$instance/oauth/authorize?client_id=${_createdApp!.clientId}&redirect_uri=com.mytoots://oauth&response_type=code&scope=read+write+follow+push';
   }
 
-  Future<Response> getMe() {
-    return Dio().get(
+  Future<Response> getMe() async {
+    final response = await Dio().get(
       'https://$_instance/api/v1/accounts/verify_credentials',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userOAuth!.accessToken}'}),
     );
+    final account = Account.fromMap(response.data);
+    final prefs = getIt.get<SharedPreferences>();
+    prefs.setString('user', jsonEncode(account));
+    return response;
   }
 
   Future<Response> authorizeUser() {
