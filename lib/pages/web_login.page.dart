@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
+import 'package:my_toots/models/o_auth_response.dart';
 import 'package:my_toots/models/search_instances/instance.dart';
 import 'package:my_toots/pages/home.page.dart';
-import 'package:my_toots/pages/my_account.page.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -42,9 +42,12 @@ class _WebLoginPageState extends State<WebLoginPage> {
                   var uri = Uri.parse(navigation.url);
                   var code = uri.queryParameters['code'];
                   _apiService.userAuthCode = code!;
-
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (_) => HomePage()));
+                  _apiService.authorizeUser(code).then((response) {
+                    _apiService.userOAuth =
+                        OAuthResponse.fromMap(response.data);
+                    return _apiService.getMe();
+                  }).then((value) => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => HomePage())));
                 }
                 return NavigationDecision.navigate;
               });

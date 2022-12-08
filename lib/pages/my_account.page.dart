@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
+import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/o_auth_response.dart';
-import 'package:my_toots/models/public_timline/account.dart';
 import 'package:my_toots/services/api.service.dart';
 
 class MyAccountPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class MyAccountPage extends StatelessWidget {
       body: Container(
         child: Center(
           child: FutureBuilder(
-              future: _service.authorizeUser().then((response) {
+              future: _service.authorizeUser('asdf').then((response) {
                 print(response);
                 _service.userOAuth = OAuthResponse.fromMap(response.data);
                 return _service.getMe();
@@ -41,7 +41,7 @@ class MyAccountPage extends StatelessWidget {
                     width: double.infinity,
                     child: Column(
                       children: [
-                        Text(account.displayName!),
+                        Text(account.displayName),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

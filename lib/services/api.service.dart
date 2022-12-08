@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_toots/getIt.instance.dart';
+import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/created_app.dart';
 import 'package:my_toots/models/o_auth_response.dart';
-import 'package:my_toots/models/public_timline/account.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @singleton
@@ -89,7 +89,8 @@ class ApiService {
     return response;
   }
 
-  Future<Response> authorizeUser() {
+  Future<Response> authorizeUser(String code) {
+    _userAuthCode = code;
     return Dio().post('https://$_instance/oauth/token', data: {
       'client_id': _createdApp!.clientId,
       'client_secret': _createdApp!.clientSecret,
@@ -98,5 +99,13 @@ class ApiService {
       'code': _userAuthCode,
       'scope': 'read write follow push'
     });
+  }
+
+  getHomeTimeline() {
+    return Dio().get(
+      'https://$_instance/api/v1/timelines/home',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userOAuth!.accessToken}'}),
+    );
   }
 }

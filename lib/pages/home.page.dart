@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_toots/pages/timeline.page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: const [
-          Center(child: Text('Home')),
+          Center(child: TimelinePage()),
           Center(child: Text('Search')),
           Center(child: Text('Notifications')),
           Center(child: Text('Messages')),

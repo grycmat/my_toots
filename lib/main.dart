@@ -30,7 +30,7 @@ class MyToots extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: 'Outfit',
+        fontFamily: 'Roboto',
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
