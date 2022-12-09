@@ -56,7 +56,7 @@ class StatusWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              status.account.username,
+                              status.account.acct,
                               style: const TextStyle(
                                 color: Color(0xFF57636C),
                                 fontSize: 14,

@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 class Option {
-  String? title;
-  int? votesCount;
+  String title;
+  int votesCount;
 
-  Option({this.title, this.votesCount});
+  Option({required this.title, required this.votesCount});
 
   @override
   String toString() => 'Option(title: $title, votesCount: $votesCount)';
 
   factory Option.fromMap(Map<String, dynamic> data) => Option(
-        title: data['title'] as String?,
-        votesCount: data['votes_count'] as int?,
+        title: data['title'] as String,
+        votesCount: data['votes_count'] as int,
       );
 
   Map<String, dynamic> toMap() => {

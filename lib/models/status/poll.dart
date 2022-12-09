@@ -3,27 +3,27 @@ import 'dart:convert';
 import 'option.dart';
 
 class Poll {
-  String? id;
-  DateTime? expiresAt;
-  bool? expired;
-  bool? multiple;
-  int? votesCount;
-  int? votersCount;
+  String id;
+  DateTime expiresAt;
+  bool expired;
+  bool multiple;
+  int votesCount;
+  int votersCount;
   bool? voted;
   List<int>? ownVotes;
-  List<Option>? options;
+  List<Option> options;
   List<dynamic>? emojis;
 
   Poll({
-    this.id,
-    this.expiresAt,
-    this.expired,
-    this.multiple,
-    this.votesCount,
-    this.votersCount,
+    required this.id,
+    required this.expiresAt,
+    required this.expired,
+    required this.multiple,
+    required this.votesCount,
+    required this.votersCount,
     this.voted,
     this.ownVotes,
-    this.options,
+    required this.options,
     this.emojis,
   });
 
@@ -33,17 +33,15 @@ class Poll {
   }
 
   factory Poll.fromMap(Map<String, dynamic> data) => Poll(
-        id: data['id'] as String?,
-        expiresAt: data['expires_at'] == null
-            ? null
-            : DateTime.parse(data['expires_at'] as String),
-        expired: data['expired'] as bool?,
-        multiple: data['multiple'] as bool?,
-        votesCount: data['votes_count'] as int?,
-        votersCount: data['voters_count'] as int?,
+        id: data['id'] as String,
+        expiresAt: DateTime.parse(data['expires_at'] as String),
+        expired: data['expired'] as bool,
+        multiple: data['multiple'] as bool,
+        votesCount: data['votes_count'] as int,
+        votersCount: data['voters_count'] as int,
         voted: data['voted'] as bool?,
         ownVotes: data['own_votes'] as List<int>?,
-        options: (data['options'] as List<dynamic>?)
+        options: data['options']
             ?.map((e) => Option.fromMap(e as Map<String, dynamic>))
             .toList(),
         emojis: data['emojis'] as List<dynamic>?,
@@ -51,14 +49,14 @@ class Poll {
 
   Map<String, dynamic> toMap() => {
         'id': id,
-        'expires_at': expiresAt?.toIso8601String(),
+        'expires_at': expiresAt.toIso8601String(),
         'expired': expired,
         'multiple': multiple,
         'votes_count': votesCount,
         'voters_count': votersCount,
         'voted': voted,
         'own_votes': ownVotes,
-        'options': options?.map((e) => e.toMap()).toList(),
+        'options': options.map((e) => e.toMap()).toList(),
         'emojis': emojis,
       };
 

@@ -1,21 +1,21 @@
 import 'dart:convert';
 
-import 'account.dart';
-import 'status.dart';
+import 'package:my_toots/models/account/account.dart';
+import 'package:my_toots/models/status/status.dart';
 
 class Notification {
-  String? id;
-  String? type;
-  DateTime? createdAt;
-  Account? account;
-  Status? status;
+  String id;
+  String type;
+  DateTime createdAt;
+  Account account;
+  Status status;
 
   Notification({
-    this.id,
-    this.type,
-    this.createdAt,
-    this.account,
-    this.status,
+    required this.id,
+    required this.type,
+    required this.createdAt,
+    required this.account,
+    required this.status,
   });
 
   @override
@@ -24,25 +24,19 @@ class Notification {
   }
 
   factory Notification.fromMap(Map<String, dynamic> data) => Notification(
-        id: data['id'] as String?,
-        type: data['type'] as String?,
-        createdAt: data['created_at'] == null
-            ? null
-            : DateTime.parse(data['created_at'] as String),
-        account: data['account'] == null
-            ? null
-            : Account.fromMap(data['account'] as Map<String, dynamic>),
-        status: data['status'] == null
-            ? null
-            : Status.fromMap(data['status'] as Map<String, dynamic>),
+        id: data['id'] as String,
+        type: data['type'] as String,
+        createdAt: DateTime.parse(data['created_at'] as String),
+        account: Account.fromMap(data['account'] as Map<String, dynamic>),
+        status: Status.fromMap(data['status'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toMap() => {
         'id': id,
         'type': type,
-        'created_at': createdAt?.toIso8601String(),
-        'account': account?.toMap(),
-        'status': status?.toMap(),
+        'created_at': createdAt.toIso8601String(),
+        'account': account.toMap(),
+        'status': status.toMap(),
       };
 
   /// `dart:convert`

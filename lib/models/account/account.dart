@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:my_toots/models/account/emoji.dart';
 import 'package:my_toots/models/account/field.dart';
 
 class Account {
@@ -23,7 +24,7 @@ class Account {
   int? statusesCount;
   String? lastStatusAt;
   bool? noindex;
-  List<dynamic>? emojis;
+  List<Emoji>? emojis;
   List<Field>? fields;
 
   Account({
@@ -79,7 +80,9 @@ class Account {
         statusesCount: data['statuses_count'] as int?,
         lastStatusAt: data['last_status_at'] as String?,
         noindex: data['noindex'] as bool?,
-        emojis: data['emojis'] as List<dynamic>?,
+        emojis: (data['fields'] as List<dynamic>?)
+            ?.map((e) => Emoji.fromMap(e as Map<String, dynamic>))
+            .toList(),
         fields: (data['fields'] as List<dynamic>?)
             ?.map((e) => Field.fromMap(e as Map<String, dynamic>))
             .toList(),
@@ -106,7 +109,7 @@ class Account {
         'statuses_count': statusesCount,
         'last_status_at': lastStatusAt,
         'noindex': noindex,
-        'emojis': emojis,
+        'emojis': emojis?.map((e) => e.toMap()).toList(),
         'fields': fields?.map((e) => e.toMap()).toList(),
       };
 

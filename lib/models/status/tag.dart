@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 class Tag {
-  String? name;
-  String? url;
+  String name;
+  String url;
 
-  Tag({this.name, this.url});
+  Tag({required this.name, required this.url});
 
   @override
   String toString() => 'Tag(name: $name, url: $url)';
 
   factory Tag.fromMap(Map<String, dynamic> data) => Tag(
-        name: data['name'] as String?,
-        url: data['url'] as String?,
+        name: data['name'] as String,
+        url: data['url'] as String,
       );
 
   Map<String, dynamic> toMap() => {
