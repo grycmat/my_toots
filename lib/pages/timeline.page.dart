@@ -10,7 +10,7 @@ class TimelinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Center(
       child: FutureBuilder(
         future: getIt.get<ApiService>().getHomeTimeline(),
         builder: (context, AsyncSnapshot<Response> snapshot) {

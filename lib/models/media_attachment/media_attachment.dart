@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'meta.dart';
 
-class MediaItem {
+class MediaAttachment {
   String id;
   String type;
   String url;
@@ -13,7 +13,7 @@ class MediaItem {
   String? description;
   String? blurhash;
 
-  MediaItem({
+  MediaAttachment({
     required this.id,
     required this.type,
     required this.url,
@@ -27,10 +27,10 @@ class MediaItem {
 
   @override
   String toString() {
-    return 'MediaItem(id: $id, type: $type, url: $url, previewUrl: $previewUrl, remoteUrl: $remoteUrl, textUrl: $textUrl, meta: $meta, description: $description, blurhash: $blurhash)';
+    return 'MediaAttachment(id: $id, type: $type, url: $url, previewUrl: $previewUrl, remoteUrl: $remoteUrl, textUrl: $textUrl, meta: $meta, description: $description, blurhash: $blurhash)';
   }
 
-  factory MediaItem.fromMap(Map<String, dynamic> data) => MediaItem(
+  factory MediaAttachment.fromMap(Map<String, dynamic> data) => MediaAttachment(
         id: data['id'] as String,
         type: data['type'] as String,
         url: data['url'] as String,
@@ -58,13 +58,13 @@ class MediaItem {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [MediaItem].
-  factory MediaItem.fromJson(String data) {
-    return MediaItem.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [MediaAttachment].
+  factory MediaAttachment.fromJson(String data) {
+    return MediaAttachment.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [MediaItem] to a JSON string.
+  /// Converts [MediaAttachment] to a JSON string.
   String toJson() => json.encode(toMap());
 }

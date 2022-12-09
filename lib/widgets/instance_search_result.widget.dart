@@ -57,15 +57,15 @@ class InstanceSearchResultWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: 160,
                 child: Stack(
-                  alignment: AlignmentDirectional(0, 1),
+                  alignment: const AlignmentDirectional(0, 1),
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0, -1),
+                      alignment: const AlignmentDirectional(0, -1),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(0),
                           bottomRight: Radius.circular(0),
                           topLeft: Radius.circular(8),
@@ -75,21 +75,22 @@ class InstanceSearchResultWidget extends StatelessWidget {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0, 1),
+                      alignment: const AlignmentDirectional(0, 1),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 24, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 0, 24, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 12),
                               child: Container(
                                 width: 40,
                                 height: 40,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
                                       Color(0xFF4B39EF),
@@ -103,16 +104,16 @@ class InstanceSearchResultWidget extends StatelessWidget {
                                   shape: BoxShape.circle,
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       2, 2, 2, 2),
                                   child: Container(
                                     width: 40,
                                     height: 40,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: Colors.white,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.chevron_right_rounded,
                                       color: Color(0xFF101213),
                                       size: 32,
@@ -129,10 +130,10 @@ class InstanceSearchResultWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 8, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 0, 0),
                 child: Text(
-                  instance.name!,
-                  style: TextStyle(
+                  instance.name,
+                  style: const TextStyle(
                     color: Color(0xFF101213),
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -140,11 +141,11 @@ class InstanceSearchResultWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 12),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 12),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Icon(
                       Icons.people_outline_outlined,
                       color: Color(0xFF101213),

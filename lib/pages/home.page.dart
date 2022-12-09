@@ -40,19 +40,19 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           selectedIndex: _pageIndex,
           destinations: const [
             NavigationDestination(
-              icon: const Icon(Icons.home),
+              icon: Icon(Icons.home),
               label: 'Home',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.search),
+              icon: Icon(Icons.search),
               label: 'Search',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.notifications),
+              icon: Icon(Icons.notifications),
               label: 'Notifications',
             ),
             NavigationDestination(
-              icon: const Icon(Icons.mail),
+              icon: Icon(Icons.mail),
               label: 'Messages',
             ),
           ]),

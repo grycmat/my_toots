@@ -3,24 +3,91 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
-import 'package:my_toots/getIt.instance.dart';
-import 'package:my_toots/models/account/account.dart';
-import 'package:my_toots/models/created_app.dart';
-import 'package:my_toots/models/o_auth_response.dart';
+import 'package:my_toots/models/application.dart';
+import 'package:my_toots/models/token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+const APPLICATION = 'application';
+const USER_AUTH_CODE = 'user_auth_code';
+const APP_TOKEN = 'appToken';
+const USER_TOKEN = 'userToken';
+const USER = 'user';
+const INSTANCE = 'instance';
+const REDIRECT_URL = 'app://com.my_toots';
 
 @singleton
 class ApiService {
-  CreatedApp? _createdApp;
-  OAuthResponse? _appOAuth;
+  SharedPreferences _prefs;
+  Application? _application;
+  Token? _appToken;
   String? _userAuthCode;
   String? _instance;
-  OAuthResponse? _userOAuth;
+  Token? _userToken;
 
-  set userAuthCode(String token) => _userAuthCode = token;
-  set userOAuth(OAuthResponse resp) => _userOAuth = resp;
+  ApiService(
+      {required SharedPreferences prefs,
+      Application? application,
+      Token? appToken,
+      String? userAuthCode,
+      String? instance,
+      Token? userToken})
+      : _prefs = prefs,
+        _application = application,
+        _appToken = appToken,
+        _userAuthCode = userAuthCode,
+        _instance = instance,
+        _userToken = userToken;
 
-  Future<Response> getPublicApi(String instance) {
+  @factoryMethod
+  factory ApiService.init(SharedPreferences prefs) {
+    final application = prefs.getString(APPLICATION);
+    final appToken = prefs.getString(APP_TOKEN);
+    final instance = prefs.getString(INSTANCE);
+    final userToken = prefs.getString(USER_TOKEN);
+    print('userToken');
+    print(userToken);
+
+    return ApiService(
+      prefs: prefs,
+      application: application != null
+          ? Application.fromMap(jsonDecode(application))
+          : null,
+      appToken: appToken != null ? Token.fromMap(jsonDecode(appToken)) : null,
+      instance: instance,
+      userToken:
+          userToken != null ? Token.fromMap(jsonDecode(userToken)) : null,
+    );
+  }
+
+  set application(Application value) {
+    _prefs.setString(APPLICATION, value.toJson());
+    _application = value;
+  }
+
+  set appToken(Token value) {
+    _prefs.setString(APP_TOKEN, value.toJson());
+    _appToken = value;
+  }
+
+  set userAuthCode(String value) {
+    _userAuthCode = value;
+  }
+
+  set instance(String value) {
+    _prefs.setString(INSTANCE, value);
+    _instance = value;
+  }
+
+  set userToken(Token value) {
+    _prefs.setString(USER_TOKEN, value.toJson());
+    _userToken = value;
+  }
+
+  bool hasUserCredentials() {
+    return _userToken != null && _instance != null;
+  }
+
+  Future<Response> getPublicTimeline(String instance) {
     return Dio().get('https://$instance/api/v1/timelines/public');
   }
 
@@ -41,71 +108,80 @@ class ApiService {
         }));
   }
 
-  Future<Response> createApp(String instance) {
-    return Dio().post('https://$instance/api/v1/apps', data: {
+  Future<Application> createApp(String instance) async {
+    final response = await Dio().post('https://$instance/api/v1/apps', data: {
       'client_name': 'My Toots',
-      'redirect_uris': 'com.mytoots://oauth',
+      'redirect_uris': REDIRECT_URL,
       'scopes': 'read write follow push',
     });
+    application = Application.fromMap(response.data);
+
+    return _application!;
   }
 
-  Future<Response> getOAuthToken(String instance, CreatedApp app) {
-    return Dio().post('https://$instance/oauth/token', data: {
+  Future<Token> getAppToken(String instance, Application app) async {
+    final response = await Dio().post('https://$instance/oauth/token', data: {
       'client_id': app.clientId,
       'client_secret': app.clientSecret,
       'grant_type': 'client_credentials',
     });
+
+    appToken = Token.fromMap(response.data);
+
+    return _appToken!;
   }
 
-  Future<Map<String, Object>> prepareAppCredentials(String instance) async {
-    _instance = instance;
-    final prefs = getIt.get<SharedPreferences>();
-    prefs.setString('instance', instance);
-    var createAppResponse = await createApp(instance);
-    var app = CreatedApp.fromMap(createAppResponse.data);
-    _createdApp = app;
-    prefs.setString('app', jsonEncode(app));
-    var tokenResponse = await getOAuthToken(instance, app);
-    var oAuth = OAuthResponse.fromMap(tokenResponse.data);
-    _appOAuth = oAuth;
-    prefs.setString('appOAuth', jsonEncode(oAuth));
+  Future<Map<String, Object>> prepareAppCredentials(String i) async {
+    instance = i;
+    final app = await createApp(i);
+    final appToken = await getAppToken(i, app);
 
-    return {'app': app, 'oAuth': oAuth};
+    return {'app': app, 'token': appToken};
   }
 
   String getLoginUrl(String instance) {
-    return 'https://$instance/oauth/authorize?client_id=${_createdApp!.clientId}&redirect_uri=com.mytoots://oauth&response_type=code&scope=read+write+follow+push';
+    return 'https://$instance/oauth/authorize?client_id=${_application!.clientId}&redirect_uri=$REDIRECT_URL&response_type=code&scope=read+write+follow+push';
   }
 
   Future<Response> getMe() async {
     final response = await Dio().get(
       'https://$_instance/api/v1/accounts/verify_credentials',
       options: Options(
-          headers: {'Authorization': 'Bearer ${_userOAuth!.accessToken}'}),
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
-    final account = Account.fromMap(response.data);
-    final prefs = getIt.get<SharedPreferences>();
-    prefs.setString('user', jsonEncode(account));
     return response;
   }
 
-  Future<Response> authorizeUser(String code) {
-    _userAuthCode = code;
-    return Dio().post('https://$_instance/oauth/token', data: {
-      'client_id': _createdApp!.clientId,
-      'client_secret': _createdApp!.clientSecret,
-      'redirect_uri': 'com.mytoots://oauth',
-      'grant_type': 'authorization_code',
-      'code': _userAuthCode,
-      'scope': 'read write follow push'
-    });
+  Future<Response>? authorizeUser(String code) {
+    userAuthCode = code;
+    print(_instance);
+    try {
+      return Dio().post('https://$_instance/oauth/token', data: {
+        'client_id': _application!.clientId,
+        'client_secret': _application!.clientSecret,
+        'redirect_uri': REDIRECT_URL,
+        'grant_type': 'authorization_code',
+        'code': _userAuthCode,
+        'scope': 'read write follow push'
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getNotificationsTimeline() {
+    return Dio().get(
+      'https://$_instance/api/v1/timelines/home',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
   }
 
   getHomeTimeline() {
     return Dio().get(
       'https://$_instance/api/v1/timelines/home',
       options: Options(
-          headers: {'Authorization': 'Bearer ${_userOAuth!.accessToken}'}),
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
   }
 }

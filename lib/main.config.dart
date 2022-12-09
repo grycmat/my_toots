@@ -7,8 +7,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:my_toots/services/api.service.dart' as _i3;
-import 'package:shared_preferences/shared_preferences.dart' as _i4;
+import 'package:my_toots/services/api.service.dart' as _i4;
+import 'package:shared_preferences/shared_preferences.dart' as _i3;
 
 import 'services/shared_prefs.service.dart' as _i5;
 
@@ -26,11 +26,12 @@ Future<_i1.GetIt> init(
     environmentFilter,
   );
   final registerModule = _$RegisterModule();
-  gh.singleton<_i3.ApiService>(_i3.ApiService());
-  await gh.factoryAsync<_i4.SharedPreferences>(
+  await gh.factoryAsync<_i3.SharedPreferences>(
     () => registerModule.prefs,
     preResolve: true,
   );
+  gh.singleton<_i4.ApiService>(
+      _i4.ApiService.init(gh<_i3.SharedPreferences>()));
   return getIt;
 }
 

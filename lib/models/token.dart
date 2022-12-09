@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-class OAuthResponse {
+class Token {
   String accessToken;
   String tokenType;
   String scope;
   int createdAt;
 
-  OAuthResponse({
+  Token({
     required this.accessToken,
     required this.tokenType,
     required this.scope,
@@ -15,10 +15,10 @@ class OAuthResponse {
 
   @override
   String toString() {
-    return 'OAuthResponse(accessToken: $accessToken, tokenType: $tokenType, scope: $scope, createdAt: $createdAt)';
+    return 'Token(accessToken: $accessToken, tokenType: $tokenType, scope: $scope, createdAt: $createdAt)';
   }
 
-  factory OAuthResponse.fromMap(Map<String, dynamic> data) => OAuthResponse(
+  factory Token.fromMap(Map<String, dynamic> data) => Token(
         accessToken: data['access_token'] as String,
         tokenType: data['token_type'] as String,
         scope: data['scope'] as String,
@@ -34,13 +34,13 @@ class OAuthResponse {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [OAuthResponse].
-  factory OAuthResponse.fromJson(String data) {
-    return OAuthResponse.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [Token].
+  factory Token.fromJson(String data) {
+    return Token.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [OAuthResponse] to a JSON string.
+  /// Converts [Token] to a JSON string.
   String toJson() => json.encode(toMap());
 }

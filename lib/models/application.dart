@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class CreatedApp {
+class Application {
   String id;
   String name;
   String? website;
@@ -9,7 +9,7 @@ class CreatedApp {
   String clientSecret;
   String vapidKey;
 
-  CreatedApp({
+  Application({
     required this.id,
     required this.name,
     this.website,
@@ -21,10 +21,10 @@ class CreatedApp {
 
   @override
   String toString() {
-    return 'CreatedApp(id: $id, name: $name, website: $website, redirectUri: $redirectUri, clientId: $clientId, clientSecret: $clientSecret, vapidKey: $vapidKey)';
+    return 'Application(id: $id, name: $name, website: $website, redirectUri: $redirectUri, clientId: $clientId, clientSecret: $clientSecret, vapidKey: $vapidKey)';
   }
 
-  factory CreatedApp.fromMap(Map<String, dynamic> data) => CreatedApp(
+  factory Application.fromMap(Map<String, dynamic> data) => Application(
         id: data['id'] as String,
         name: data['name'] as String,
         website: data['website'] as String?,
@@ -46,13 +46,13 @@ class CreatedApp {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [CreatedApp].
-  factory CreatedApp.fromJson(String data) {
-    return CreatedApp.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [Application].
+  factory Application.fromJson(String data) {
+    return Application.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [CreatedApp] to a JSON string.
+  /// Converts [Application] to a JSON string.
   String toJson() => json.encode(toMap());
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
@@ -61,9 +62,31 @@ class _InstancesListPageState extends State<InstancesListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(
+      //   flexibleSpace: Center(
+      //     child: Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: TextField(
+      //         controller: _controller,
+      //         decoration: InputDecoration(
+      //             prefixText: 'https://',
+      //             border: const OutlineInputBorder(),
+      //             labelText: 'Find Instance',
+      //             suffix: _isSearching
+      //                 ? const SizedBox(
+      //                     width: 25,
+      //                     height: 25,
+      //                     child: CircularProgressIndicator(
+      //                       strokeWidth: 3,
+      //                     ),
+      //                   )
+      //                 : null),
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/background.jpg'), fit: BoxFit.cover),
         ),
@@ -72,30 +95,46 @@ class _InstancesListPageState extends State<InstancesListPage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                    prefixText: 'https://',
-                    border: const OutlineInputBorder(),
-                    labelText: 'Find Instance',
-                    suffix: _isSearching
-                        ? const SizedBox(
-                            width: 25,
-                            height: 25,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 3,
-                            ),
-                          )
-                        : null),
-              ),
-              Expanded(
-                flex: 1,
-                child: ListView.builder(
-                  itemCount: _instances?.length,
-                  itemBuilder: (context, index) => _instances != null
-                      ? InstanceSearchResultWidget(instance: _instances![index])
-                      : CircularProgressIndicator(),
-                ),
+              Stack(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 600,
+                    child: ListView.builder(
+                      itemCount: _instances?.length,
+                      itemBuilder: (context, index) => _instances != null
+                          ? InstanceSearchResultWidget(
+                              instance: _instances![index])
+                          : const CircularProgressIndicator(),
+                    ),
+                  ),
+                  ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        width: double.infinity,
+                        height: 200,
+                        color: Colors.white.withOpacity(0.1),
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                        prefixText: 'https://',
+                        border: const OutlineInputBorder(),
+                        labelText: 'Find Instance',
+                        suffix: _isSearching
+                            ? const SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                ),
+                              )
+                            : null),
+                  ),
+                ],
               ),
             ],
           ),

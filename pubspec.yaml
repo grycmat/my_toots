@@ -88,9 +88,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Outfit
+    - family: Comfortaa
       fonts:
-        - asset: fonts/Outfit-Regular.ttf
+        - asset: assets/Comfortaa/Comfortaa-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

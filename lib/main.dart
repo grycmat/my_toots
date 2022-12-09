@@ -4,7 +4,9 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/main.config.dart';
+import 'package:my_toots/pages/home.page.dart';
 import 'package:my_toots/pages/instances_list.page.dart';
+import 'package:my_toots/services/api.service.dart';
 
 @InjectableInit(
   initializerName: 'init',
@@ -17,11 +19,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   await dotenv.load(fileName: '.env');
-  runApp(const MyToots());
+  runApp(MyToots());
 }
 
 class MyToots extends StatelessWidget {
-  const MyToots({super.key});
+  MyToots({super.key});
+  final _service = getIt.get<ApiService>();
 
   // This widget is the root of your application.
   @override
@@ -30,11 +33,13 @@ class MyToots extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: 'Roboto',
+        fontFamily: 'Comfortaa',
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const InstancesListPage(),
+      home: _service.hasUserCredentials()
+          ? const HomePage()
+          : const InstancesListPage(),
     );
   }
 }

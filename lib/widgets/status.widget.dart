@@ -9,12 +9,12 @@ class StatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
+            padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,7 +25,7 @@ class StatusWidget extends StatelessWidget {
                     width: 50,
                     height: 50,
                     clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.network(
@@ -35,14 +35,14 @@ class StatusWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 4, 0, 4),
+                  padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 0, 4),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         status.account.displayName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
                           color: Color(0xFF101213),
                           fontSize: 18,
@@ -50,19 +50,20 @@ class StatusWidget extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
                               status.account.username,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF57636C),
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                               child: Text(
@@ -74,7 +75,7 @@ class StatusWidget extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                               child: Text(
@@ -96,14 +97,25 @@ class StatusWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
+            padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 4, 12),
-                  child: Html(data: status.content),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 4, 12),
+                  child: status.reblog == null
+                      ? Html(data: status.content)
+                      : Center(
+                          child: Card(
+                            elevation: 0,
+                            color: Colors.amber.withOpacity(0.1),
+                            child: SizedBox(
+                              width: 400,
+                              child: Html(data: status.reblog!.content),
+                            ),
+                          ),
+                        ),
                   // child: Text(
                   //   status.content,
                   //   style: TextStyle(
@@ -125,17 +137,18 @@ class StatusWidget extends StatelessWidget {
                       : null,
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(4, 8, 4, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(4, 8, 4, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Padding(
+                            const Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 8, 0, 8),
                               child: Icon(
@@ -145,11 +158,11 @@ class StatusWidget extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8, 0, 8, 0),
                               child: Text(
                                 status.repliesCount.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF57636C),
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
@@ -160,11 +173,12 @@ class StatusWidget extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Padding(
+                            const Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 8, 0, 8),
                               child: Icon(
@@ -174,11 +188,11 @@ class StatusWidget extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(4, 0, 8, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  4, 0, 8, 0),
                               child: Text(
                                 status.favouritesCount.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF57636C),
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
@@ -189,10 +203,11 @@ class StatusWidget extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
-                          children: [
+                          children: const [
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
@@ -206,10 +221,11 @@ class StatusWidget extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
-                          children: [
+                          children: const [
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
