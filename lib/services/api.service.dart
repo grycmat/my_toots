@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
+import 'package:my_toots/models/status/status_context.dart';
 import 'package:my_toots/models/token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -186,11 +187,12 @@ class ApiService {
     );
   }
 
-  Future<Response> getStatusContext(String id) {
-    return Dio().get(
+  Future<StatusContext> getStatusContext(String id) async {
+    final response = await Dio().get(
       'https://$_instance/api/v1/statuses/$id/context',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
+    return StatusContext.fromMap(response.data);
   }
 }
