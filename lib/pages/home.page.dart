@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_toots/getIt.instance.dart';
+import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/pages/timeline.page.dart';
+import 'package:my_toots/services/api.service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,9 +31,28 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Title'),
+        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+        scrolledUnderElevation: 2,
+        title: FutureBuilder(
+          future: getIt.get<ApiService>().getMe(),
+          builder: (_, AsyncSnapshot<Account> snapshot) {
+            if (snapshot.hasData) {
+              return Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(snapshot.data!.avatarStatic),
+                  ),
+                  Text(snapshot.data!.acct),
+                ],
+              );
+            }
+            return Text('');
+          },
+        ),
       ),
       bottomNavigationBar: NavigationBar(
+          elevation: 5,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           onDestinationSelected: (value) {
             _tabController.animateTo(value);
             setState(() {
@@ -41,19 +63,19 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: '',
             ),
             NavigationDestination(
               icon: Icon(Icons.search),
-              label: 'Search',
+              label: '',
             ),
             NavigationDestination(
               icon: Icon(Icons.notifications),
-              label: 'Notifications',
+              label: '',
             ),
             NavigationDestination(
               icon: Icon(Icons.mail),
-              label: 'Messages',
+              label: '',
             ),
           ]),
       body: TabBarView(

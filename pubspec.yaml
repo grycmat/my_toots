@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^0.5.5
   html: ^0.15.1
   flutter_html: ^3.0.0-alpha.6
+  link_preview_generator: ^1.2.0
 
 dev_dependencies:
   flutter_test:

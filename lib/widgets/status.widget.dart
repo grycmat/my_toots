@@ -1,251 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
+import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/status_card.widget.dart';
 
 class StatusWidget extends StatelessWidget {
   const StatusWidget({required this.status, Key? key}) : super(key: key);
   final Status status;
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+  Widget _showDetailsSheet(BuildContext context, Status status) {
+    return SizedBox(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.9,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () async {},
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.network(
-                      status.account.avatarStatic,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 0, 4),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        status.account.displayName,
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          color: Color(0xFF101213),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              status.account.acct,
-                              style: const TextStyle(
-                                color: Color(0xFF57636C),
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            const Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                              child: Text(
-                                '•',
-                                style: TextStyle(
-                                  color: Color(0xFF57636C),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                            const Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                              child: Text(
-                                '4 mins ago',
-                                style: TextStyle(
-                                  color: Color(0xFF57636C),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.amber),
+              height: 5,
+              width: 50,
             ),
           ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 4, 12),
-                  child: status.reblog == null
-                      ? Html(data: status.content)
-                      : Center(
-                          child: Card(
-                            elevation: 0,
-                            color: Colors.amber.withOpacity(0.1),
-                            child: SizedBox(
-                              width: 400,
-                              child: Html(data: status.reblog!.content),
-                            ),
-                          ),
-                        ),
-                  // child: Text(
-                  //   status.content,
-                  //   style: TextStyle(
-                  //     color: Color(0xFF101213),
-                  //     fontSize: 14,
-                  //     fontWeight: FontWeight.w500,
-                  //   ),
-                  // ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: status.mediaAttachments.isNotEmpty
-                      ? Image.network(
-                          status.mediaAttachments.first.previewUrl,
-                          width: double.infinity,
-                          height: 230,
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(4, 8, 4, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 0, 8),
-                              child: Icon(
-                                Icons.mode_comment_outlined,
-                                color: Color(0xFF57636C),
-                                size: 24,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  8, 0, 8, 0),
-                              child: Text(
-                                status.repliesCount.toString(),
-                                style: const TextStyle(
-                                  color: Color(0xFF57636C),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 0, 8),
-                              child: Icon(
-                                Icons.favorite_border_rounded,
-                                color: Color(0xFF57636C),
-                                size: 24,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  4, 0, 8, 0),
-                              child: Text(
-                                status.favouritesCount.toString(),
-                                style: const TextStyle(
-                                  color: Color(0xFF57636C),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Icon(
-                                Icons.bookmark_border,
-                                color: Color(0xFF57636C),
-                                size: 24,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Icon(
-                                Icons.ios_share,
-                                color: Color(0xFF57636C),
-                                size: 24,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          StatusCardWidget(status: status),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+      child: InkWell(
+          onTap: () => showModalBottomSheet(
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                context: context,
+                builder: (context) => _showDetailsSheet(context, status),
+              ),
+          child: StatusCardWidget(status: status)),
     );
   }
 }

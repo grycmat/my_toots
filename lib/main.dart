@@ -35,7 +35,7 @@ class MyToots extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Comfortaa',
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: _service.hasUserCredentials()
           ? const HomePage()

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:my_toots/models/account/emoji.dart';
+
 import 'option.dart';
 
 class Poll {
@@ -10,8 +12,8 @@ class Poll {
   int votesCount;
   int votersCount;
   bool? voted;
-  List<int>? ownVotes;
-  List<Option> options;
+  List<dynamic>? ownVotes;
+  List<dynamic>? options;
   List<dynamic>? emojis;
 
   Poll({
@@ -33,19 +35,24 @@ class Poll {
   }
 
   factory Poll.fromMap(Map<String, dynamic> data) => Poll(
-        id: data['id'] as String,
-        expiresAt: DateTime.parse(data['expires_at'] as String),
-        expired: data['expired'] as bool,
-        multiple: data['multiple'] as bool,
-        votesCount: data['votes_count'] as int,
-        votersCount: data['voters_count'] as int,
-        voted: data['voted'] as bool?,
-        ownVotes: data['own_votes'] as List<int>?,
-        options: data['options']
-            ?.map((e) => Option.fromMap(e as Map<String, dynamic>))
-            .toList(),
-        emojis: data['emojis'] as List<dynamic>?,
-      );
+      id: data['id'] as String,
+      expiresAt: DateTime.parse(data['expires_at'] as String),
+      expired: data['expired'] as bool,
+      multiple: data['multiple'] as bool,
+      votesCount: data['votes_count'] as int,
+      votersCount: data['voters_count'] as int,
+      voted: data['voted'] as bool?,
+      ownVotes: data['own_votes'] as List<dynamic>?,
+      options: (data['options'] as List<dynamic>?) == null
+          ? []
+          : data['options']
+              ?.map((e) => Option.fromMap(e as Map<String, dynamic>))
+              .toList(),
+      emojis: (data['emojis'] as List<dynamic>?) == null
+          ? []
+          : data['emojis']
+              ?.map((e) => Emoji.fromMap(e as Map<String, dynamic>))
+              .toList());
 
   Map<String, dynamic> toMap() => {
         'id': id,
@@ -56,8 +63,8 @@ class Poll {
         'voters_count': votersCount,
         'voted': voted,
         'own_votes': ownVotes,
-        'options': options.map((e) => e.toMap()).toList(),
-        'emojis': emojis,
+        'options': options?.map((e) => e.toMap()).toList(),
+        'emojis': emojis?.map((e) => e.toMap()).toList(),
       };
 
   /// `dart:convert`

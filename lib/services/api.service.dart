@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
 import 'package:my_toots/models/token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -143,13 +144,13 @@ class ApiService {
     return 'https://$instance/oauth/authorize?client_id=${_application!.clientId}&redirect_uri=$REDIRECT_URL&response_type=code&scope=read+write+follow+push';
   }
 
-  Future<Response> getMe() async {
+  Future<Account> getMe() async {
     final response = await Dio().get(
       'https://$_instance/api/v1/accounts/verify_credentials',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
-    return response;
+    return Account.fromMap(response.data);
   }
 
   Future<Response>? authorizeUser(String code) {
@@ -180,6 +181,14 @@ class ApiService {
   getHomeTimeline() {
     return Dio().get(
       'https://$_instance/api/v1/timelines/home',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+  }
+
+  Future<Response> getStatusContext(String id) {
+    return Dio().get(
+      'https://$_instance/api/v1/statuses/$id/context',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
