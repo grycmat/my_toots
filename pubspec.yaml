@@ -47,6 +47,7 @@ dependencies:
   html: ^0.15.1
   flutter_html: ^3.0.0-alpha.6
   link_preview_generator: ^1.2.0
+  any_link_preview: ^2.0.3
 
 dev_dependencies:
   flutter_test:

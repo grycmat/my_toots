@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:my_toots/models/status/status.dart';
+import 'package:my_toots/widgets/reblog.widget.dart';
+import 'package:my_toots/widgets/status_html_text.widget.dart';
 
 class StatusCardWidget extends StatelessWidget {
   Status status;
@@ -75,68 +77,8 @@ class StatusCardWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 4, 12),
                 child: status.reblog == null
-                    ? Html(
-                        data: status.content,
-                        style: {'p': Style(fontSize: FontSize(8))},
-                      )
-                    : Center(
-                        child: Card(
-                          color: Colors.green[100],
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(Icons.repeat_outlined),
-                                    ),
-                                    Text(
-                                      status.reblog!.account.acct,
-                                      style: const TextStyle(
-                                        overflow: TextOverflow.ellipsis,
-                                        color: Color(0xFF101213),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Html(
-                                          data: status.reblog!.content,
-                                          style: {
-                                            'p': Style(fontSize: FontSize(8))
-                                          }),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: status
-                                            .reblog!.mediaAttachments.isNotEmpty
-                                        ? Image.network(
-                                            status.reblog!.mediaAttachments
-                                                .first.previewUrl,
-                                            width: double.infinity,
-                                            height: 230,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : null,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                    ? StatusHtmlTextWidget(status: status)
+                    : Center(child: ReblogWidget(status: status.reblog!)),
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),

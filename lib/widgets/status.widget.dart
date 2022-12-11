@@ -12,18 +12,20 @@ class StatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-      child: InkWell(
-          onTap: () => showModalBottomSheet(
-                isScrollControlled: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+        child: InkWell(
+            onTap: () => showModalBottomSheet(
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  context: context,
+                  builder: (context) => _showDetailsSheet(context, status),
                 ),
-                context: context,
-                builder: (context) => _showDetailsSheet(context, status),
-              ),
-          child: StatusCardWidget(status: status)),
+            child: StatusCardWidget(status: status)),
+      ),
     );
   }
 }
