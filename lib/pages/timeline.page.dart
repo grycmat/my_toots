@@ -38,7 +38,12 @@ class _TimelinePageState extends State<TimelinePage> {
         backgroundColor: Theme.of(context).primaryColor,
         color: Colors.white,
         onRefresh: () => _getStatuses(),
-        child: ListView.builder(
+        child: ListView.separated(
+          separatorBuilder: (_, __) => Divider(
+            indent: 60,
+            endIndent: 60,
+            color: Colors.black,
+          ),
           itemCount: statuses.length,
           physics: BouncingScrollPhysics(),
           itemBuilder: (_, index) {

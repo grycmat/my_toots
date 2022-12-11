@@ -7,25 +7,43 @@ class StatusWidget extends StatelessWidget {
   const StatusWidget({required this.status, Key? key}) : super(key: key);
   final Status status;
 
-  Widget _showDetailsSheet(BuildContext context, Status status) =>
-      StatusDetailsWidget(status);
+  Widget _showDetailsSheet(BuildContext context, Status status) {
+    print(MediaQuery.of(context).viewInsets);
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.85,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).primaryColor,
+              ),
+              width: 70,
+              height: 5,
+            ),
+          ),
+          StatusDetailsWidget(status),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-        child: InkWell(
-            onTap: () => showModalBottomSheet(
-                  isScrollControlled: true,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  context: context,
-                  builder: (context) => _showDetailsSheet(context, status),
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+      child: InkWell(
+          onTap: () => showModalBottomSheet(
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-            child: StatusCardWidget(status: status)),
-      ),
+                context: context,
+                builder: (context) => _showDetailsSheet(context, status),
+              ),
+          child: StatusCardWidget(status: status)),
     );
   }
 }
