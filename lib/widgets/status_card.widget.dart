@@ -37,8 +37,8 @@ class StatusCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       status.account.displayName,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
                         color: Color(0xFF101213),
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -81,22 +81,62 @@ class StatusCardWidget extends StatelessWidget {
                       )
                     : Center(
                         child: Card(
-                          elevation: 0,
-                          color: Colors.amber.withOpacity(0.1),
+                          color: Colors.green[100],
                           child: SizedBox(
-                            width: 400,
-                            child: Html(data: status.reblog!.content),
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(Icons.repeat_outlined),
+                                    ),
+                                    Text(
+                                      status.reblog!.account.acct,
+                                      style: const TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        color: Color(0xFF101213),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Html(
+                                          data: status.reblog!.content,
+                                          style: {
+                                            'p': Style(fontSize: FontSize(8))
+                                          }),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: status
+                                            .reblog!.mediaAttachments.isNotEmpty
+                                        ? Image.network(
+                                            status.reblog!.mediaAttachments
+                                                .first.previewUrl,
+                                            width: double.infinity,
+                                            height: 230,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : null,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                // child: Text(
-                //   status.content,
-                //   style: TextStyle(
-                //     color: Color(0xFF101213),
-                //     fontSize: 14,
-                //     fontWeight: FontWeight.w500,
-                //   ),
-                // ),
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),

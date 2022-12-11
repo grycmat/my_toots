@@ -92,6 +92,10 @@ flutter:
     - family: Comfortaa
       fonts:
         - asset: assets/Comfortaa/Comfortaa-Regular.ttf
+        - asset: assets/Comfortaa/Comfortaa-Light.ttf
+          weight: 300
+        - asset: assets/Comfortaa/Comfortaa-Bold.ttf
+          weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

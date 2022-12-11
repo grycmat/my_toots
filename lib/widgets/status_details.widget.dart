@@ -26,7 +26,8 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.amber),
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(context).primaryColor),
               height: 5,
               width: 50,
             ),

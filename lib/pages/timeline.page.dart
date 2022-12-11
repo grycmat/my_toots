@@ -5,29 +5,48 @@ import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/status.widget.dart';
 
-class TimelinePage extends StatelessWidget {
+class TimelinePage extends StatefulWidget {
   const TimelinePage({Key? key}) : super(key: key);
+
+  @override
+  State<TimelinePage> createState() => _TimelinePageState();
+}
+
+class _TimelinePageState extends State<TimelinePage> {
+  List<Status> statuses = [];
+
+  Future<void> _getStatuses() async {
+    return getIt.get<ApiService>().getHomeTimeline().then((statuses) {
+      print(statuses);
+      setState(() {
+        this.statuses = statuses;
+      });
+      return Future.value();
+    });
+  }
+
+  @override
+  void initState() {
+    _getStatuses();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: FutureBuilder(
-        future: getIt.get<ApiService>().getHomeTimeline(),
-        builder: (context, AsyncSnapshot<Response> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
-            final response = snapshot.data!.data as List<dynamic>;
-            final statuses = response.map((e) => Status.fromMap(e)).toList();
-            return ListView.builder(
-                itemBuilder: (_, index) {
-                  return StatusWidget(
-                    status: statuses[index],
-                  );
-                },
-                itemCount: statuses.length);
-          }
-          return Container();
-        },
+      child: RefreshIndicator(
+        backgroundColor: Theme.of(context).primaryColor,
+        color: Colors.white,
+        onRefresh: () => _getStatuses(),
+        child: ListView.builder(
+          itemCount: statuses.length,
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (_, index) {
+            return StatusWidget(
+              status: statuses[index],
+            );
+          },
+        ),
       ),
     );
   }
