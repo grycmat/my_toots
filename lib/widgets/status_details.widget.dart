@@ -14,49 +14,50 @@ class StatusDetailsWidget extends StatefulWidget {
 }
 
 class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
+  List<Status> _ancestors = [];
+  List<Status> _descendants = [];
+
+  @override
+  void initState() {
+    _descendants.add(widget.status);
+    getIt.get<ApiService>().getStatusContext(widget.status.id).then((value) {
+      setState(() {
+        _ancestors = [...value.ancestors];
+        _descendants.addAll(value.descendants);
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    const Key centerKey = ValueKey<String>('center-key');
     return SizedBox(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.9,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).primaryColor),
-              height: 5,
-              width: 50,
-            ),
-          ),
-          StatusCardWidget(
-            status: widget.status,
-          ),
-          FutureBuilder(
-            future: getIt.get<ApiService>().getStatusContext(widget.status.id),
-            builder: (context, AsyncSnapshot<StatusContext> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                final statusContext = snapshot.data!;
-                return Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (_, index) {
-                      return StatusCardWidget(
-                        status: statusContext.descendants[index],
-                      );
-                    },
-                    itemCount: statusContext.descendants.length,
-                  ),
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.9,
+        child: CustomScrollView(
+          center: centerKey,
+          slivers: [
+            SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 24.0),
+                  child: StatusCardWidget(status: _ancestors[index]),
                 );
-              }
-              return Container();
-            },
-          )
-        ],
-      ),
-    );
+              }, childCount: _ancestors.length),
+            ),
+            SliverList(
+              key: centerKey,
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return _descendants[index].id == widget.status.id
+                    ? StatusCardWidget(status: _descendants[index])
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 24.0),
+                        child: StatusCardWidget(status: _descendants[index]),
+                      );
+              }, childCount: _descendants.length),
+            ),
+          ],
+        ));
   }
 }
