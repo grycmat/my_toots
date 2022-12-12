@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_toots/models/status/status_payload.dart';
+import 'package:my_toots/getIt.instance.dart';
+import 'package:my_toots/services/api.service.dart';
 
 class ComposeStatusWidget extends StatefulWidget {
   const ComposeStatusWidget({Key? key}) : super(key: key);
@@ -26,6 +29,14 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
     super.dispose();
   }
 
+  _postStatus(BuildContext context) {
+    final statusText = _textEditingController.text;
+    final statusPayload = StatusPayload(status: statusText);
+    getIt.get<ApiService>().postStatus(statusPayload).then((value) {
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +54,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Compose a toot...',
+                  hintText: 'Lets toot something!',
                 ),
               ),
               Row(
@@ -52,8 +63,10 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                   Text(chars.toString()),
                   IconButton(
                       color: Theme.of(context).primaryColor,
-                      onPressed: () {},
-                      icon: Icon(Icons.send_outlined))
+                      onPressed: () {
+                        _postStatus(context);
+                      },
+                      icon: const Icon(Icons.send_outlined, size: 30))
                 ],
               ),
             ],

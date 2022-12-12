@@ -39,13 +39,13 @@ class _TimelinePageState extends State<TimelinePage> {
         color: Colors.white,
         onRefresh: () => _getStatuses(),
         child: ListView.separated(
-          separatorBuilder: (_, __) => Divider(
+          separatorBuilder: (_, __) => const Divider(
             indent: 60,
             endIndent: 60,
             color: Colors.black,
           ),
           itemCount: statuses.length,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemBuilder: (_, index) {
             return StatusWidget(
               status: statuses[index],

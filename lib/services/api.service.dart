@@ -7,6 +7,7 @@ import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_context.dart';
+import 'package:my_toots/models/status/status_payload.dart';
 import 'package:my_toots/models/token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -198,5 +199,14 @@ class ApiService {
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
     return StatusContext.fromMap(response.data);
+  }
+
+  Future<Response> postStatus(StatusPayload status) {
+    return Dio().post(
+      'https://$_instance/api/v1/statuses',
+      data: status.toMap(),
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
   }
 }
