@@ -84,12 +84,13 @@ class _AccountPageState extends State<AccountPage> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           Text(
-                                            '604',
+                                            widget.account.statusesCount
+                                                .toString(),
                                             textAlign: TextAlign.center,
                                           ),
-                                          Text(
+                                          const Text(
                                             'Posts',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -116,12 +117,13 @@ class _AccountPageState extends State<AccountPage> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           Text(
-                                            '705k',
+                                            widget.account.followersCount
+                                                .toString(),
                                             textAlign: TextAlign.center,
                                           ),
-                                          Text(
+                                          const Text(
                                             'Followers',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -148,12 +150,13 @@ class _AccountPageState extends State<AccountPage> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           Text(
-                                            '12',
+                                            widget.account.followingCount
+                                                .toString(),
                                             textAlign: TextAlign.center,
                                           ),
-                                          Text(
+                                          const Text(
                                             'Following',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(

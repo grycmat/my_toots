@@ -19,9 +19,9 @@ class Account {
   String avatarStatic;
   String header;
   String headerStatic;
-  int? followersCount;
-  int? followingCount;
-  int? statusesCount;
+  int followersCount;
+  int followingCount;
+  int statusesCount;
   String? lastStatusAt;
   bool? noindex;
   List<Emoji>? emojis;
@@ -43,9 +43,9 @@ class Account {
     required this.avatarStatic,
     required this.header,
     required this.headerStatic,
-    this.followersCount,
-    this.followingCount,
-    this.statusesCount,
+    required this.followersCount,
+    required this.followingCount,
+    required this.statusesCount,
     this.lastStatusAt,
     this.noindex,
     this.emojis,
@@ -75,9 +75,9 @@ class Account {
         avatarStatic: data['avatar_static'] as String,
         header: data['header'] as String,
         headerStatic: data['header_static'] as String,
-        followersCount: data['followers_count'] as int?,
-        followingCount: data['following_count'] as int?,
-        statusesCount: data['statuses_count'] as int?,
+        followersCount: data['followers_count'] as int,
+        followingCount: data['following_count'] as int,
+        statusesCount: data['statuses_count'] as int,
         lastStatusAt: data['last_status_at'] as String?,
         noindex: data['noindex'] as bool?,
         emojis: (data['fields'] as List<dynamic>?)
