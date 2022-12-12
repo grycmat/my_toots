@@ -4,7 +4,7 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/status.widget.container.dart';
+import 'package:my_toots/widgets/status_container.widget.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({required this.account, Key? key}) : super(key: key);
@@ -219,7 +219,7 @@ class _AccountPageState extends State<AccountPage> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate((_, index) {
-              return StatusWidgetContainer(
+              return StatusContainerWidget(
                 status: statuses[index],
               );
             }, childCount: statuses.length),

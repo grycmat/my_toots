@@ -3,8 +3,8 @@ import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/widgets/status.widget.dart';
 import 'package:my_toots/widgets/status_details.widget.dart';
 
-class StatusWidgetContainer extends StatelessWidget {
-  const StatusWidgetContainer({required this.status, Key? key})
+class StatusContainerWidget extends StatelessWidget {
+  const StatusContainerWidget({required this.status, Key? key})
       : super(key: key);
   final Status status;
 
