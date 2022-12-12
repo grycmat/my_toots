@@ -209,4 +209,24 @@ class ApiService {
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
   }
+
+  Future<Account> getAccount(String id) async {
+    final accountResponse = await Dio().get(
+      'https://$_instance/api/v1/accounts/$id',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+    return Account.fromMap(accountResponse.data);
+  }
+
+  Future<List<Status>> getTimelineById(String id) async {
+    final response = await Dio().get(
+      'https://$_instance/api/v1/accounts/$id/statuses',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+    final items = response.data as List<dynamic>;
+
+    return items.map((e) => Status.fromMap(e)).toList();
+  }
 }

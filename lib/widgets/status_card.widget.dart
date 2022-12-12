@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
+import 'package:my_toots/pages/account.page.dart';
+import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';
 import 'package:my_toots/widgets/status_html_text.widget.dart';
 
@@ -19,16 +22,24 @@ class StatusCardWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Image.network(
-                  status.account.avatarStatic,
-                  fit: BoxFit.cover,
+              InkWell(
+                onTap: () {
+                  getIt.get<ApiService>().getAccount(status.account.id).then(
+                      (account) => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              AccountPage(account: account))));
+                },
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.network(
+                    status.account.avatarStatic,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Expanded(
