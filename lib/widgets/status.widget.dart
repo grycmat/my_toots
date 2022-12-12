@@ -4,7 +4,6 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/pages/account.page.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/compose_status.widget.dart';
 import 'package:my_toots/widgets/media_attachment.widget.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';
 import 'package:my_toots/widgets/status_action_icon_buttons.widget.dart';

@@ -176,7 +176,18 @@ class ApiService {
     );
   }
 
-  Future<List<Status>> getHomeTimeline() async {
+  Future<List<Status>> getHomeTimeline({String? maxId}) async {
+    if (maxId != null) {
+      final response = await Dio().get(
+        'https://$_instance/api/v1/timelines/home?max_id=$maxId',
+        options: Options(
+            headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+      );
+      final items = response.data as List<dynamic>;
+
+      return items.map((e) => Status.fromMap(e)).toList();
+    }
+
     final response = await Dio().get(
       'https://$_instance/api/v1/timelines/home',
       options: Options(

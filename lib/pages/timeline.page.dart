@@ -14,6 +14,7 @@ class TimelinePage extends StatefulWidget {
 
 class _TimelinePageState extends State<TimelinePage> {
   List<Status> statuses = [];
+  ScrollController _scrollController = ScrollController();
 
   Future<void> _getStatuses() async {
     return getIt.get<ApiService>().getHomeTimeline().then((statuses) {
@@ -28,6 +29,20 @@ class _TimelinePageState extends State<TimelinePage> {
   @override
   void initState() {
     _getStatuses();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        getIt
+            .get<ApiService>()
+            .getHomeTimeline(maxId: statuses.last.id)
+            .then((statuses) {
+          setState(() {
+            this.statuses = [...this.statuses, ...statuses];
+          });
+          return Future.value();
+        });
+      }
+    });
     super.initState();
   }
 
@@ -39,6 +54,7 @@ class _TimelinePageState extends State<TimelinePage> {
         color: Colors.white,
         onRefresh: () => _getStatuses(),
         child: ListView.builder(
+          controller: _scrollController,
           itemCount: statuses.length,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (_, index) {

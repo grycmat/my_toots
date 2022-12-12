@@ -10,10 +10,11 @@ class MediaAttachmentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: mediaAttachments.isNotEmpty
-          ? CachedNetworkImage(
+    switch (mediaAttachments.length) {
+      case 1:
+        return ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
               imageUrl: mediaAttachments.first.previewUrl,
               width: double.infinity,
               height: 230,
@@ -26,8 +27,9 @@ class MediaAttachmentWidget extends StatelessWidget {
                     width: double.infinity,
                     color: Colors.white38,
                   )),
-            )
-          : null,
-    );
+            ));
+      default:
+        return Container();
+    }
   }
 }
