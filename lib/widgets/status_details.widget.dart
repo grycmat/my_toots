@@ -3,7 +3,7 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_context.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/status_card.widget.dart';
+import 'package:my_toots/widgets/status.widget.dart';
 
 class StatusDetailsWidget extends StatefulWidget {
   final Status status;
@@ -42,7 +42,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
               delegate: SliverChildBuilderDelegate((context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 24.0),
-                  child: StatusCardWidget(status: _ancestors[index]),
+                  child: StatusWidget(status: _ancestors[index]),
                 );
               }, childCount: _ancestors.length),
             ),
@@ -50,10 +50,10 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
               key: centerKey,
               delegate: SliverChildBuilderDelegate((context, index) {
                 return _descendants[index].id == widget.status.id
-                    ? StatusCardWidget(status: _descendants[index])
+                    ? StatusWidget(status: _descendants[index])
                     : Padding(
                         padding: const EdgeInsets.only(left: 24.0),
-                        child: StatusCardWidget(status: _descendants[index]),
+                        child: StatusWidget(status: _descendants[index]),
                       );
               }, childCount: _descendants.length),
             ),

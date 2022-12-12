@@ -158,19 +158,14 @@ class ApiService {
 
   Future<Response>? authorizeUser(String code) {
     userAuthCode = code;
-    print(_instance);
-    try {
-      return Dio().post('https://$_instance/oauth/token', data: {
-        'client_id': _application!.clientId,
-        'client_secret': _application!.clientSecret,
-        'redirect_uri': REDIRECT_URL,
-        'grant_type': 'authorization_code',
-        'code': _userAuthCode,
-        'scope': 'read write follow push'
-      });
-    } catch (e) {
-      print(e);
-    }
+    return Dio().post('https://$_instance/oauth/token', data: {
+      'client_id': _application!.clientId,
+      'client_secret': _application!.clientSecret,
+      'redirect_uri': REDIRECT_URL,
+      'grant_type': 'authorization_code',
+      'code': _userAuthCode,
+      'scope': 'read write follow push'
+    });
   }
 
   getNotificationsTimeline() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/status.widget.container.dart';
 import 'package:my_toots/widgets/status.widget.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -37,16 +38,11 @@ class _TimelinePageState extends State<TimelinePage> {
         backgroundColor: Theme.of(context).primaryColor,
         color: Colors.white,
         onRefresh: () => _getStatuses(),
-        child: ListView.separated(
-          separatorBuilder: (_, __) => const Divider(
-            indent: 60,
-            endIndent: 60,
-            color: Colors.black,
-          ),
+        child: ListView.builder(
           itemCount: statuses.length,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (_, index) {
-            return StatusWidget(
+            return StatusWidgetContainer(
               status: statuses[index],
             );
           },

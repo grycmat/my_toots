@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/status/status.dart';
+import 'package:my_toots/widgets/media_attachment.widget.dart';
 import 'package:my_toots/widgets/status_html_text.widget.dart';
 
 class ReblogWidget extends StatelessWidget {
@@ -9,15 +10,15 @@ class ReblogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.green[100],
+      color: Colors.green.shade100,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Icon(Icons.repeat_outlined),
                 ),
                 Text(
@@ -40,17 +41,8 @@ class ReblogWidget extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: status.mediaAttachments.isNotEmpty
-                    ? Image.network(
-                        status.mediaAttachments.first.previewUrl,
-                        width: double.infinity,
-                        height: 230,
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
+              child: MediaAttachmentWidget(
+                  mediaAttachments: status.mediaAttachments),
             ),
           ],
         ),

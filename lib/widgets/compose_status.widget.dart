@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_payload.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/status.widget.dart';
 
 class ComposeStatusWidget extends StatefulWidget {
-  const ComposeStatusWidget({Key? key}) : super(key: key);
-
+  const ComposeStatusWidget({this.inReplyToStatus, Key? key}) : super(key: key);
+  final Status? inReplyToStatus;
   @override
   State<ComposeStatusWidget> createState() => _ComposeStatusWidgetState();
 }
@@ -40,13 +42,19 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).viewInsets.bottom + 160,
+      height: MediaQuery.of(context).size.height * 0.95,
+      // height: MediaQuery.of(context).viewInsets.bottom + 160,
       color: Colors.white,
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              Container(
+                child: widget.inReplyToStatus == null
+                    ? null
+                    : StatusWidget(status: widget.inReplyToStatus!),
+              ),
               TextField(
                 autofocus: true,
                 controller: _textEditingController,
@@ -54,7 +62,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Lets toot something!',
+                  hintText: "Let's toot something!",
                 ),
               ),
               Row(
@@ -62,11 +70,12 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                 children: [
                   Text(chars.toString()),
                   IconButton(
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        _postStatus(context);
-                      },
-                      icon: const Icon(Icons.send_outlined, size: 30))
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      _postStatus(context);
+                    },
+                    icon: const Icon(Icons.send_outlined, size: 30),
+                  )
                 ],
               ),
             ],

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/status.widget.dart';
+import 'package:my_toots/widgets/status.widget.container.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({required this.account, Key? key}) : super(key: key);
@@ -204,6 +205,13 @@ class _AccountPageState extends State<AccountPage> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
+                    Html(data: widget.account.note!),
+                    Row(
+                      children: const <Widget>[
+                        ChoiceChip(label: Text('Bio'), selected: true),
+                        ChoiceChip(label: Text('Posts'), selected: true)
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -211,7 +219,7 @@ class _AccountPageState extends State<AccountPage> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate((_, index) {
-              return StatusWidget(
+              return StatusWidgetContainer(
                 status: statuses[index],
               );
             }, childCount: statuses.length),
