@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:my_toots/getIt.instance.dart';
@@ -36,8 +37,8 @@ class _AccountPageState extends State<AccountPage> {
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(widget.account.acct),
-              background:
-                  Image.network(widget.account.headerStatic, fit: BoxFit.cover),
+              background: CachedNetworkImage(
+                  imageUrl: widget.account.headerStatic, fit: BoxFit.cover),
             ),
           ),
           SliverToBoxAdapter(
@@ -57,8 +58,8 @@ class _AccountPageState extends State<AccountPage> {
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: Image.network(
-                            widget.account.avatarStatic,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.account.avatarStatic,
                             fit: BoxFit.cover,
                           ),
                         ),
