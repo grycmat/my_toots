@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 class Thumbnail {
-  String? url;
+  String url;
   String? blurhash;
   dynamic versions;
 
-  Thumbnail({this.url, this.blurhash, this.versions});
+  Thumbnail({required this.url, this.blurhash, this.versions});
 
   @override
   String toString() {
@@ -13,7 +13,7 @@ class Thumbnail {
   }
 
   factory Thumbnail.fromMap(Map<String, dynamic> data) => Thumbnail(
-        url: data['url'] as String?,
+        url: data['url'] as String,
         blurhash: data['blurhash'] as String?,
         versions: data['versions'],
       );

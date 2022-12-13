@@ -13,8 +13,8 @@ class Instance {
   String version;
   String sourceUrl;
   String description;
-  Usage usage;
-  Thumbnail thumbnail;
+  Usage? usage;
+  String? thumbnail;
   List<String> languages;
   Configuration configuration;
   Registrations registrations;
@@ -28,7 +28,7 @@ class Instance {
     required this.sourceUrl,
     required this.description,
     required this.usage,
-    required this.thumbnail,
+    this.thumbnail,
     required this.languages,
     required this.configuration,
     required this.registrations,
@@ -47,8 +47,10 @@ class Instance {
         version: data['version'] as String,
         sourceUrl: data['source_url'] as String,
         description: data['description'] as String,
-        usage: Usage.fromMap(data['usage'] as Map<String, dynamic>),
-        thumbnail: Thumbnail.fromMap(data['thumbnail'] as Map<String, dynamic>),
+        usage: data['usage'] == null
+            ? null
+            : Usage.fromMap(data['usage'] as Map<String, dynamic>),
+        thumbnail: data['thumbnail'] as String?,
         languages: data['languages'] as List<String>,
         configuration: Configuration.fromMap(
             data['configuration'] as Map<String, dynamic>),
@@ -66,8 +68,8 @@ class Instance {
         'version': version,
         'source_url': sourceUrl,
         'description': description,
-        'usage': usage.toMap(),
-        'thumbnail': thumbnail.toMap(),
+        'usage': usage?.toMap(),
+        'thumbnail': thumbnail,
         'languages': languages,
         'configuration': configuration.toMap(),
         'registrations': registrations.toMap(),

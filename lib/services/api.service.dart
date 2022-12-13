@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
+import 'package:my_toots/models/instance/instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_context.dart';
 import 'package:my_toots/models/status/status_payload.dart';
@@ -93,6 +94,11 @@ class ApiService {
 
   Future<Response> getPublicTimeline(String instance) {
     return Dio().get('https://$instance/api/v1/timelines/public');
+  }
+
+  Future<Instance> getInstance() async {
+    final response = await Dio().get('https://$_instance/api/v1/instance');
+    return Instance.fromMap(response.data);
   }
 
   Future<Response> getSampleInstances() {

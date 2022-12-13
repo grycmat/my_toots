@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/account/account.dart';
+import 'package:my_toots/models/instance/instance.dart';
 import 'package:my_toots/pages/timeline.page.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/compose_status.widget.dart';
+import 'package:my_toots/services/widget.service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,16 +17,12 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _pageIndex = 0;
   late TabController _tabController;
-  final _textEditingController = TextEditingController();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
-
-  Widget _getComposeWidget() => ComposeStatusWidget();
 
   @override
   void dispose() {
@@ -35,7 +33,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -43,7 +40,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(10),
             ),
             context: context,
-            builder: (_) => _getComposeWidget(),
+            builder: (_) => getIt.get<WidgetService>().getComposeWidget(),
           );
         },
         child: const Icon(Icons.add),
@@ -57,15 +54,16 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             if (snapshot.hasData) {
               return Row(
                 children: [
-                  // CircleAvatar(
+                  // snapshot.data!.thumbnail != null ? CircleAvatar(
                   //   radius: 30,
-                  //   backgroundImage: NetworkImage(snapshot.data!.avatarStatic),
+                  //   backgroundImage: CachedNetworkImageProvider(
+                  //       snapshot.data!.thumbnail.url),
                   // ),
-                  Text(snapshot.data!.acct),
+                  Text('Home'),
                 ],
               );
             }
-            return Text('');
+            return const Text('');
           },
         ),
       ),
@@ -97,14 +95,16 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               label: '',
             ),
           ]),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          Center(child: TimelinePage()),
-          Center(child: Text('Search')),
-          Center(child: Text('Notifications')),
-          Center(child: Text('Messages')),
-        ],
+      body: SafeArea(
+        child: TabBarView(
+          controller: _tabController,
+          children: const [
+            Center(child: TimelinePage()),
+            Center(child: Text('Search')),
+            Center(child: Text('Notifications')),
+            Center(child: Text('Messages')),
+          ],
+        ),
       ),
     );
   }
