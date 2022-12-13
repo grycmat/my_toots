@@ -49,8 +49,6 @@ class ApiService {
     final appToken = prefs.getString(APP_TOKEN);
     final instance = prefs.getString(INSTANCE);
     final userToken = prefs.getString(USER_TOKEN);
-    print('userToken');
-    print(userToken);
 
     return ApiService(
       prefs: prefs,

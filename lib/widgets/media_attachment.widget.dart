@@ -9,34 +9,37 @@ class MediaAttachmentWidget extends StatelessWidget {
       : super(key: key);
   final List<MediaAttachment> mediaAttachments;
 
-  ClipRRect _renderMediaItem(
+  Widget _renderMediaItem(
           BuildContext context, MediaAttachment mediaAttachment) =>
-      ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => MediaPreviewPage(
-                  mediaAttachment: mediaAttachment,
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => MediaPreviewPage(
+                    mediaAttachment: mediaAttachment,
+                  ),
                 ),
-              ),
-            );
-          },
-          child: Hero(
-            tag: mediaAttachment.id,
-            child: CachedNetworkImage(
-              imageUrl: mediaAttachment.previewUrl,
-              width: double.infinity,
-              height: 230,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.green.shade100,
-                highlightColor: Colors.green.shade500,
-                child: Container(
-                  height: 230,
-                  width: double.infinity,
-                  color: Colors.white38,
+              );
+            },
+            child: Hero(
+              tag: mediaAttachment.id,
+              child: CachedNetworkImage(
+                imageUrl: mediaAttachment.previewUrl,
+                width: double.infinity,
+                height: 230,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.green.shade100,
+                  highlightColor: Colors.green.shade500,
+                  child: Container(
+                    height: 230,
+                    width: double.infinity,
+                    color: Colors.white38,
+                  ),
                 ),
               ),
             ),
@@ -53,7 +56,7 @@ class MediaAttachmentWidget extends StatelessWidget {
         return ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: ListView(
-            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             children: [
               for (var mediaAttachment in mediaAttachments)
@@ -65,6 +68,7 @@ class MediaAttachmentWidget extends StatelessWidget {
         return ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: GridView.count(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 2,
             crossAxisSpacing: 3,

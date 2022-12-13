@@ -18,7 +18,6 @@ class _TimelinePageState extends State<TimelinePage> {
 
   Future<void> _getStatuses() async {
     return getIt.get<ApiService>().getHomeTimeline().then((statuses) {
-      print(statuses);
       setState(() {
         this.statuses = statuses;
       });
