@@ -34,6 +34,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        elevation: 3,
         onPressed: () {
           showModalBottomSheet(
             shape: RoundedRectangleBorder(
