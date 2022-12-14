@@ -4,6 +4,7 @@ import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/status_container.widget.dart';
 import 'package:my_toots/widgets/status.widget.dart';
+import 'package:my_toots/widgets/status_placeholder.widget.dart';
 
 class TimelinePage extends StatefulWidget {
   const TimelinePage({Key? key}) : super(key: key);
@@ -14,12 +15,17 @@ class TimelinePage extends StatefulWidget {
 
 class _TimelinePageState extends State<TimelinePage> {
   List<Status> statuses = [];
+  bool _isLoading = true;
   ScrollController _scrollController = ScrollController();
 
   Future<void> _getStatuses() async {
+    setState(() {
+      _isLoading = true;
+    });
     return getIt.get<ApiService>().getHomeTimeline().then((statuses) {
       setState(() {
         this.statuses = statuses;
+        _isLoading = false;
       });
       return Future.value();
     });
@@ -56,12 +62,14 @@ class _TimelinePageState extends State<TimelinePage> {
           separatorBuilder: (_, index) =>
               const Divider(height: 5, thickness: 2),
           controller: _scrollController,
-          itemCount: statuses.length,
+          itemCount: _isLoading ? 20 : statuses.length,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (_, index) {
-            return StatusContainerWidget(
-              status: statuses[index],
-            );
+            return _isLoading
+                ? const StatusPlaceholderWidget()
+                : StatusContainerWidget(
+                    status: statuses[index],
+                  );
           },
         ),
       ),

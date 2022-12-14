@@ -33,31 +33,36 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
   Widget build(BuildContext context) {
     const Key centerKey = ValueKey<String>('center-key');
     return Container(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.95,
-        child: CustomScrollView(
-          center: centerKey,
-          slivers: [
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                return Padding(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.95,
+      child: CustomScrollView(
+        center: centerKey,
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return Center(
+                child: Padding(
                   padding: const EdgeInsets.only(left: 24.0),
                   child: StatusWidget(status: _ancestors[index]),
-                );
-              }, childCount: _ancestors.length),
-            ),
-            SliverList(
-              key: centerKey,
-              delegate: SliverChildBuilderDelegate((context, index) {
-                return _descendants[index].id == widget.status.id
-                    ? StatusWidget(status: _descendants[index])
-                    : Padding(
+                ),
+              );
+            }, childCount: _ancestors.length),
+          ),
+          SliverList(
+            key: centerKey,
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return _descendants[index].id == widget.status.id
+                  ? Center(child: StatusWidget(status: _descendants[index]))
+                  : Center(
+                      child: Padding(
                         padding: const EdgeInsets.only(left: 24.0),
                         child: StatusWidget(status: _descendants[index]),
-                      );
-              }, childCount: _descendants.length),
-            ),
-          ],
-        ));
+                      ),
+                    );
+            }, childCount: _descendants.length),
+          ),
+        ],
+      ),
+    );
   }
 }
