@@ -16,7 +16,7 @@ class TimelinePage extends StatefulWidget {
 class _TimelinePageState extends State<TimelinePage> {
   List<Status> statuses = [];
   bool _isLoading = true;
-  ScrollController _scrollController = ScrollController();
+  late final ScrollController _scrollController = ScrollController();
 
   Future<void> _getStatuses() async {
     setState(() {

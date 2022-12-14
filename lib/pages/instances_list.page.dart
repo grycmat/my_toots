@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/search_instances/instance.dart';
 import 'package:my_toots/models/search_instances/search_instances.dart';
+import 'package:my_toots/pages/web_login.page.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/instance_search_result.widget.dart';
 
@@ -18,127 +19,53 @@ class InstancesListPage extends StatefulWidget {
 }
 
 class _InstancesListPageState extends State<InstancesListPage> {
-  final _controller = TextEditingController();
-  final _apiService = getIt<ApiService>();
+  late final TextEditingController _controller;
   bool _isSearching = false;
-  List<Instance>? _instances;
-  Timer? _debounce;
 
   @override
   initState() {
+    _controller = TextEditingController();
     super.initState();
-    _controller.addListener(() {
-      if (_debounce?.isActive ?? false) _debounce?.cancel();
-      _debounce = Timer(const Duration(milliseconds: 300), () {
-        if (_controller.text.length > 2) {
-          setState(() {
-            _isSearching = true;
-          });
-          _apiService.searchInstances(_controller.text).then((value) {
-            _isSearching = false;
-            setState(() {
-              _isSearching = false;
-              _instances = SearchInstances.fromMap(value.data).instances;
-            });
-          });
-        }
-      });
-    });
-    _apiService.getSampleInstances().then((value) {
-      final instances = SearchInstances.fromMap(value.data);
-      setState(() {
-        _instances = instances.instances;
-      });
-    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _debounce?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   flexibleSpace: Center(
-      //     child: Padding(
-      //       padding: const EdgeInsets.all(8.0),
-      //       child: TextField(
-      //         controller: _controller,
-      //         decoration: InputDecoration(
-      //             prefixText: 'https://',
-      //             border: const OutlineInputBorder(),
-      //             labelText: 'Find Instance',
-      //             suffix: _isSearching
-      //                 ? const SizedBox(
-      //                     width: 25,
-      //                     height: 25,
-      //                     child: CircularProgressIndicator(
-      //                       strokeWidth: 3,
-      //                     ),
-      //                   )
-      //                 : null),
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/background.jpg'), fit: BoxFit.cover),
-        ),
-        child: Center(
-            child: Padding(
+      appBar: AppBar(
+        title: const Text('Log in'),
+      ),
+      body: Center(
+        child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 600,
-                    child: ListView.builder(
-                      itemCount: _instances?.length,
-                      itemBuilder: (context, index) => _instances != null
-                          ? InstanceSearchResultWidget(
-                              instance: _instances![index])
-                          : const CircularProgressIndicator(),
-                    ),
-                  ),
-                  ClipRRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Container(
-                        width: double.infinity,
-                        height: 200,
-                        color: Colors.white.withOpacity(0.1),
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                        prefixText: 'https://',
-                        border: const OutlineInputBorder(),
-                        labelText: 'Find Instance',
-                        suffix: _isSearching
-                            ? const SizedBox(
-                                width: 25,
-                                height: 25,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3,
-                                ),
-                              )
-                            : null),
-                  ),
-                ],
+              TextField(
+                controller: _controller,
+                decoration: const InputDecoration(
+                  prefixText: 'https://',
+                  border: OutlineInputBorder(),
+                  labelText: 'Find Instance',
+                ),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => WebLoginPage(_controller.text),
+                    ),
+                  );
+                },
+                child: const Text('Log in'),
+              )
             ],
           ),
-        )),
+        ),
       ),
     );
   }

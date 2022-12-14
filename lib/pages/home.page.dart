@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _pageIndex = 0;
-  late TabController _tabController;
+  late final TabController _tabController;
 
   @override
   void initState() {
@@ -48,14 +48,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+        backgroundColor: Theme.of(context).primaryColor,
         scrolledUnderElevation: 1,
         title: FutureBuilder(
           future: getIt.get<ApiService>().getMe(),
           builder: (_, AsyncSnapshot<Account> snapshot) {
             if (snapshot.hasData) {
               return Row(
-                children: [
+                children: const [
                   // snapshot.data!.thumbnail != null ? CircleAvatar(
                   //   radius: 30,
                   //   backgroundImage: CachedNetworkImageProvider(

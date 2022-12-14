@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/widget.service.dart';
-import 'package:my_toots/widgets/compose_status.widget.dart';
 
 class StatusActionIconButtonsWidget extends StatelessWidget {
   const StatusActionIconButtonsWidget({required this.status, Key? key})

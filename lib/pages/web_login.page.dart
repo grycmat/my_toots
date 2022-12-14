@@ -10,7 +10,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebLoginPage extends StatefulWidget {
   const WebLoginPage(this.instance, {Key? key}) : super(key: key);
-  final Instance instance;
+  final String instance;
 
   @override
   State<WebLoginPage> createState() => _WebLoginPageState();
@@ -23,33 +23,33 @@ class _WebLoginPageState extends State<WebLoginPage> {
     super.initState();
   }
 
-  final _apiService = getIt.get<ApiService>();
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _apiService.prepareAppCredentials(widget.instance.name),
+      future: getIt.get<ApiService>().prepareAppCredentials(widget.instance),
       builder: (_, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
           return WebView(
-              initialUrl: _apiService.getLoginUrl(widget.instance.name),
+              initialUrl: getIt.get<ApiService>().getLoginUrl(widget.instance),
               javascriptMode: JavascriptMode.unrestricted,
               navigationDelegate: (navigation) async {
                 if (navigation.url.startsWith(REDIRECT_URL)) {
                   var uri = Uri.parse(navigation.url);
                   var code = uri.queryParameters['code'];
-                  _apiService.userAuthCode = code!;
-                  try {
-                    final a = await _apiService.authorizeUser(code);
-                    _apiService.userToken = Token.fromMap(a!.data);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const HomePage()));
-                  } catch (e) {
-                    print(e);
-                  }
+                  getIt.get<ApiService>().userAuthCode = code!;
+                  getIt.get<ApiService>().authorizeUser(code)!.then((value) {
+                    getIt.get<ApiService>().userToken =
+                        Token.fromMap(value.data);
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (_) => const HomePage(),
+                      ),
+                    );
+                  });
                 }
                 return NavigationDecision.navigate;
               });

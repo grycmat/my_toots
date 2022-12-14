@@ -3,8 +3,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:my_toots/models/status/status.dart';
 
 class StatusHtmlTextWidget extends StatelessWidget {
-  StatusHtmlTextWidget({required this.status, Key? key}) : super(key: key);
-  Status status;
+  const StatusHtmlTextWidget({required this.status, Key? key})
+      : super(key: key);
+  final Status status;
 
   @override
   Widget build(BuildContext context) {

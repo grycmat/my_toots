@@ -46,11 +46,11 @@ class InstanceSearchResultWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => WebLoginPage(instance),
-            ),
-          );
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (context) => WebLoginPage(instance),
+          //   ),
+          // );
         },
         child: Card(
           child: Column(

@@ -4,8 +4,8 @@ import 'package:my_toots/widgets/media_attachment.widget.dart';
 import 'package:my_toots/widgets/status_html_text.widget.dart';
 
 class ReblogWidget extends StatelessWidget {
-  ReblogWidget({required this.status, Key? key}) : super(key: key);
-  Status status;
+  const ReblogWidget({required this.status, Key? key}) : super(key: key);
+  final Status status;
 
   @override
   Widget build(BuildContext context) {
