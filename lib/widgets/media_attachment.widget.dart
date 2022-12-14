@@ -64,6 +64,7 @@ class MediaAttachmentWidget extends StatelessWidget {
             ],
           ),
         );
+      case 3:
       case 4:
         return ClipRRect(
           borderRadius: BorderRadius.circular(12),

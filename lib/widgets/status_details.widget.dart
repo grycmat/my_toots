@@ -34,7 +34,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
     const Key centerKey = ValueKey<String>('center-key');
     return SizedBox(
         width: double.infinity,
-        height: double.maxFinite,
+        height: MediaQuery.of(context).size.height * 0.95,
         child: CustomScrollView(
           center: centerKey,
           slivers: [
