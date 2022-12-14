@@ -32,7 +32,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     const Key centerKey = ValueKey<String>('center-key');
-    return SizedBox(
+    return Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height * 0.95,
         child: CustomScrollView(

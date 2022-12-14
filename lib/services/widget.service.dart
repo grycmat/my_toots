@@ -22,7 +22,7 @@ class WidgetService {
               height: 5,
             ),
           ),
-          StatusDetailsWidget(status),
+          Expanded(child: StatusDetailsWidget(status)),
         ],
       ),
     );
