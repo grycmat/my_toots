@@ -3,7 +3,6 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/status_container.widget.dart';
-import 'package:my_toots/widgets/status.widget.dart';
 import 'package:my_toots/widgets/status_placeholder.widget.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -59,11 +58,13 @@ class _TimelinePageState extends State<TimelinePage> {
         color: Colors.white,
         onRefresh: () => _getStatuses(),
         child: ListView.separated(
+          primary: false,
+          padding: const EdgeInsets.all(8),
+          cacheExtent: 500,
           separatorBuilder: (_, index) =>
               const Divider(height: 5, thickness: 2),
           controller: _scrollController,
           itemCount: _isLoading ? 20 : statuses.length,
-          physics: const BouncingScrollPhysics(),
           itemBuilder: (_, index) {
             return _isLoading
                 ? const StatusPlaceholderWidget()

@@ -43,18 +43,15 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.95,
-      // height: MediaQuery.of(context).viewInsets.bottom + 160,
       color: Colors.white,
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Container(
-                child: widget.inReplyToStatus == null
-                    ? null
-                    : StatusWidget(status: widget.inReplyToStatus!),
-              ),
+              (widget.inReplyToStatus == null
+                  ? null
+                  : StatusWidget(status: widget.inReplyToStatus!)) as Widget,
               TextField(
                 autofocus: true,
                 controller: _textEditingController,
@@ -68,7 +65,9 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(chars.toString()),
+                  Text(
+                    chars.toString(),
+                  ),
                   IconButton(
                     color: Theme.of(context).primaryColor,
                     onPressed: () {

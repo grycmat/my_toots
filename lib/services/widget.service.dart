@@ -7,7 +7,7 @@ import 'package:my_toots/widgets/status_details.widget.dart';
 @singleton
 class WidgetService {
   Widget getDetailsSheet(BuildContext context, Status status) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.95,
       child: Column(
         children: [

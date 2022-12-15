@@ -15,7 +15,7 @@ class StatusDetailsWidget extends StatefulWidget {
 
 class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
   List<Status> _ancestors = [];
-  List<Status> _descendants = [];
+  final List<Status> _descendants = [];
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     const Key centerKey = ValueKey<String>('center-key');
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.95,
       child: CustomScrollView(

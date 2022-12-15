@@ -12,20 +12,17 @@ class StatusContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-      child: InkWell(
-        onTap: () => showModalBottomSheet(
-          isScrollControlled: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          context: context,
-          builder: (context) =>
-              getIt.get<WidgetService>().getDetailsSheet(context, status),
+    return InkWell(
+      onTap: () => showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: StatusWidget(status: status),
+        context: context,
+        builder: (context) =>
+            getIt.get<WidgetService>().getDetailsSheet(context, status),
       ),
+      child: StatusWidget(status: status),
     );
   }
 }
