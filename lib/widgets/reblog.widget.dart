@@ -10,6 +10,7 @@ class ReblogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 1,
       color: Colors.green.shade100,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,

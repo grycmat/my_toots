@@ -4,6 +4,7 @@ import 'package:shimmer/shimmer.dart';
 class StatusPlaceholderWidget extends StatelessWidget {
   const StatusPlaceholderWidget({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),

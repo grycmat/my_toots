@@ -3,7 +3,6 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/widget.service.dart';
 import 'package:my_toots/widgets/status.widget.dart';
-import 'package:my_toots/widgets/status_details.widget.dart';
 
 class StatusContainerWidget extends StatelessWidget {
   const StatusContainerWidget({required this.status, Key? key})
@@ -13,8 +12,7 @@ class StatusContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showModalBottomSheet(
-        isScrollControlled: true,
+      onTap: () => showBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

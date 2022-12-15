@@ -1,15 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
-import 'package:my_toots/pages/account.page.dart';
-import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/media_attachment.widget.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';
 import 'package:my_toots/widgets/status_account_row.widget.dart';
 import 'package:my_toots/widgets/status_action_icon_buttons.widget.dart';
 import 'package:my_toots/widgets/status_html_text.widget.dart';
-import 'package:shimmer/shimmer.dart';
 
 class StatusWidget extends StatelessWidget {
   final Status status;

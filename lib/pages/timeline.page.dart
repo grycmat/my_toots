@@ -32,6 +32,7 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   void initState() {
+    super.initState();
     _getStatuses();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -47,7 +48,12 @@ class _TimelinePageState extends State<TimelinePage> {
         });
       }
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,18 +65,28 @@ class _TimelinePageState extends State<TimelinePage> {
         onRefresh: () => _getStatuses(),
         child: ListView.separated(
           primary: false,
+          addAutomaticKeepAlives: true,
           padding: const EdgeInsets.all(8),
-          cacheExtent: 500,
+          cacheExtent: 200,
           separatorBuilder: (_, index) =>
               const Divider(height: 5, thickness: 2),
           controller: _scrollController,
-          itemCount: _isLoading ? 20 : statuses.length,
+          itemCount: _isLoading ? 20 : statuses.length + 1,
           itemBuilder: (_, index) {
-            return _isLoading
-                ? const StatusPlaceholderWidget()
-                : StatusContainerWidget(
-                    status: statuses[index],
-                  );
+            if (index == statuses.length) {
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24.0),
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            if (!_isLoading) {
+              return StatusContainerWidget(
+                status: statuses[index],
+              );
+            }
+            return const StatusPlaceholderWidget();
           },
         ),
       ),

@@ -1,14 +1,5 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:my_toots/getIt.instance.dart';
-import 'package:my_toots/models/search_instances/instance.dart';
-import 'package:my_toots/models/search_instances/search_instances.dart';
 import 'package:my_toots/pages/web_login.page.dart';
-import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/instance_search_result.widget.dart';
 
 class InstancesListPage extends StatefulWidget {
   const InstancesListPage({Key? key}) : super(key: key);
@@ -44,6 +35,7 @@ class _InstancesListPageState extends State<InstancesListPage> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _controller,

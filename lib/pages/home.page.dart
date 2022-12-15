@@ -50,24 +50,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         scrolledUnderElevation: 1,
-        title: FutureBuilder(
-          future: getIt.get<ApiService>().getMe(),
-          builder: (_, AsyncSnapshot<Account> snapshot) {
-            if (snapshot.hasData) {
-              return Row(
-                children: const [
-                  // snapshot.data!.thumbnail != null ? CircleAvatar(
-                  //   radius: 30,
-                  //   backgroundImage: CachedNetworkImageProvider(
-                  //       snapshot.data!.thumbnail.url),
-                  // ),
-                  Text('Home'),
-                ],
-              );
-            }
-            return const Text('');
-          },
-        ),
+        title: Text('Home'),
       ),
       bottomNavigationBar: NavigationBar(
           elevation: 5,

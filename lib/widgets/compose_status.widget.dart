@@ -50,8 +50,8 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
           child: Column(
             children: [
               (widget.inReplyToStatus == null
-                  ? null
-                  : StatusWidget(status: widget.inReplyToStatus!)) as Widget,
+                  ? Container()
+                  : StatusWidget(status: widget.inReplyToStatus!)),
               TextField(
                 autofocus: true,
                 controller: _textEditingController,
