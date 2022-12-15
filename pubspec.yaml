@@ -43,7 +43,7 @@ dependencies:
   webview_flutter: ^3.0.4
   skeleton_loader: ^2.0.0+4
   cached_network_image: ^3.2.3
-  shared_preferences: ^0.5.5
+  shared_preferences: ^2.0.15
   html: ^0.15.1
   flutter_html: ^3.0.0-alpha.6
   link_preview_generator: ^1.2.0
