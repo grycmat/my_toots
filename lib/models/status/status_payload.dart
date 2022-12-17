@@ -3,12 +3,14 @@ import 'dart:convert';
 class StatusPayload {
   final String status;
   final List<String>? mediaIds;
-  final String? inReplayToId;
+  String? inReplayToId;
   final bool? sensitive;
   final String? spoilerText;
   final String? visibility;
   final String? language;
   final String? scheduledAt;
+
+  set inReplyToId(String? value) => inReplayToId = value;
 
   StatusPayload({
     required this.status,

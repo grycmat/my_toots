@@ -33,20 +33,21 @@ class _TimelinePageState extends State<TimelinePage> {
   @override
   void initState() {
     super.initState();
-    _getStatuses();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        getIt
-            .get<ApiService>()
-            .getHomeTimeline(maxId: statuses.last.id)
-            .then((statuses) {
-          setState(() {
-            this.statuses = [...this.statuses, ...statuses];
+    _getStatuses().then((_) {
+      _scrollController.addListener(() {
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent - 200) {
+          getIt
+              .get<ApiService>()
+              .getHomeTimeline(maxId: statuses.last.id)
+              .then((statuses) {
+            setState(() {
+              this.statuses = [...this.statuses, ...statuses];
+            });
+            return Future.value();
           });
-          return Future.value();
-        });
-      }
+        }
+      });
     });
   }
 

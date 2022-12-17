@@ -52,7 +52,38 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
             key: centerKey,
             delegate: SliverChildBuilderDelegate((context, index) {
               return _descendants[index].id == widget.status.id
-                  ? Center(child: StatusWidget(status: _descendants[index]))
+                  ? Column(
+                      children: [
+                        Container(
+                          color: Colors.black12,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.subdirectory_arrow_right_outlined),
+                                Text('In response to'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: StatusWidget(status: _descendants[index]),
+                        ),
+                        Container(
+                          color: Colors.black12,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Text('Replies'),
+                                Icon(Icons.subdirectory_arrow_left_outlined),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   : Center(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 24.0),

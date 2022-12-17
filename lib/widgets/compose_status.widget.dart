@@ -34,6 +34,11 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   _postStatus(BuildContext context) {
     final statusText = _textEditingController.text;
     final statusPayload = StatusPayload(status: statusText);
+
+    if (widget.inReplyToStatus != null) {
+      statusPayload.inReplyToId = widget.inReplyToStatus!.id;
+    }
+
     getIt.get<ApiService>().postStatus(statusPayload).then((value) {
       Navigator.of(context).pop();
     });
