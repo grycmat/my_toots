@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/pages/web_login.page.dart';
 
-class InstancesListPage extends StatefulWidget {
-  const InstancesListPage({Key? key}) : super(key: key);
+class SelectInstancePage extends StatefulWidget {
+  const SelectInstancePage({Key? key}) : super(key: key);
   static const String routeName = '/login';
 
   @override
-  State<InstancesListPage> createState() => _InstancesListPageState();
+  State<SelectInstancePage> createState() => _SelectInstancePageState();
 }
 
-class _InstancesListPageState extends State<InstancesListPage> {
+class _SelectInstancePageState extends State<SelectInstancePage> {
   late final TextEditingController _controller;
   bool _isSearching = false;
 
@@ -53,7 +53,17 @@ class _InstancesListPageState extends State<InstancesListPage> {
                     ),
                   );
                 },
-                child: const Text('Log in'),
+                child: const Text('Log in selected instance'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => WebLoginPage(_controller.text),
+                    ),
+                  );
+                },
+                child: const Text('Try 101010.pl!'),
               )
             ],
           ),

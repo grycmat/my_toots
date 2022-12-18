@@ -8,7 +8,9 @@ import 'package:my_toots/widgets/status_html_text.widget.dart';
 
 class StatusWidget extends StatelessWidget {
   final Status status;
-  const StatusWidget({required this.status, Key? key}) : super(key: key);
+  bool showActions;
+  StatusWidget({required this.status, this.showActions = true, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,9 @@ class StatusWidget extends StatelessWidget {
                 ),
                 MediaAttachmentWidget(
                     mediaAttachments: status.mediaAttachments),
-                StatusActionIconButtonsWidget(status: status)
+                showActions
+                    ? StatusActionIconButtonsWidget(status: status)
+                    : Container(),
               ],
             ),
           ),

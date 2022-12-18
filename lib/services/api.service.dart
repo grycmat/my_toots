@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
 import 'package:my_toots/models/instance/instance.dart';
+import 'package:my_toots/models/notification/account_notification.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_context.dart';
 import 'package:my_toots/models/status/status_payload.dart';
@@ -172,12 +173,15 @@ class ApiService {
     });
   }
 
-  getNotificationsTimeline() {
-    return Dio().get(
-      'https://$_instance/api/v1/timelines/home',
+  Future<List<AccountNotification>> getNotifications() async {
+    final response = await Dio().get(
+      'https://$_instance/api/v1/notifications',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
+    final items = response.data as List<dynamic>;
+
+    return items.map((e) => AccountNotification.fromMap(e)).toList();
   }
 
   Future<List<Status>> getHomeTimeline({String? maxId}) async {
@@ -238,5 +242,37 @@ class ApiService {
     final items = response.data as List<dynamic>;
 
     return items.map((e) => Status.fromMap(e)).toList();
+  }
+
+  Future<Response> favouriteStatus(Status status) {
+    return Dio().post(
+      'https://$_instance/api/v1/statuses/${status.id}/favourite',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+  }
+
+  Future<Response> unfavouriteStatus(Status status) {
+    return Dio().post(
+      'https://$_instance/api/v1/statuses/${status.id}/unfavourite',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+  }
+
+  Future<Response> boostStatus(Status status) {
+    return Dio().post(
+      'https://$_instance/api/v1/statuses/${status.id}/reblog',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+  }
+
+  Future<Response> undoBoostStatus(Status status) {
+    return Dio().post(
+      'https://$_instance/api/v1/statuses/${status.id}/unreblog',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
   }
 }

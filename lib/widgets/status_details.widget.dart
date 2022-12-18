@@ -41,10 +41,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               return Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24.0),
-                  child: StatusWidget(status: _ancestors[index]),
-                ),
+                child: StatusWidget(status: _ancestors[index]),
               );
             }, childCount: _ancestors.length),
           ),
@@ -85,10 +82,7 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                       ],
                     )
                   : Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 24.0),
-                        child: StatusWidget(status: _descendants[index]),
-                      ),
+                      child: StatusWidget(status: _descendants[index]),
                     );
             }, childCount: _descendants.length),
           ),

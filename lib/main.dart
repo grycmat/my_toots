@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -5,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/main.config.dart';
 import 'package:my_toots/pages/home.page.dart';
-import 'package:my_toots/pages/instances_list.page.dart';
+import 'package:my_toots/pages/select_instance.page.dart';
 import 'package:my_toots/services/api.service.dart';
 
 @InjectableInit(
@@ -30,6 +31,7 @@ class MyToots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: const CupertinoScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -39,7 +41,7 @@ class MyToots extends StatelessWidget {
       ),
       home: _service.hasUserCredentials()
           ? const HomePage()
-          : const InstancesListPage(),
+          : const SelectInstancePage(),
     );
   }
 }

@@ -1,10 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
-import 'package:my_toots/models/account/account.dart';
-import 'package:my_toots/models/instance/instance.dart';
+import 'package:my_toots/pages/notifications.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
-import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/services/widget.service.dart';
 
 class HomePage extends StatefulWidget {
@@ -48,9 +46,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.green.shade100,
         scrolledUnderElevation: 1,
-        title: Text('Home'),
+        title: const Text('Home'),
       ),
       bottomNavigationBar: NavigationBar(
           elevation: 5,
@@ -68,11 +66,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               label: '',
             ),
             NavigationDestination(
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.notifications_outlined),
               label: '',
             ),
             NavigationDestination(
-              icon: Icon(Icons.notifications),
+              icon: Icon(CupertinoIcons.globe),
               label: '',
             ),
             NavigationDestination(
@@ -85,7 +83,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           controller: _tabController,
           children: const [
             Center(child: TimelinePage()),
-            Center(child: Text('Search')),
+            Center(child: NotificationsPage()),
             Center(child: Text('Notifications')),
             Center(child: Text('Messages')),
           ],

@@ -21,12 +21,12 @@ class Status {
   String? language;
   String uri;
   String url;
-  int? repliesCount;
-  int? reblogsCount;
-  int? favouritesCount;
+  int repliesCount;
+  int reblogsCount;
+  int favouritesCount;
   DateTime? editedAt;
-  bool? favourited;
-  bool? reblogged;
+  bool favourited;
+  bool reblogged;
   bool? muted;
   bool? bookmarked;
   String content;
@@ -52,12 +52,12 @@ class Status {
     this.language,
     required this.uri,
     required this.url,
-    this.repliesCount,
-    this.reblogsCount,
-    this.favouritesCount,
+    required this.repliesCount,
+    required this.reblogsCount,
+    required this.favouritesCount,
     required this.editedAt,
-    this.favourited,
-    this.reblogged,
+    required this.favourited,
+    required this.reblogged,
     this.muted,
     this.bookmarked,
     required this.content,
@@ -89,14 +89,14 @@ class Status {
         language: data['language'] as String?,
         uri: data['uri'] as String,
         url: data['url'] as String,
-        repliesCount: data['replies_count'] as int?,
-        reblogsCount: data['reblogs_count'] as int?,
-        favouritesCount: data['favourites_count'] as int?,
+        repliesCount: data['replies_count'] as int,
+        reblogsCount: data['reblogs_count'] as int,
+        favouritesCount: data['favourites_count'] as int,
         editedAt: data['edited_at'] == null
             ? null
             : DateTime.parse(data['edited_at'] as String),
-        favourited: data['favourited'] as bool?,
-        reblogged: data['reblogged'] as bool?,
+        favourited: data['favourited'] as bool,
+        reblogged: data['reblogged'] as bool,
         muted: data['muted'] as bool?,
         bookmarked: data['bookmarked'] as bool?,
         content: data['content'] as String,
