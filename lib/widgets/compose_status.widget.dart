@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_payload.dart';
@@ -64,7 +65,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: "Let's toot something!",
+                  hintText: "Let's make some toots!",
                 ),
               ),
               Row(
@@ -79,6 +80,14 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                       _postStatus(context);
                     },
                     icon: const Icon(Icons.send_outlined, size: 30),
+                  ),
+                  IconButton(
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () async {
+                      final file = await FilePicker.platform.pickFiles();
+                      print(file);
+                    },
+                    icon: const Icon(Icons.file_open_outlined, size: 30),
                   )
                 ],
               ),

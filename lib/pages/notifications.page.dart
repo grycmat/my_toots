@@ -47,6 +47,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
@@ -73,6 +74,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
@@ -84,19 +86,23 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           ),
                         ),
                         Expanded(
-                            child:
-                                StatusAccountRowWidget(account: noti.account)),
+                            child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            StatusAccountRowWidget(account: noti.account),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                elevation: 1,
+                                color: Colors.green.shade100,
+                                child: StatusInNotificationWidget(
+                                  status: noti.status!,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
                       ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      elevation: 1,
-                      color: Colors.green.shade100,
-                      child: StatusInNotificationWidget(
-                        status: noti.status!,
-                      ),
                     ),
                   ),
                 ],

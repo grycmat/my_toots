@@ -8,142 +8,136 @@ class AccountBasicInfoWidget extends StatelessWidget {
   final Account account;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-      child: Column(children: [
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: CachedNetworkImage(
-                imageUrl: account.avatarStatic,
-                fit: BoxFit.cover,
-              ),
+    return Column(children: [
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
             ),
-            Expanded(
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        child: Container(
-                          width: 70,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                account.statusesCount.toString(),
-                                textAlign: TextAlign.center,
-                              ),
-                              const Text(
-                                'Posts',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFFB3B3B3),
-                                  fontSize: 8,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        child: Container(
-                          width: 70,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                account.followersCount.toString(),
-                                textAlign: TextAlign.center,
-                              ),
-                              const Text(
-                                'Followers',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFFB3B3B3),
-                                  fontSize: 8,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        child: Container(
-                          width: 70,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                account.followingCount.toString(),
-                                textAlign: TextAlign.center,
-                              ),
-                              const Text(
-                                'Following',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFFB3B3B3),
-                                  fontSize: 8,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            child: CachedNetworkImage(
+              imageUrl: account.avatarStatic,
+              fit: BoxFit.cover,
             ),
-          ],
-        ),
-        Text(
-          account.displayName,
-        ),
-        Text(
-          account.acct,
-          style: const TextStyle(
-            color: Color(0xFF787878),
-            fontSize: 12,
-            fontWeight: FontWeight.normal,
           ),
+          Expanded(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                      child: Container(
+                        width: 70,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              account.statusesCount.toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                            const Text(
+                              'Posts',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFFB3B3B3),
+                                fontSize: 8,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                      child: Container(
+                        width: 70,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              account.followersCount.toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                            const Text(
+                              'Followers',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFFB3B3B3),
+                                fontSize: 8,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                      child: Container(
+                        width: 70,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              account.followingCount.toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                            const Text(
+                              'Following',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFFB3B3B3),
+                                fontSize: 8,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      Text(
+        account.displayName,
+      ),
+      Text(
+        account.acct,
+        style: const TextStyle(
+          color: Color(0xFF787878),
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
         ),
-      ]),
-    );
+      ),
+    ]);
   }
 }

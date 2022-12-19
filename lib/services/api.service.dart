@@ -111,6 +111,10 @@ class ApiService {
         }));
   }
 
+  Future<Response> getConversations() {
+    return Dio().get('https://$_instance/api/v1/conversations');
+  }
+
   Future<Response> searchInstances(String term) {
     var apiKey = dotenv.env['INSTANCES_SEARCH_API'];
     return Dio().get('https://instances.social/api/1.0/instances/search',
