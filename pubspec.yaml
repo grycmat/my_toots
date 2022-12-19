@@ -46,6 +46,7 @@ dependencies:
   any_link_preview: ^2.0.9
   shimmer: ^2.0.0
   webview_flutter: ^3.0.4
+  animations: ^2.0.7
 
 dev_dependencies:
   flutter_test:

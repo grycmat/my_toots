@@ -1,9 +1,13 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/pages/notifications.page.dart';
+import 'package:my_toots/pages/public_timeline.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
 import 'package:my_toots/services/widget.service.dart';
+import 'package:my_toots/widgets/compose_fab.widget.dart';
+import 'package:my_toots/widgets/compose_status.widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -31,22 +35,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        elevation: 3,
-        onPressed: () {
-          showModalBottomSheet(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            context: context,
-            builder: (_) => getIt.get<WidgetService>().getComposeWidget(),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: const ComposeFabWidget(),
       appBar: AppBar(
-        backgroundColor: Colors.green.shade100,
+        backgroundColor: Colors.green.shade50,
         scrolledUnderElevation: 1,
         title: const Text('Home'),
       ),
@@ -84,7 +75,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           children: const [
             Center(child: TimelinePage()),
             Center(child: NotificationsPage()),
-            Center(child: Text('Notifications')),
+            Center(child: PublicTimelinePage()),
             Center(child: Text('Messages')),
           ],
         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
-import 'package:my_toots/models/status/status_context.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/status.widget.dart';
 
@@ -52,34 +51,40 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
               return _descendants[index].id == widget.status.id
                   ? Column(
                       children: [
-                        Container(
-                          color: Colors.black12,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.subdirectory_arrow_right_outlined),
-                                Text('In response to'),
-                              ],
-                            ),
-                          ),
-                        ),
+                        _ancestors.isNotEmpty
+                            ? Container(
+                                color: Colors.black12,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons
+                                          .subdirectory_arrow_right_outlined),
+                                      Text('In response to'),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(),
                         Center(
                           child: StatusWidget(status: _descendants[index]),
                         ),
-                        Container(
-                          color: Colors.black12,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
-                                Text('Replies'),
-                                Icon(Icons.subdirectory_arrow_left_outlined),
-                              ],
-                            ),
-                          ),
-                        ),
+                        _descendants.length > 1
+                            ? Container(
+                                color: Colors.black12,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Text('Replies'),
+                                      Icon(Icons
+                                          .subdirectory_arrow_left_outlined),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(),
                       ],
                     )
                   : Center(

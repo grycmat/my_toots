@@ -91,8 +91,11 @@ class ApiService {
     return _userToken != null && _instance != null;
   }
 
-  Future<Response> getPublicTimeline(String instance) {
-    return Dio().get('https://$instance/api/v1/timelines/public');
+  Future<List<Status>> getPublicTimeline() async {
+    final response =
+        await Dio().get('https://$_instance/api/v1/timelines/public');
+
+    return (response.data as List).map((e) => Status.fromMap(e)).toList();
   }
 
   Future<Instance> getInstance() async {
