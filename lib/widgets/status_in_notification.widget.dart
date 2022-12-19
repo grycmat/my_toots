@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/status/status.dart';
-import 'package:my_toots/widgets/media_attachment.widget.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';
 import 'package:my_toots/widgets/status_account_row.widget.dart';
-import 'package:my_toots/widgets/status_action_icon_buttons.widget.dart';
 import 'package:my_toots/widgets/status_html_text.widget.dart';
 
-class StatusWidget extends StatelessWidget {
+class StatusInNotificationWidget extends StatelessWidget {
+  const StatusInNotificationWidget({required this.status, Key? key})
+      : super(key: key);
   final Status status;
-  const StatusWidget({required this.status, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +33,6 @@ class StatusWidget extends StatelessWidget {
                           child: ReblogWidget(status: status.reblog!),
                         ),
                 ),
-                MediaAttachmentWidget(
-                    mediaAttachments: status.mediaAttachments),
-                StatusActionIconButtonsWidget(status: status),
               ],
             ),
           ),

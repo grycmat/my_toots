@@ -11,7 +11,6 @@ class StatusHtmlTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Html(
       data: status.content,
-      style: {'p': Style(fontSize: FontSize(8))},
       onLinkTap: (url, context, attributes, element) {
         print(url);
         print(context);

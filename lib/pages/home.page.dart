@@ -74,7 +74,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               label: '',
             ),
             NavigationDestination(
-              icon: Icon(Icons.mail),
+              icon: Icon(Icons.markunread_outlined),
               label: '',
             ),
           ]),

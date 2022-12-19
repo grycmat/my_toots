@@ -6,6 +6,7 @@ import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/account_basic_info.widget.dart';
 import 'package:my_toots/widgets/status.widget.dart';
 import 'package:my_toots/widgets/status_account_row.widget.dart';
+import 'package:my_toots/widgets/status_in_notification.widget.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -93,9 +94,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     child: Card(
                       elevation: 1,
                       color: Colors.green.shade100,
-                      child: StatusWidget(
+                      child: StatusInNotificationWidget(
                         status: noti.status!,
-                        showActions: false,
                       ),
                     ),
                   ),
@@ -127,9 +127,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     Card(
                       elevation: 1,
                       color: Colors.green.shade100,
-                      child: StatusWidget(
+                      child: StatusInNotificationWidget(
                         status: noti.status!,
-                        showActions: false,
                       ),
                     ),
                   ],
@@ -153,9 +152,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                               color: Theme.of(context).primaryColor, size: 40),
                         ),
                         Expanded(
-                          child: StatusWidget(
+                          child: StatusInNotificationWidget(
                             status: noti.status!,
-                            showActions: false,
                           ),
                         ),
                       ],
@@ -173,9 +171,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   Card(
                     elevation: 1,
                     color: Colors.green.shade100,
-                    child: StatusWidget(
+                    child: StatusInNotificationWidget(
                       status: noti.status!,
-                      showActions: false,
                     ),
                   ),
                 ],
@@ -199,9 +196,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   Card(
                     elevation: 1,
                     color: Colors.green.shade100,
-                    child: StatusWidget(
+                    child: StatusInNotificationWidget(
                       status: noti.status!,
-                      showActions: false,
                     ),
                   ),
                 ],

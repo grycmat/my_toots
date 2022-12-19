@@ -41,7 +41,8 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               return Center(
-                child: StatusWidget(status: _ancestors[index]),
+                child: StatusWidget(
+                    status: _ancestors[_ancestors.length - 1 - index]),
               );
             }, childCount: _ancestors.length),
           ),
