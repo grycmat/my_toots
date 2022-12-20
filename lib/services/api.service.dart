@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -280,6 +281,24 @@ class ApiService {
       'https://$_instance/api/v1/statuses/${status.id}/unreblog',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+  }
+
+  Future<Response> uploadFile(File file) async {
+    final fileData = await MultipartFile.fromFile(file.path);
+
+    final formData = FormData.fromMap({
+      'file': fileData,
+    });
+
+    return Dio().post(
+      'https://$_instance/api/v2/media',
+      data: formData,
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+      onSendProgress: (count, total) {
+        print('count: $count, total: $total');
+      },
     );
   }
 }

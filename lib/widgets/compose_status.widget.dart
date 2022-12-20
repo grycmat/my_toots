@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/status/status.dart';
@@ -84,10 +86,22 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                   IconButton(
                     color: Theme.of(context).primaryColor,
                     onPressed: () async {
-                      final file = await FilePicker.platform.pickFiles();
-                      print(file);
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+
+                      if (result != null) {
+                        File file = File(result.files.single.path!);
+                        print(file);
+                        getIt.get<ApiService>().uploadFile(file).then((value) {
+                          print(value);
+                        });
+                      } else {
+                        print('user cancelled picker');
+                        // User canceled the picker
+                      }
                     },
-                    icon: const Icon(Icons.file_open_outlined, size: 30),
+                    icon: const Icon(Icons.add_photo_alternate_outlined,
+                        size: 30),
                   )
                 ],
               ),
