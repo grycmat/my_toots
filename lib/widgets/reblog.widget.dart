@@ -13,7 +13,7 @@ class ReblogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 1,
-      color: Colors.green.shade100,
+      color: Theme.of(context).primaryColorLight,
       child: InkWell(
         onTap: () => showBottomSheet(
           shape: RoundedRectangleBorder(

@@ -9,8 +9,8 @@ class StatusPlaceholderWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Shimmer.fromColors(
-        baseColor: Colors.green.shade100,
-        highlightColor: Colors.green.shade500,
+        baseColor: Theme.of(context).colorScheme.background,
+        highlightColor: Theme.of(context).colorScheme.onBackground,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

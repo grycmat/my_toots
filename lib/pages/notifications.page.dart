@@ -94,7 +94,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                               padding: const EdgeInsets.all(8.0),
                               child: Card(
                                 elevation: 1,
-                                color: Colors.green.shade100,
+                                color: Theme.of(context).primaryColorLight,
                                 child: StatusInNotificationWidget(
                                   status: noti.status!,
                                 ),
@@ -122,7 +122,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           child: Icon(
                             CupertinoIcons.arrow_turn_up_right,
                             size: 40,
-                            color: Colors.green.shade400,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         Expanded(
@@ -132,7 +132,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     ),
                     Card(
                       elevation: 1,
-                      color: Colors.green.shade100,
+                      color: Theme.of(context).primaryColorLight,
                       child: StatusInNotificationWidget(
                         status: noti.status!,
                       ),
@@ -176,7 +176,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   StatusAccountRowWidget(account: noti.account),
                   Card(
                     elevation: 1,
-                    color: Colors.green.shade100,
+                    color: Theme.of(context).primaryColorLight,
                     child: StatusInNotificationWidget(
                       status: noti.status!,
                     ),
@@ -201,7 +201,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   StatusAccountRowWidget(account: noti.account),
                   Card(
                     elevation: 1,
-                    color: Colors.green.shade100,
+                    color: Theme.of(context).primaryColorLight,
                     child: StatusInNotificationWidget(
                       status: noti.status!,
                     ),
