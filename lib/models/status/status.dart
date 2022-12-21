@@ -19,8 +19,8 @@ class Status {
   String? spoilerText;
   String? visibility;
   String? language;
-  String uri;
-  String url;
+  String? uri;
+  String? url;
   int repliesCount;
   int reblogsCount;
   int favouritesCount;
@@ -50,8 +50,8 @@ class Status {
     this.spoilerText,
     this.visibility,
     this.language,
-    required this.uri,
-    required this.url,
+    this.uri,
+    this.url,
     required this.repliesCount,
     required this.reblogsCount,
     required this.favouritesCount,
@@ -87,8 +87,8 @@ class Status {
         spoilerText: data['spoiler_text'] as String?,
         visibility: data['visibility'] as String?,
         language: data['language'] as String?,
-        uri: data['uri'] as String,
-        url: data['url'] as String,
+        uri: data['uri'] as String?,
+        url: data['url'] as String?,
         repliesCount: data['replies_count'] as int,
         reblogsCount: data['reblogs_count'] as int,
         favouritesCount: data['favourites_count'] as int,

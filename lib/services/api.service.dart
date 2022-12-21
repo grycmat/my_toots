@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
@@ -20,7 +19,7 @@ const APP_TOKEN = 'appToken';
 const USER_TOKEN = 'userToken';
 const USER = 'user';
 const INSTANCE = 'instance';
-const REDIRECT_URL = 'app://com.my_toots';
+const REDIRECT_URL = 'app://com.tootoo';
 
 @singleton
 class ApiService {
@@ -104,25 +103,8 @@ class ApiService {
     return Instance.fromMap(response.data);
   }
 
-  Future<Response> getSampleInstances() {
-    var apiKey = dotenv.env['INSTANCES_SEARCH_API'];
-    return Dio().get('https://instances.social/api/1.0/instances/sample',
-        options: Options(headers: {
-          'Authorization': 'Bearer $apiKey',
-        }));
-  }
-
   Future<Response> getConversations() {
     return Dio().get('https://$_instance/api/v1/conversations');
-  }
-
-  Future<Response> searchInstances(String term) {
-    var apiKey = dotenv.env['INSTANCES_SEARCH_API'];
-    return Dio().get('https://instances.social/api/1.0/instances/search',
-        queryParameters: {'q': term},
-        options: Options(headers: {
-          'Authorization': 'Bearer $apiKey',
-        }));
   }
 
   Future<Application> createApp(String instance) async {

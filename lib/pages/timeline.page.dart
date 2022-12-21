@@ -87,6 +87,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 status: statuses[index],
               );
             }
+
             return const StatusPlaceholderWidget();
           },
         ),

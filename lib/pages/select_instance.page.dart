@@ -59,7 +59,7 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => WebLoginPage(_controller.text),
+                      builder: (context) => const WebLoginPage('101010.pl'),
                     ),
                   );
                 },
