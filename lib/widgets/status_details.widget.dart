@@ -20,10 +20,12 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
   void initState() {
     _descendants.add(widget.status);
     getIt.get<ApiService>().getStatusContext(widget.status.id).then((value) {
-      setState(() {
-        _ancestors = [...value.ancestors];
-        _descendants.addAll(value.descendants);
-      });
+      if (mounted) {
+        setState(() {
+          _ancestors = [...value.ancestors];
+          _descendants.addAll(value.descendants);
+        });
+      }
     });
     super.initState();
   }
