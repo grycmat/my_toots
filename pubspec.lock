@@ -317,6 +317,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.0"
+  functional_listener:
+    dependency: transitive
+    description:
+      name: functional_listener
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   get_it:
     dependency: "direct main"
     description:
@@ -324,6 +331,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.0"
+  get_it_mixin:
+    dependency: "direct main"
+    description:
+      name: get_it_mixin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.4+2"
   glob:
     dependency: transitive
     description:

@@ -50,7 +50,7 @@ class _WebLoginPageState extends State<WebLoginPage> {
 
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (_) => const HomePage(),
+                          builder: (_) => HomePage(),
                         ),
                       );
                     });

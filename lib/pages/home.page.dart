@@ -1,22 +1,25 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/pages/notifications.page.dart';
 import 'package:my_toots/pages/public_timeline.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
+import 'package:my_toots/services/theme.service.dart';
 import 'package:my_toots/services/widget.service.dart';
 import 'package:my_toots/widgets/compose_fab.widget.dart';
 import 'package:my_toots/widgets/compose_status.widget.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget with GetItStatefulWidgetMixin {
+  HomePage({Key? key}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class HomePageState extends State<HomePage>
+    with TickerProviderStateMixin, GetItStateMixin {
   int _pageIndex = 0;
   late final TabController _tabController;
 
@@ -38,7 +41,16 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       resizeToAvoidBottomInset: true,
       floatingActionButton: const ComposeFabWidget(),
       appBar: AppBar(
-        backgroundColor: Colors.green.shade50,
+        actions: [
+          watchOnly((ThemeService s) => s.isDark)
+              ? const Icon(CupertinoIcons.moon_stars)
+              : const Icon(CupertinoIcons.sun_max),
+          Switch(
+              value: watchOnly((ThemeService s) => s.isDark),
+              onChanged: (value) {
+                get<ThemeService>().setIsDark(value);
+              })
+        ],
         scrolledUnderElevation: 1,
         title: const Text('Home'),
       ),

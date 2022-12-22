@@ -38,6 +38,9 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   }
 
   _postStatus(BuildContext context) {
+    if (_textEditingController.text.isEmpty) {
+      return;
+    }
     final statusText = _textEditingController.text;
     final statusPayload =
         StatusPayload(status: statusText, mediaIds: _mediaIds);
@@ -55,7 +58,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.95,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Center(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
@@ -72,8 +75,15 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                   controller: _textEditingController,
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () {
+                        _postStatus(context);
+                      },
+                      icon: const Icon(Icons.send_outlined, size: 30),
+                    ),
+                    border: const OutlineInputBorder(),
                     hintText: "Let's make some toots!",
                   ),
                 ),
@@ -84,14 +94,6 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                       _chars.toString(),
                     ),
                     IconButton(
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        _postStatus(context);
-                      },
-                      icon: const Icon(Icons.send_outlined, size: 30),
-                    ),
-                    IconButton(
-                      color: Theme.of(context).primaryColor,
                       onPressed: () {
                         FilePicker.platform
                             .pickFiles()
@@ -119,9 +121,18 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                           }
                         });
                       },
-                      icon: const Icon(Icons.add_photo_alternate_outlined,
+                      icon: Icon(Icons.add_photo_alternate_outlined,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 30),
-                    )
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.poll_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 30,
+                      ),
+                    ),
                   ],
                 ),
                 _media != null ? Image.file(_media!) : Container(),
