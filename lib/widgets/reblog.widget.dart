@@ -35,12 +35,7 @@ class ReblogWidget extends StatelessWidget {
                   ),
                   Text(
                     status.account.acct,
-                    style: const TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      color: Color(0xFF101213),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
               ),

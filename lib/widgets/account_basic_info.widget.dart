@@ -49,14 +49,12 @@ class AccountBasicInfoWidget extends StatelessWidget {
                             Text(
                               account.statusesCount.toString(),
                               textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
-                            const Text(
+                            Text(
                               'Posts',
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFFB3B3B3),
-                                fontSize: 8,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
                         ),
@@ -78,15 +76,11 @@ class AccountBasicInfoWidget extends StatelessWidget {
                             Text(
                               account.followersCount.toString(),
                               textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
-                            const Text(
-                              'Followers',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFFB3B3B3),
-                                fontSize: 8,
-                              ),
-                            ),
+                            Text('Followers',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodySmall)
                           ],
                         ),
                       ),
@@ -107,15 +101,11 @@ class AccountBasicInfoWidget extends StatelessWidget {
                             Text(
                               account.followingCount.toString(),
                               textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
-                            const Text(
-                              'Following',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFFB3B3B3),
-                                fontSize: 8,
-                              ),
-                            ),
+                            Text('Following',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodySmall),
                           ],
                         ),
                       ),
@@ -129,14 +119,11 @@ class AccountBasicInfoWidget extends StatelessWidget {
       ),
       Text(
         account.displayName,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       Text(
         account.acct,
-        style: const TextStyle(
-          color: Color(0xFF787878),
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-        ),
+        style: Theme.of(context).textTheme.bodySmall,
       ),
     ]);
   }

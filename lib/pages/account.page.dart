@@ -37,7 +37,14 @@ class _AccountPageState extends State<AccountPage> {
           SliverAppBar(
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(widget.account.acct),
+              title: Container(
+                  width: double.infinity,
+                  decoration:
+                      BoxDecoration(color: Colors.grey.withOpacity(0.9)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(widget.account.acct),
+                  )),
               background: CachedNetworkImage(
                   imageUrl: widget.account.headerStatic, fit: BoxFit.cover),
             ),
@@ -50,19 +57,19 @@ class _AccountPageState extends State<AccountPage> {
                   children: [
                     AccountBasicInfoWidget(account: widget.account),
                     Html(data: widget.account.note!),
-                    Row(
-                      children: const <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: ChoiceChip(label: Text('Bio'), selected: true),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child:
-                              ChoiceChip(label: Text('Posts'), selected: false),
-                        )
-                      ],
-                    )
+                    // Row(
+                    //   children: const <Widget>[
+                    //     Padding(
+                    //       padding: EdgeInsets.all(8.0),
+                    //       child: ChoiceChip(label: Text('Bio'), selected: true),
+                    //     ),
+                    //     Padding(
+                    //       padding: EdgeInsets.all(8.0),
+                    //       child:
+                    //           ChoiceChip(label: Text('Posts'), selected: false),
+                    //     )
+                    //   ],
+                    // )
                   ],
                 ),
               ),

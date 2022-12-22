@@ -54,29 +54,17 @@ class StatusAccountRowWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  account.displayName,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Color(0xFF101213),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                Text(account.displayName,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyLarge),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        account.acct,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Color(0xFF57636C),
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
+                      Text(account.acct,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),
                 ),
