@@ -1,10 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/account_basic_info.widget.dart';
-import 'package:my_toots/widgets/status.widget.dart';
+import 'package:my_toots/widgets/favorite_notification.widget.dart';
+import 'package:my_toots/widgets/follow_notification.widget.dart';
+import 'package:my_toots/widgets/mention_notification.widget.dart';
+import 'package:my_toots/widgets/poll_notification.widget.dart';
+import 'package:my_toots/widgets/reblog_notification.widget.dart';
 import 'package:my_toots/widgets/status_account_row.widget.dart';
 import 'package:my_toots/widgets/status_in_notification.widget.dart';
 
@@ -41,153 +43,19 @@ class _NotificationsPageState extends State<NotificationsPage> {
           itemBuilder: (context, index) {
             final noti = _notifications[index];
             if (noti.type == 'follow') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        CupertinoIcons.person_add,
-                        size: 40,
-                        color: Colors.blue.shade400,
-                      ),
-                      Expanded(
-                        child: AccountBasicInfoWidget(account: noti.account),
-                      ),
-                    ],
-                  ),
-                ],
-              );
+              return FollowNotificationWidget(noti: noti);
             }
             if (noti.type == 'favourite') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.favorite_outline_outlined,
-                        size: 40,
-                        color: Colors.red.shade400,
-                      ),
-                      Expanded(
-                          child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          StatusAccountRowWidget(account: noti.account),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Card(
-                              elevation: 1,
-                              color: Theme.of(context).primaryColorLight,
-                              child: StatusInNotificationWidget(
-                                status: noti.status!,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )),
-                    ],
-                  ),
-                ],
-              );
+              return FavoriteNotificationWidget(noti: noti);
             }
             if (noti.type == 'reblog') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        CupertinoIcons.arrow_turn_up_right,
-                        size: 40,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      Expanded(
-                        child: StatusAccountRowWidget(account: noti.account),
-                      ),
-                    ],
-                  ),
-                  Card(
-                    elevation: 1,
-                    color: Theme.of(context).primaryColorLight,
-                    child: StatusInNotificationWidget(
-                      status: noti.status!,
-                    ),
-                  ),
-                ],
-              );
+              return ReblogNotificationWidget(noti: noti);
             }
             if (noti.type == 'mention') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.message_outlined,
-                          color: Colors.purple.shade200, size: 40),
-                      Expanded(
-                        child: StatusInNotificationWidget(
-                          status: noti.status!,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
+              return MentionNotificationWidget(noti: noti);
             }
             if (noti.type == 'poll') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.poll_outlined,
-                        size: 40,
-                        color: Colors.green.shade300,
-                      ),
-                      Expanded(
-                          child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          StatusInNotificationWidget(
-                            status: noti.status!,
-                          ),
-                          ListView(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [
-                              for (var option in noti.status!.poll!.options!)
-                                ListTile(
-                                  title: Text(
-                                      '${option.title} (${option.votesCount})'),
-                                  subtitle: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: LinearProgressIndicator(
-                                      minHeight: 20,
-                                      value: option.votesCount /
-                                          noti.status!.poll!.votesCount,
-                                    ),
-                                  ),
-                                )
-                            ],
-                          ),
-                        ],
-                      )),
-                    ],
-                  ),
-                ],
-              );
+              return PollNotificationWidget(noti: noti);
             }
             if (noti.type == 'follow_request') {
               return Column(

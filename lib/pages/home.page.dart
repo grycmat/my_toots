@@ -35,6 +35,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       floatingActionButton: const ComposeFabWidget(),
       appBar: AppBar(
         backgroundColor: Colors.green.shade50,
@@ -45,28 +46,28 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           elevation: 5,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           onDestinationSelected: (value) {
-            _tabController.animateTo(value);
             setState(() {
               _pageIndex = value;
             });
+            _tabController.animateTo(value);
           },
           selectedIndex: _pageIndex,
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home),
-              label: '',
+              label: 'Home timeline',
             ),
             NavigationDestination(
               icon: Icon(Icons.notifications_outlined),
-              label: '',
+              label: 'Notifications',
             ),
             NavigationDestination(
               icon: Icon(CupertinoIcons.globe),
-              label: '',
+              label: 'Public timeline',
             ),
             NavigationDestination(
               icon: Icon(Icons.markunread_outlined),
-              label: '',
+              label: 'Direct Messages',
             ),
           ]),
       body: SafeArea(

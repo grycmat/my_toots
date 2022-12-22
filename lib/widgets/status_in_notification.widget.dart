@@ -11,33 +11,30 @@ class StatusInNotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
-              child: StatusAccountRowWidget(account: status.account)),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 4, 12),
-                  child: status.reblog == null
-                      ? StatusHtmlTextWidget(status: status)
-                      : Center(
-                          child: ReblogWidget(status: status.reblog!),
-                        ),
-                ),
-              ],
-            ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
+            child: StatusAccountRowWidget(account: status.account)),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 4, 12),
+                child: status.reblog == null
+                    ? StatusHtmlTextWidget(status: status)
+                    : Center(
+                        child: ReblogWidget(status: status.reblog!),
+                      ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

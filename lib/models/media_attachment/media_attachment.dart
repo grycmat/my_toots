@@ -5,7 +5,7 @@ import 'meta.dart';
 class MediaAttachment {
   String id;
   String type;
-  String url;
+  String? url;
   String previewUrl;
   String? remoteUrl;
   String? textUrl;
@@ -16,7 +16,7 @@ class MediaAttachment {
   MediaAttachment({
     required this.id,
     required this.type,
-    required this.url,
+    this.url,
     required this.previewUrl,
     this.remoteUrl,
     this.textUrl,
@@ -33,7 +33,7 @@ class MediaAttachment {
   factory MediaAttachment.fromMap(Map<String, dynamic> data) => MediaAttachment(
         id: data['id'] as String,
         type: data['type'] as String,
-        url: data['url'] as String,
+        url: data['url'] as String?,
         previewUrl: data['preview_url'] as String,
         remoteUrl: data['remote_url'] as String?,
         textUrl: data['text_url'] as String?,
