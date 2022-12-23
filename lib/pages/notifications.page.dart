@@ -42,57 +42,53 @@ class _NotificationsPageState extends State<NotificationsPage> {
       child: ListView.separated(
           itemBuilder: (context, index) {
             final noti = _notifications[index];
-            if (noti.type == 'follow') {
-              return FollowNotificationWidget(noti: noti);
-            }
-            if (noti.type == 'favourite') {
-              return FavoriteNotificationWidget(noti: noti);
-            }
-            if (noti.type == 'reblog') {
-              return ReblogNotificationWidget(noti: noti);
-            }
-            if (noti.type == 'mention') {
-              return MentionNotificationWidget(noti: noti);
-            }
-            if (noti.type == 'poll') {
-              return PollNotificationWidget(noti: noti);
-            }
-            if (noti.type == 'follow_request') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Follow request'),
-                  StatusAccountRowWidget(account: noti.account),
-                ],
-              );
-            }
-            if (noti.type == 'status') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Enabled post notifications'),
-                  StatusAccountRowWidget(account: noti.account),
-                  Card(
-                    elevation: 1,
-                    color: Theme.of(context).primaryColorLight,
-                    child: StatusInNotificationWidget(
-                      status: noti.status!,
+
+            switch (noti.type) {
+              case 'follow':
+                return FollowNotificationWidget(noti: noti);
+              case 'favourite':
+                return FavoriteNotificationWidget(noti: noti);
+              case 'reblog':
+                return ReblogNotificationWidget(noti: noti);
+              case 'mention':
+                return MentionNotificationWidget(noti: noti);
+              case 'poll':
+                return PollNotificationWidget(noti: noti);
+              case 'follow_request':
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('Follow request'),
+                    StatusAccountRowWidget(account: noti.account),
+                  ],
+                );
+              case 'status':
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('Enabled post notifications'),
+                    StatusAccountRowWidget(account: noti.account),
+                    Card(
+                      elevation: 1,
+                      color: Theme.of(context).primaryColorLight,
+                      child: StatusInNotificationWidget(
+                        status: noti.status!,
+                      ),
                     ),
-                  ),
-                ],
-              );
+                  ],
+                );
+              case 'update':
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('Status updated'),
+                    StatusAccountRowWidget(account: noti.account),
+                  ],
+                );
+              default:
+                return const Text(
+                    'This type of notification is not implemented yet :(');
             }
-            if (noti.type == 'update') {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Status updated'),
-                  StatusAccountRowWidget(account: noti.account),
-                ],
-              );
-            }
-            return const Text(
-                'This type of notification is not implemented yet :(');
           },
           separatorBuilder: (context, index) =>
               const Divider(height: 5, thickness: 2),

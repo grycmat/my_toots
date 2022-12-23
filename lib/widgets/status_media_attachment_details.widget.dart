@@ -12,35 +12,32 @@ class StatusMediaAttachmentDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => MediaPreviewPage(
-                  mediaAttachment: mediaAttachment,
-                ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => MediaPreviewPage(
+                mediaAttachment: mediaAttachment,
               ),
-            );
-          },
-          child: Hero(
-            tag: mediaAttachment.id,
-            child: CachedNetworkImage(
-              imageUrl: mediaAttachment.previewUrl,
-              width: double.infinity,
-              height: 230,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.green.shade100,
-                highlightColor: Colors.green.shade500,
-                child: Container(
-                  height: 230,
-                  width: double.infinity,
-                  color: Colors.white38,
-                ),
+            ),
+          );
+        },
+        child: Hero(
+          tag: mediaAttachment.id,
+          child: CachedNetworkImage(
+            imageUrl: mediaAttachment.previewUrl,
+            width: double.infinity,
+            height: 230,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.green.shade100,
+              highlightColor: Colors.green.shade500,
+              child: Container(
+                height: 230,
+                width: double.infinity,
+                color: Colors.white38,
               ),
             ),
           ),

@@ -10,8 +10,12 @@ class LinkPreviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnyLinkPreview(
       displayDirection: UIDirection.uiDirectionVertical,
-      bodyStyle: Theme.of(context).textTheme.titleSmall,
-      titleStyle: Theme.of(context).textTheme.titleLarge,
+      bodyStyle: TextStyle(
+        color: Theme.of(context).textTheme.headline1!.color,
+      ),
+      titleStyle: TextStyle(
+        color: Theme.of(context).textTheme.bodyLarge!.color,
+      ),
       errorWidget: const SizedBox(),
       backgroundColor: Theme.of(context).cardTheme.color,
       removeElevation: true,

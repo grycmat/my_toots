@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
 class ThemeService extends ChangeNotifier {
   bool _isDark = false;
