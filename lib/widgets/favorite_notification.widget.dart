@@ -23,19 +23,20 @@ class FavoriteNotificationWidget extends StatelessWidget {
               color: Colors.red.shade400,
             ),
             Expanded(
-                child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                StatusAccountRowWidget(account: noti.account),
-                Card(
-                  elevation: 1,
-                  color: Theme.of(context).primaryColorLight,
-                  child: StatusInNotificationWidget(
-                    status: noti.status!,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  StatusAccountRowWidget(account: noti.account),
+                  Card(
+                    elevation: 1,
+                    color: Theme.of(context).primaryColorLight,
+                    child: StatusInNotificationWidget(
+                      status: noti.status!,
+                    ),
                   ),
-                ),
-              ],
-            )),
+                ],
+              ),
+            ),
           ],
         ),
       ],
