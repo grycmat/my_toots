@@ -33,9 +33,13 @@ class ReblogWidget extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Icon(Icons.loop_outlined),
                   ),
-                  Text(
-                    status.account.acct,
-                    style: Theme.of(context).textTheme.titleSmall,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Text(
+                      status.account.acct,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                   ),
                 ],
               ),
