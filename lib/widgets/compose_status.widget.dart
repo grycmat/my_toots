@@ -143,19 +143,26 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
               _mediaFiles!.isEmpty
                   ? const SizedBox()
                   : GridView.count(
+                      physics: NeverScrollableScrollPhysics(),
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
                       shrinkWrap: true,
-                      crossAxisCount: 2,
+                      crossAxisCount: 4,
                       children: _mediaFiles!
                           .map(
-                            (File f) => SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.file(f, fit: BoxFit.cover),
-                              ),
+                            (File f) => Stack(
+                              children: [
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.file(f, fit: BoxFit.cover),
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: () {}, icon: Icon(Icons.close))
+                              ],
                             ),
                           )
                           .toList(),
