@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/no_connection_icon.widget.dart';
 import 'package:my_toots/widgets/status_container.widget.dart';
 import 'package:my_toots/widgets/status_placeholder.widget.dart';
 
@@ -13,8 +15,9 @@ class TimelinePage extends StatefulWidget {
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  List<Status> statuses = [];
+  List<Status> _statuses = [];
   bool _isLoading = true;
+  bool _error = false;
   late final ScrollController _scrollController = ScrollController();
 
   Future<void> _getStatuses() async {
@@ -23,10 +26,20 @@ class _TimelinePageState extends State<TimelinePage> {
     });
     return getIt.get<ApiService>().getHomeTimeline().then((statuses) {
       setState(() {
-        this.statuses = statuses;
+        _statuses = statuses;
         _isLoading = false;
       });
+      print('refreshed');
       return Future.value();
+    }, onError: (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ooops! No internet connection!'),
+        ),
+      );
+      setState(() {
+        _error = true;
+      });
     });
   }
 
@@ -39,10 +52,10 @@ class _TimelinePageState extends State<TimelinePage> {
             _scrollController.position.maxScrollExtent - 200) {
           getIt
               .get<ApiService>()
-              .getHomeTimeline(maxId: statuses.last.id)
+              .getHomeTimeline(maxId: _statuses.last.id)
               .then((statuses) {
             setState(() {
-              this.statuses = [...this.statuses, ...statuses];
+              _statuses = [..._statuses, ...statuses];
             });
             return Future.value();
           });
@@ -64,33 +77,35 @@ class _TimelinePageState extends State<TimelinePage> {
         backgroundColor: Theme.of(context).primaryColor,
         color: Colors.white,
         onRefresh: () => _getStatuses(),
-        child: ListView.separated(
-          primary: false,
-          addAutomaticKeepAlives: true,
-          padding: const EdgeInsets.all(8),
-          cacheExtent: 200,
-          separatorBuilder: (_, index) =>
-              const Divider(height: 5, thickness: 2),
-          controller: _scrollController,
-          itemCount: _isLoading ? 20 : statuses.length + 1,
-          itemBuilder: (_, index) {
-            if (index == statuses.length) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24.0),
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            if (!_isLoading) {
-              return StatusContainerWidget(
-                status: statuses[index],
-              );
-            }
+        child: _error
+            ? const Center(child: NoConnectionIconWidget())
+            : ListView.separated(
+                primary: false,
+                addAutomaticKeepAlives: true,
+                padding: const EdgeInsets.all(8),
+                cacheExtent: 200,
+                separatorBuilder: (_, index) =>
+                    const Divider(height: 5, thickness: 2),
+                controller: _scrollController,
+                itemCount: _isLoading ? 20 : _statuses.length + 1,
+                itemBuilder: (_, index) {
+                  if (index == _statuses.length) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  if (!_isLoading) {
+                    return StatusContainerWidget(
+                      status: _statuses[index],
+                    );
+                  }
 
-            return const StatusPlaceholderWidget();
-          },
-        ),
+                  return const StatusPlaceholderWidget();
+                },
+              ),
       ),
     );
   }

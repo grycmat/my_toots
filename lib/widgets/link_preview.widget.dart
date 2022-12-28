@@ -8,18 +8,24 @@ class LinkPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnyLinkPreview(
-      displayDirection: UIDirection.uiDirectionVertical,
-      bodyStyle: TextStyle(
-        color: Theme.of(context).textTheme.headline1!.color,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.black12),
       ),
-      titleStyle: TextStyle(
-        color: Theme.of(context).textTheme.bodyLarge!.color,
+      child: AnyLinkPreview(
+        displayDirection: UIDirection.uiDirectionHorizontal,
+        bodyStyle: TextStyle(
+          color: Theme.of(context).textTheme.headline1!.color,
+        ),
+        titleStyle: TextStyle(
+          color: Theme.of(context).textTheme.bodyLarge!.color,
+        ),
+        errorWidget: const SizedBox(),
+        backgroundColor: Theme.of(context).cardTheme.color,
+        removeElevation: true,
+        link: element.attributes['href']!,
       ),
-      errorWidget: const SizedBox(),
-      backgroundColor: Theme.of(context).cardTheme.color,
-      removeElevation: true,
-      link: element.attributes['href']!,
     );
   }
 }

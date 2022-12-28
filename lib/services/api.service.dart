@@ -223,6 +223,14 @@ class ApiService {
     return Account.fromMap(accountResponse.data);
   }
 
+  Future<Response> lookupAccount(String name, String instance) {
+    return Dio().get(
+      'https://$instance/api/v1/accounts/lookup?acct=$name',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+  }
+
   Future<List<Status>> getTimelineById(String id) async {
     final response = await Dio().get(
       'https://$_instance/api/v1/accounts/$id/statuses',

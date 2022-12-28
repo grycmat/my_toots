@@ -51,7 +51,7 @@ class ReblogWidget extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 12.0),
                 child: MediaAttachmentWidget(
                     mediaAttachments: status.mediaAttachments),
               ),

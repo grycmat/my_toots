@@ -1,15 +1,11 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
-import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/pages/notifications.page.dart';
 import 'package:my_toots/pages/public_timeline.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
 import 'package:my_toots/services/theme.service.dart';
-import 'package:my_toots/services/widget.service.dart';
 import 'package:my_toots/widgets/compose_fab.widget.dart';
-import 'package:my_toots/widgets/compose_status.widget.dart';
 
 class HomePage extends StatefulWidget with GetItStatefulWidgetMixin {
   HomePage({Key? key}) : super(key: key);
@@ -26,6 +22,11 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        _pageIndex = _tabController.index;
+      });
+    });
     super.initState();
   }
 
@@ -42,14 +43,21 @@ class HomePageState extends State<HomePage>
       floatingActionButton: const ComposeFabWidget(),
       appBar: AppBar(
         actions: [
-          watchOnly((ThemeService s) => s.isDark)
-              ? const Icon(CupertinoIcons.moon_stars)
-              : const Icon(CupertinoIcons.sun_max),
-          Switch(
-              value: watchOnly((ThemeService s) => s.isDark),
-              onChanged: (value) {
-                get<ThemeService>().setIsDark(value);
-              })
+          PopupMenuButton(
+              elevation: 10,
+              splashRadius: 10,
+              itemBuilder: ((context) => [
+                    PopupMenuItem(
+                        child: Switch(
+                            value: watchOnly((ThemeService s) => s.isDark),
+                            onChanged: (value) {
+                              get<ThemeService>().setIsDark(value);
+                            })),
+                    PopupMenuItem(child: Text('Logout'))
+                  ])),
+          // watchOnly((ThemeService s) => s.isDark)
+          //     ? const Icon(CupertinoIcons.moon_stars)
+          //     : const Icon(CupertinoIcons.sun_max),
         ],
         scrolledUnderElevation: 1,
         title: const Text('Home'),
@@ -58,10 +66,10 @@ class HomePageState extends State<HomePage>
           elevation: 5,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           onDestinationSelected: (value) {
+            _tabController.animateTo(value);
             setState(() {
               _pageIndex = value;
             });
-            _tabController.animateTo(value);
           },
           selectedIndex: _pageIndex,
           destinations: const [

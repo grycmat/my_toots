@@ -61,12 +61,14 @@ class StatusActionIconButtonsWidget extends StatelessWidget {
                   child: IconButton(
                     onPressed: () {
                       final service = getIt.get<ApiService>();
-                      status.favourited
-                          ? service.unfavouriteStatus(status)
-                          : service.favouriteStatus(status);
+                      status.doFavorite();
+                      // status.favourited
+                      //     ? service.unfavouriteStatus(status)
+                      //     : service.favouriteStatus(status);
                     },
                     icon: Icon(
                       Icons.favorite_border_rounded,
+                      color: status.favourited ? Colors.red : Colors.black,
                     ),
                   ),
                 ),

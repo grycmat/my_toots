@@ -73,6 +73,26 @@ class Status {
     this.poll,
   });
 
+  doFavorite() {
+    favourited = true;
+    favouritesCount++;
+  }
+
+  undoFavorite() {
+    favourited = false;
+    favouritesCount--;
+  }
+
+  doReblog() {
+    reblogged = true;
+    reblogsCount++;
+  }
+
+  undoReblog() {
+    reblogged = false;
+    reblogsCount--;
+  }
+
   @override
   String toString() {
     return 'Status(id: $id, createdAt: $createdAt, inReplyToId: $inReplyToId, inReplyToAccountId: $inReplyToAccountId, sensitive: $sensitive, spoilerText: $spoilerText, visibility: $visibility, language: $language, uri: $uri, url: $url, repliesCount: $repliesCount, reblogsCount: $reblogsCount, favouritesCount: $favouritesCount, editedAt: $editedAt, favourited: $favourited, reblogged: $reblogged, muted: $muted, bookmarked: $bookmarked, content: $content, filtered: $filtered, reblog: $reblog, application: $application, account: $account, mediaAttachments: $mediaAttachments, mentions: $mentions, tags: $tags, emojis: $emojis, card: $card, poll: $poll)';
