@@ -19,7 +19,10 @@ class StatusWidget extends StatelessWidget {
         children: [
           Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
-              child: StatusAccountRowWidget(account: status.account)),
+              child: StatusAccountRowWidget(
+                  account: status.reblog == null
+                      ? status.account
+                      : status.reblog!.account)),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
             child: Column(
@@ -31,7 +34,10 @@ class StatusWidget extends StatelessWidget {
                   child: status.reblog == null
                       ? StatusHtmlTextWidget(status: status)
                       : Center(
-                          child: ReblogWidget(status: status.reblog!),
+                          child: ReblogWidget(
+                            status: status.reblog!,
+                            rebloggerAcct: status.account.acct,
+                          ),
                         ),
                 ),
                 MediaAttachmentWidget(

@@ -6,8 +6,11 @@ import 'package:my_toots/widgets/media_attachment.widget.dart';
 import 'package:my_toots/widgets/status_html_text.widget.dart';
 
 class ReblogWidget extends StatelessWidget {
-  const ReblogWidget({required this.status, Key? key}) : super(key: key);
+  const ReblogWidget(
+      {required this.status, required this.rebloggerAcct, Key? key})
+      : super(key: key);
   final Status status;
+  final String rebloggerAcct;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class ReblogWidget extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
-                      status.account.acct,
+                      rebloggerAcct,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),

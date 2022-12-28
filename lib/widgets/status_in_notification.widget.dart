@@ -28,7 +28,10 @@ class StatusInNotificationWidget extends StatelessWidget {
                 child: status.reblog == null
                     ? StatusHtmlTextWidget(status: status)
                     : Center(
-                        child: ReblogWidget(status: status.reblog!),
+                        child: ReblogWidget(
+                          status: status.reblog!,
+                          rebloggerAcct: status.account.acct,
+                        ),
                       ),
               ),
             ],
