@@ -24,7 +24,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   Future<void> _getNotifications() async {
     return getIt.get<ApiService>().getNotifications().then((notifications) {
-      print(notifications);
       setState(() {
         _notifications = notifications;
       });
@@ -50,62 +49,67 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: _error
-          ? const NoConnectionIconWidget()
-          : ListView.separated(
-              itemBuilder: (context, index) {
-                final noti = _notifications[index];
+      child: RefreshIndicator(
+        backgroundColor: Theme.of(context).primaryColor,
+        color: Colors.white,
+        onRefresh: () => _getNotifications(),
+        child: _error
+            ? const NoConnectionIconWidget()
+            : ListView.separated(
+                itemBuilder: (context, index) {
+                  final noti = _notifications[index];
 
-                switch (noti.type) {
-                  case 'follow':
-                    return FollowNotificationWidget(noti: noti);
-                  case 'favourite':
-                    return FavoriteNotificationWidget(noti: noti);
-                  case 'reblog':
-                    return ReblogNotificationWidget(noti: noti);
-                  case 'mention':
-                    return MentionNotificationWidget(noti: noti);
-                  case 'poll':
-                    return PollNotificationWidget(noti: noti);
-                  case 'follow_request':
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('Follow request'),
-                        StatusAccountRowWidget(account: noti.account),
-                      ],
-                    );
-                  case 'status':
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('Enabled post notifications'),
-                        StatusAccountRowWidget(account: noti.account),
-                        Card(
-                          elevation: 1,
-                          color: Theme.of(context).primaryColorLight,
-                          child: StatusInNotificationWidget(
-                            status: noti.status!,
+                  switch (noti.type) {
+                    case 'follow':
+                      return FollowNotificationWidget(noti: noti);
+                    case 'favourite':
+                      return FavoriteNotificationWidget(noti: noti);
+                    case 'reblog':
+                      return ReblogNotificationWidget(noti: noti);
+                    case 'mention':
+                      return MentionNotificationWidget(noti: noti);
+                    case 'poll':
+                      return PollNotificationWidget(noti: noti);
+                    case 'follow_request':
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text('Follow request'),
+                          StatusAccountRowWidget(account: noti.account),
+                        ],
+                      );
+                    case 'status':
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text('Enabled post notifications'),
+                          StatusAccountRowWidget(account: noti.account),
+                          Card(
+                            elevation: 1,
+                            color: Theme.of(context).primaryColorLight,
+                            child: StatusInNotificationWidget(
+                              status: noti.status!,
+                            ),
                           ),
-                        ),
-                      ],
-                    );
-                  case 'update':
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('Status updated'),
-                        StatusAccountRowWidget(account: noti.account),
-                      ],
-                    );
-                  default:
-                    return const Text(
-                        'This type of notification is not implemented yet :(');
-                }
-              },
-              separatorBuilder: (context, index) =>
-                  const Divider(height: 5, thickness: 2),
-              itemCount: _notifications.length),
+                        ],
+                      );
+                    case 'update':
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text('Status updated'),
+                          StatusAccountRowWidget(account: noti.account),
+                        ],
+                      );
+                    default:
+                      return const Text(
+                          'This type of notification is not implemented yet :(');
+                  }
+                },
+                separatorBuilder: (context, index) =>
+                    const Divider(height: 5, thickness: 2),
+                itemCount: _notifications.length),
+      ),
     );
   }
 }

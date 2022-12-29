@@ -7,6 +7,7 @@ import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_payload.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/posting_status_alert.widget.dart';
 import 'package:my_toots/widgets/status.widget.dart';
 
 class ComposeStatusWidget extends StatefulWidget {
@@ -37,10 +38,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
     super.dispose();
   }
 
-  _postStatus(BuildContext context) {
-    if (_textEditingController.text.isEmpty) {
-      return;
-    }
+  Future<void> _postStatus() async {
     final statusText = _textEditingController.text;
     final statusPayload =
         StatusPayload(status: statusText, mediaIds: _mediaIds);
@@ -49,8 +47,12 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
       statusPayload.inReplyToId = widget.inReplyToStatus!.id;
     }
 
-    getIt.get<ApiService>().postStatus(statusPayload).then((value) {
+    return await getIt
+        .get<ApiService>()
+        .postStatus(statusPayload)
+        .then((value) {
       Navigator.of(context).pop();
+      return Future.value();
     });
   }
 
@@ -77,8 +79,17 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                     color: Theme.of(context).colorScheme.primary,
-                    onPressed: () {
-                      _postStatus(context);
+                    onPressed: () async {
+                      if (_textEditingController.text.isEmpty) {
+                        return;
+                      }
+                      showDialog(
+                        context: context,
+                        builder: (context) => const PostingStatusAlertWidget(),
+                      );
+                      await _postStatus().then(
+                        (_) => Navigator.of(context).pop(),
+                      );
                     },
                     icon: const Icon(Icons.send_outlined, size: 30),
                   ),

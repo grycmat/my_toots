@@ -89,7 +89,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 controller: _scrollController,
                 itemCount: _isLoading ? 20 : _statuses.length + 1,
                 itemBuilder: (_, index) {
-                  if (index == _statuses.length) {
+                  if (index == _statuses.length && !_isLoading) {
                     return const Center(
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 24.0),

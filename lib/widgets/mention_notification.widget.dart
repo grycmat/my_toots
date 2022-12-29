@@ -21,6 +21,7 @@ class MentionNotificationWidget extends StatelessWidget {
             Expanded(
               child: StatusInNotificationWidget(
                 status: noti.status!,
+                showActions: true,
               ),
             ),
           ],

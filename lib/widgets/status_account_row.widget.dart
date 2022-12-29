@@ -18,13 +18,11 @@ class StatusAccountRowWidget extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            getIt.get<ApiService>().getAccount(account.id).then(
-                  (account) => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => AccountPage(account: account),
-                    ),
-                  ),
-                );
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AccountPage(account: account),
+              ),
+            );
           },
           child: Container(
             width: 50,

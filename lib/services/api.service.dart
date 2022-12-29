@@ -242,28 +242,37 @@ class ApiService {
     return items.map((e) => Status.fromMap(e)).toList();
   }
 
-  Future<Response> favouriteStatus(Status status) {
-    return Dio().post(
-      'https://$_instance/api/v1/statuses/${status.id}/favourite',
-      options: Options(
-          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
-    );
+  Future<Response> toggleFavorite(
+      {required Status status, required bool favorite}) {
+    return favorite
+        ? Dio().post(
+            'https://$_instance/api/v1/statuses/${status.id}/favourite',
+            options: Options(headers: {
+              'Authorization': 'Bearer ${_userToken!.accessToken}'
+            }),
+          )
+        : Dio().post(
+            'https://$_instance/api/v1/statuses/${status.id}/unfavourite',
+            options: Options(headers: {
+              'Authorization': 'Bearer ${_userToken!.accessToken}'
+            }),
+          );
   }
 
-  Future<Response> unfavouriteStatus(Status status) {
-    return Dio().post(
-      'https://$_instance/api/v1/statuses/${status.id}/unfavourite',
-      options: Options(
-          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
-    );
-  }
-
-  Future<Response> boostStatus(Status status) {
-    return Dio().post(
-      'https://$_instance/api/v1/statuses/${status.id}/reblog',
-      options: Options(
-          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
-    );
+  Future<Response> toggleReblog({required Status status, required reblog}) {
+    return reblog
+        ? Dio().post(
+            'https://$_instance/api/v1/statuses/${status.id}/reblog',
+            options: Options(headers: {
+              'Authorization': 'Bearer ${_userToken!.accessToken}'
+            }),
+          )
+        : Dio().post(
+            'https://$_instance/api/v1/statuses/${status.id}/unreblog',
+            options: Options(headers: {
+              'Authorization': 'Bearer ${_userToken!.accessToken}'
+            }),
+          );
   }
 
   Future<Response> undoBoostStatus(Status status) {
