@@ -20,7 +20,7 @@ class ComposeStatusWidget extends StatefulWidget {
 class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   final _textEditingController = TextEditingController();
   int _chars = 0;
-  List<File>? _mediaFiles = [];
+  List<File> _mediaFiles = [];
   final List<String> _mediaIds = [];
   @override
   void initState() {
@@ -39,9 +39,14 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   }
 
   Future<void> _postStatus() async {
+    final service = getIt.get<ApiService>();
     final statusText = _textEditingController.text;
+    final uploadedMedia = await service.uploadFiles(_mediaFiles);
+    final uploadedMediaIds = uploadedMedia
+        .map((response) => response.data!['id'] as String)
+        .toList();
     final statusPayload =
-        StatusPayload(status: statusText, mediaIds: _mediaIds);
+        StatusPayload(status: statusText, mediaIds: uploadedMediaIds);
 
     if (widget.inReplyToStatus != null) {
       statusPayload.inReplyToId = widget.inReplyToStatus!.id;
@@ -151,7 +156,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                   ),
                 ],
               ),
-              _mediaFiles!.isEmpty
+              _mediaFiles.isEmpty
                   ? const SizedBox()
                   : GridView.count(
                       physics: NeverScrollableScrollPhysics(),
@@ -159,7 +164,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                       mainAxisSpacing: 8,
                       shrinkWrap: true,
                       crossAxisCount: 4,
-                      children: _mediaFiles!
+                      children: _mediaFiles
                           .map(
                             (File f) => Stack(
                               children: [

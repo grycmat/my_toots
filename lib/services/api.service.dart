@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
 import 'package:my_toots/models/instance/instance.dart';
+import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_context.dart';
@@ -283,7 +284,9 @@ class ApiService {
     );
   }
 
-  Future<Response> uploadFile(File file) async {
+  Future<Response> uploadFile(
+      {required File file,
+      void Function({int count, int total})? callback}) async {
     final fileData = await MultipartFile.fromFile(file.path);
 
     final formData = FormData.fromMap({
@@ -296,8 +299,13 @@ class ApiService {
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
       onSendProgress: (count, total) {
+        if (callback != null) callback(count: count, total: total);
         print('count: $count, total: $total');
       },
     );
+  }
+
+  Future<List<Response>> uploadFiles(List<File> files) {
+    return Future.wait([for (var file in files) uploadFile(file: file)]);
   }
 }

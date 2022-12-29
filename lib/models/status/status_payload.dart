@@ -14,7 +14,7 @@ class StatusPayload {
 
   StatusPayload({
     required this.status,
-    this.mediaIds,
+    this.mediaIds = const [],
     this.inReplayToId,
     this.sensitive,
     this.spoilerText,
