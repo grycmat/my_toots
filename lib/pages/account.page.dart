@@ -40,10 +40,12 @@ class _AccountPageState extends State<AccountPage> {
               title: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.9),
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          bottomLeft: Radius.circular(12))),
+                    color: Colors.grey.withOpacity(0.9),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      bottomLeft: Radius.circular(12),
+                    ),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(widget.account.acct),
