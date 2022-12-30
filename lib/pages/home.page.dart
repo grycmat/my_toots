@@ -42,17 +42,25 @@ class HomePageState extends State<HomePage>
       resizeToAvoidBottomInset: true,
       floatingActionButton: const ComposeFabWidget(),
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
           PopupMenuButton(
               elevation: 10,
               splashRadius: 10,
               itemBuilder: ((context) => [
                     PopupMenuItem(
-                        child: Switch(
+                        child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.wb_sunny_outlined),
+                        Switch(
                             value: watchOnly((ThemeService s) => s.isDark),
                             onChanged: (value) {
                               get<ThemeService>().setIsDark(value);
-                            })),
+                            }),
+                        Icon(Icons.nights_stay_outlined)
+                      ],
+                    )),
                     PopupMenuItem(child: Text('Logout'))
                   ])),
           // watchOnly((ThemeService s) => s.isDark)

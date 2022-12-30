@@ -123,23 +123,12 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                           setState(() {
                             _mediaFiles = files;
                           });
-                          // getIt
-                          //     .get<ApiService>()
-                          //     .uploadFile(file)
-                          //     .then((response) {
-                          //   setState(() {
-                          //     _media = file;
-                          //     print(response.data);
-                          //     _mediaIds.add(response.data['id']);
-                          //   });
-                          // });
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Uploading media aborted'),
                             ),
                           );
-                          // User canceled the picker
                         }
                       });
                     },

@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/pages/account.page.dart';
-import 'package:my_toots/services/api.service.dart';
 import 'package:shimmer/shimmer.dart';
 
 class StatusAccountRowWidget extends StatelessWidget {
@@ -12,19 +10,19 @@ class StatusAccountRowWidget extends StatelessWidget {
   final Account account;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AccountPage(account: account),
-              ),
-            );
-          },
-          child: Container(
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => AccountPage(account: account),
+          ),
+        );
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
             width: 50,
             height: 50,
             clipBehavior: Clip.antiAlias,
@@ -44,36 +42,36 @@ class StatusAccountRowWidget extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 0, 4),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(account.displayName,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyLarge),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        child: Text(account.acct,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodySmall),
-                      ),
-                    ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 0, 4),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(account.displayName,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyLarge),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: Text(account.acct,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodySmall),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
