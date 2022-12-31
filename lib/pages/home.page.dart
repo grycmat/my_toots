@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/pages/notifications.page.dart';
 import 'package:my_toots/pages/public_timeline.page.dart';
+import 'package:my_toots/pages/select_instance.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
+import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/services/theme.service.dart';
 import 'package:my_toots/widgets/compose_fab.widget.dart';
 
@@ -49,19 +52,23 @@ class HomePageState extends State<HomePage>
               splashRadius: 10,
               itemBuilder: ((context) => [
                     PopupMenuItem(
-                        child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.wb_sunny_outlined),
-                        Switch(
-                            value: watchOnly((ThemeService s) => s.isDark),
-                            onChanged: (value) {
-                              get<ThemeService>().setIsDark(value);
-                            }),
-                        Icon(Icons.nights_stay_outlined)
-                      ],
-                    )),
-                    PopupMenuItem(child: Text('Logout'))
+                      child: const Text('Toggle theme'),
+                      onTap: () {
+                        get<ThemeService>().toggleTheme();
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: const Text('Logout'),
+                      onTap: () {
+                        getIt<ApiService>().logout().then(
+                              (value) => Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (context) =>
+                                    const SelectInstancePage(),
+                              )),
+                            );
+                      },
+                    )
                   ])),
           // watchOnly((ThemeService s) => s.isDark)
           //     ? const Icon(CupertinoIcons.moon_stars)

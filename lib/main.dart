@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -28,21 +29,48 @@ class MyToots extends StatelessWidget with GetItMixin {
   MyToots({super.key});
   final _service = getIt.get<ApiService>();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       scrollBehavior: const CupertinoScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Comfortaa',
+      theme: FlexThemeData.light(
+        scheme: FlexScheme.aquaBlue,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 9,
+        subThemesData: const FlexSubThemesData(
+          blendOnLevel: 10,
+          blendOnColors: false,
+          useFlutterDefaults: true,
+          bottomNavigationBarSelectedLabelSchemeColor: SchemeColor.primary,
+          bottomNavigationBarSelectedIconSchemeColor: SchemeColor.primary,
+          bottomNavigationBarShowUnselectedLabels: false,
+        ),
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
-        primarySwatch: Colors.green,
-        brightness: watchOnly((ThemeService s) => s.isDark)
-            ? Brightness.dark
-            : Brightness.light,
+        swapLegacyOnMaterial3: true,
+        fontFamily: 'Comfortaa',
       ),
+      darkTheme: FlexThemeData.dark(
+        scheme: FlexScheme.aquaBlue,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 15,
+        subThemesData: const FlexSubThemesData(
+          blendOnLevel: 20,
+          useFlutterDefaults: true,
+          bottomNavigationBarSelectedLabelSchemeColor: SchemeColor.primary,
+          bottomNavigationBarSelectedIconSchemeColor: SchemeColor.primary,
+          bottomNavigationBarShowUnselectedLabels: false,
+        ),
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+        useMaterial3: true,
+        swapLegacyOnMaterial3: true,
+        fontFamily: 'Comfortaa',
+      ),
+      themeMode: watchOnly((ThemeService s) => s.isDark)
+          ? ThemeMode.dark
+          : ThemeMode.light,
       home: _service.hasUserCredentials()
           ? HomePage()
           : const SelectInstancePage(),

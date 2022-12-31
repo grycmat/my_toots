@@ -29,7 +29,6 @@ class FavoriteNotificationWidget extends StatelessWidget {
                   StatusAccountRowWidget(account: noti.account),
                   Card(
                     elevation: 1,
-                    color: Theme.of(context).primaryColorLight,
                     child: StatusInNotificationWidget(
                       status: noti.status!,
                     ),

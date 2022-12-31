@@ -308,4 +308,8 @@ class ApiService {
   Future<List<Response>> uploadFiles(List<File> files) {
     return Future.wait([for (var file in files) uploadFile(file: file)]);
   }
+
+  Future<bool> logout() {
+    return _prefs.clear();
+  }
 }

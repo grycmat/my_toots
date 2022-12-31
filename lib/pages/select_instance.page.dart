@@ -63,7 +63,7 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                     ),
                   );
                 },
-                child: const Text('Try 101010.pl!'),
+                child: const Text('Or try 101010.pl!'),
               )
             ],
           ),

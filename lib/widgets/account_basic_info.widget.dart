@@ -39,7 +39,6 @@ class AccountBasicInfoWidget extends StatelessWidget {
                         width: 70,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
@@ -66,7 +65,6 @@ class AccountBasicInfoWidget extends StatelessWidget {
                         width: 70,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
@@ -91,7 +89,6 @@ class AccountBasicInfoWidget extends StatelessWidget {
                         width: 70,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(

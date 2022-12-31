@@ -116,10 +116,14 @@ class _StatusActionIconButtonsWidgetState
                       service.toggleReblog(
                           status: widget.status, reblog: _isReblogged);
                     },
-                    icon: Icon(
-                      Icons.loop_outlined,
-                      color: _isReblogged ? Colors.green : Colors.black,
-                    ),
+                    icon: _isReblogged
+                        ? Icon(
+                            Icons.loop_outlined,
+                            color: Colors.green,
+                          )
+                        : Icon(
+                            Icons.loop_outlined,
+                          ),
                   ),
                 ),
                 Padding(
