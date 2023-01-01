@@ -35,42 +35,51 @@ class MyToots extends StatelessWidget with GetItMixin {
       scrollBehavior: const CupertinoScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: FlexThemeData.light(
-        scheme: FlexScheme.aquaBlue,
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 9,
-        subThemesData: const FlexSubThemesData(
-          blendOnLevel: 10,
-          blendOnColors: false,
-          useFlutterDefaults: true,
-          bottomNavigationBarSelectedLabelSchemeColor: SchemeColor.primary,
-          bottomNavigationBarSelectedIconSchemeColor: SchemeColor.primary,
-          bottomNavigationBarShowUnselectedLabels: false,
-        ),
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      theme: ThemeData(
         useMaterial3: true,
-        swapLegacyOnMaterial3: true,
         fontFamily: 'Comfortaa',
+        brightness: watchOnly<ThemeService, Brightness>(
+            (ThemeService service) =>
+                service.isDark ? Brightness.dark : Brightness.light),
+        primarySwatch: watchOnly<ThemeService, MaterialColor>(
+            (ThemeService service) => service.primarySwatch),
       ),
-      darkTheme: FlexThemeData.dark(
-        scheme: FlexScheme.aquaBlue,
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 15,
-        subThemesData: const FlexSubThemesData(
-          blendOnLevel: 20,
-          useFlutterDefaults: true,
-          bottomNavigationBarSelectedLabelSchemeColor: SchemeColor.primary,
-          bottomNavigationBarSelectedIconSchemeColor: SchemeColor.primary,
-          bottomNavigationBarShowUnselectedLabels: false,
-        ),
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-        useMaterial3: true,
-        swapLegacyOnMaterial3: true,
-        fontFamily: 'Comfortaa',
-      ),
-      themeMode: watchOnly((ThemeService s) => s.isDark)
-          ? ThemeMode.dark
-          : ThemeMode.light,
+      // theme: FlexThemeData.light(
+      //   scheme: FlexScheme.aquaBlue,
+      //   surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+      //   blendLevel: 9,
+      //   subThemesData: const FlexSubThemesData(
+      //     blendOnLevel: 10,
+      //     blendOnColors: false,
+      //     useFlutterDefaults: true,
+      //     bottomNavigationBarSelectedLabelSchemeColor: SchemeColor.primary,
+      //     bottomNavigationBarSelectedIconSchemeColor: SchemeColor.primary,
+      //     bottomNavigationBarShowUnselectedLabels: false,
+      //   ),
+      //   visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      //   useMaterial3: true,
+      //   swapLegacyOnMaterial3: true,
+      //   fontFamily: 'Comfortaa',
+      // ),
+      // darkTheme: FlexThemeData.dark(
+      //   scheme: FlexScheme.aquaBlue,
+      //   surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+      //   blendLevel: 15,
+      //   subThemesData: const FlexSubThemesData(
+      //     blendOnLevel: 20,
+      //     useFlutterDefaults: true,
+      //     bottomNavigationBarSelectedLabelSchemeColor: SchemeColor.primary,
+      //     bottomNavigationBarSelectedIconSchemeColor: SchemeColor.primary,
+      //     bottomNavigationBarShowUnselectedLabels: false,
+      //   ),
+      //   visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      //   useMaterial3: true,
+      //   swapLegacyOnMaterial3: true,
+      //   fontFamily: 'Comfortaa',
+      // ),
+      // themeMode: watchOnly((ThemeService s) => s.isDark)
+      //     ? ThemeMode.dark
+      //     : ThemeMode.light,
       home: _service.hasUserCredentials()
           ? HomePage()
           : const SelectInstancePage(),
