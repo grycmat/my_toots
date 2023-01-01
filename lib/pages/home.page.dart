@@ -60,22 +60,18 @@ class HomePageState extends State<HomePage>
                       builder: (context) {
                         return ListView(
                           shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: Axis.vertical,
                           children: get<ThemeService>()
                               .availableColors
                               .map(
-                                (e) => SizedBox(
-                                  height: 100,
-                                  width: 50,
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundColor: e,
-                                    ),
-                                    onTap: () {
-                                      get<ThemeService>().setPrimarySwatch(e);
-                                      Navigator.of(context).pop();
-                                    },
+                                (e) => ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundColor: e,
                                   ),
+                                  onTap: () {
+                                    get<ThemeService>().setPrimarySwatch(e);
+                                    Navigator.of(context).pop();
+                                  },
                                 ),
                               )
                               .toList(),
