@@ -53,11 +53,14 @@ class ReblogWidget extends StatelessWidget {
                   Expanded(child: StatusHtmlTextWidget(status: status)),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 12.0),
-                child: MediaAttachmentWidget(
-                    mediaAttachments: status.mediaAttachments),
-              ),
+              status.mediaAttachments.isNotEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
+                      child: MediaAttachmentWidget(
+                        mediaAttachments: status.mediaAttachments,
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),

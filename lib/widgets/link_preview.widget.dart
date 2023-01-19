@@ -22,7 +22,7 @@ class LinkPreviewWidget extends StatelessWidget {
           color: Theme.of(context).textTheme.bodyLarge!.color,
         ),
         errorWidget: const SizedBox(),
-        backgroundColor: Theme.of(context).cardTheme.color,
+        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
         removeElevation: true,
         link: element.attributes['href']!,
       ),

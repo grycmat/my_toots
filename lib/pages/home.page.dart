@@ -48,67 +48,6 @@ class HomePageState extends State<HomePage>
       resizeToAvoidBottomInset: true,
       floatingActionButton: const ComposeFabWidget(),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        actions: [
-          IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return BottomSheet(
-                      onClosing: () {},
-                      builder: (context) {
-                        return ListView(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          children: get<ThemeService>()
-                              .availableColors
-                              .map(
-                                (e) => ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundColor: e,
-                                  ),
-                                  onTap: () {
-                                    get<ThemeService>().setPrimarySwatch(e);
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              )
-                              .toList(),
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-              icon: Icon(Icons.more_vert_outlined))
-          // PopupMenuButton(
-          //     elevation: 10,
-          //     splashRadius: 10,
-          //     itemBuilder: ((context) => [
-          //           PopupMenuItem(
-          //             child: const Text('Toggle theme'),
-          //             onTap: () {
-          //               get<ThemeService>().toggleTheme();
-          //             },
-          //           ),
-          //           PopupMenuItem(
-          //             child: const Text('Logout'),
-          //             onTap: () {
-          //               getIt<ApiService>().logout().then(
-          //                     (value) => Navigator.of(context)
-          //                         .pushReplacement(MaterialPageRoute(
-          //                       builder: (context) =>
-          //                           const SelectInstancePage(),
-          //                     )),
-          //                   );
-          //             },
-          //           )
-          //         ])),
-          // watchOnly((ThemeService s) => s.isDark)
-          //     ? const Icon(CupertinoIcons.moon_stars)
-          //     : const Icon(CupertinoIcons.sun_max),
-        ],
         scrolledUnderElevation: 1,
         title: Text(_appBarTitle[_pageIndex]),
       ),

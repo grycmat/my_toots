@@ -53,7 +53,7 @@ class StatusInNotificationWidget extends StatelessWidget {
           ),
           showActions
               ? StatusActionIconButtonsWidget(status: status)
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     );

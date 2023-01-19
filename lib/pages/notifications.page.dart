@@ -86,7 +86,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           StatusAccountRowWidget(account: noti.account),
                           Card(
                             elevation: 1,
-                            color: Theme.of(context).primaryColorLight,
                             child: StatusInNotificationWidget(
                               status: noti.status!,
                             ),
