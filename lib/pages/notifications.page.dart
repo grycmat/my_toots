@@ -23,6 +23,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
   bool _error = false;
 
   Future<void> _getNotifications() async {
+    if (!mounted) {
+      return;
+    }
     return getIt.get<ApiService>().getNotifications().then((notifications) {
       setState(() {
         _notifications = notifications;

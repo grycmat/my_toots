@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -48,7 +49,10 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(widget.account.acct),
+                    child: AutoSizeText(
+                      widget.account.acct,
+                      maxLines: 1,
+                    ),
                   )),
               background: CachedNetworkImage(
                   imageUrl: widget.account.headerStatic, fit: BoxFit.cover),

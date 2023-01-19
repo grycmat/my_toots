@@ -19,6 +19,9 @@ class _PublicTimelinePageState extends State<PublicTimelinePage> {
   late final ScrollController _scrollController = ScrollController();
 
   Future<void> _getStatuses() async {
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _isLoading = true;
     });
