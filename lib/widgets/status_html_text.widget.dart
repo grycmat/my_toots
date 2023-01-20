@@ -1,9 +1,14 @@
 import 'package:any_link_preview/any_link_preview.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+import 'package:my_toots/getIt.instance.dart';
+import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/status/status.dart';
+import 'package:my_toots/pages/account.page.dart';
+import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/link_preview.widget.dart';
 
 class StatusHtmlTextWidget extends StatelessWidget {
@@ -21,8 +26,22 @@ class StatusHtmlTextWidget extends StatelessWidget {
       children: [
         Html(
           data: status.content,
-          onLinkTap: (url, context, attributes, element) {
-            print(url);
+          onLinkTap: (url, renderContext, attributes, element) {
+            if (attributes.containsKey('class') &&
+                attributes['class']!.contains('mention')) {
+              List<String> splitted = url!.split('/');
+              getIt
+                  .get<ApiService>()
+                  .findUserByUsername(splitted[2], splitted[3])
+                  .then((Account found) => {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AccountPage(account: found),
+                          ),
+                        )
+                      });
+              ;
+            }
             print(context);
             print(attributes);
             print(element);

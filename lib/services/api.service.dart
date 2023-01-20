@@ -92,6 +92,15 @@ class ApiService {
     return _userToken != null && _instance != null;
   }
 
+  Future<Account> findUserByUsername(String userInstance, String user) async {
+    final response = await Dio().get(
+      'https://$_instance/api/v1/accounts/search?q=$user@$userInstance',
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+    return Account.fromMap(response.data[0]);
+  }
+
   Future<List<Status>> getPublicTimeline() async {
     final response =
         await Dio().get('https://$_instance/api/v1/timelines/public');

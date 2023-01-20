@@ -28,129 +28,101 @@ class _StatusActionIconButtonsWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(4, 8, 4, 0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 0, 8),
-                  child: IconButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        context: context,
-                        builder: (_) => getIt
-                            .get<WidgetService>()
-                            .getComposeWidget(inReplyToStatus: widget.status),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.mode_comment_outlined,
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  context: context,
+                  builder: (_) => getIt
+                      .get<WidgetService>()
+                      .getComposeWidget(inReplyToStatus: widget.status),
+                );
+              },
+              icon: const Icon(
+                Icons.mode_comment_outlined,
+              ),
+            ),
+            Text(
+              widget.status.repliesCount.toString(),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+                onPressed: () {
+                  final service = getIt.get<ApiService>();
+                  setState(() {
+                    _isFavorited = !_isFavorited;
+                  });
+                  service.toggleFavorite(
+                      status: widget.status, favorite: _isFavorited);
+                },
+                icon: _isFavorited
+                    ? const Icon(
+                        Icons.favorite_outlined,
+                        color: Colors.red,
+                      )
+                    : const Icon(Icons.favorite_outline_outlined)),
+            Text(
+              widget.status.favouritesCount.toString(),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: () {
+                final service = getIt.get<ApiService>();
+                setState(() {
+                  _isReblogged = !_isReblogged;
+                });
+                service.toggleReblog(
+                    status: widget.status, reblog: _isReblogged);
+              },
+              icon: _isReblogged
+                  ? const Icon(
+                      Icons.loop_outlined,
+                      color: Colors.green,
+                    )
+                  : const Icon(
+                      Icons.loop_outlined,
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                  child: Text(
-                    widget.status.repliesCount.toString(),
-                  ),
-                ),
-              ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 0, 8),
-                  child: IconButton(
-                      onPressed: () {
-                        final service = getIt.get<ApiService>();
-                        setState(() {
-                          _isFavorited = !_isFavorited;
-                        });
-                        service.toggleFavorite(
-                            status: widget.status, favorite: _isFavorited);
-                      },
-                      icon: _isFavorited
-                          ? const Icon(
-                              Icons.favorite_outlined,
-                              color: Colors.red,
-                            )
-                          : const Icon(Icons.favorite_outline_outlined)),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 8, 0),
-                  child: Text(
-                    widget.status.favouritesCount.toString(),
-                  ),
-                ),
-              ],
+            Text(
+              widget.status.reblogsCount.toString(),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: IconButton(
-                    onPressed: () {
-                      final service = getIt.get<ApiService>();
-                      setState(() {
-                        _isReblogged = !_isReblogged;
-                      });
-                      service.toggleReblog(
-                          status: widget.status, reblog: _isReblogged);
-                    },
-                    icon: _isReblogged
-                        ? Icon(
-                            Icons.loop_outlined,
-                            color: Colors.green,
-                          )
-                        : Icon(
-                            Icons.loop_outlined,
-                          ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 8, 0),
-                  child: Text(
-                    widget.status.reblogsCount.toString(),
-                  ),
-                ),
-              ],
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(
+              Icons.format_quote_outlined,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: const [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: Icon(
-                    Icons.share_outlined,
-                  ),
-                ),
-              ],
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(
+              Icons.share_outlined,
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }
