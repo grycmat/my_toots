@@ -16,10 +16,13 @@ class FollowNotificationWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              CupertinoIcons.person_add,
-              size: 25,
-              color: Colors.blue.shade400,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                CupertinoIcons.person_add,
+                size: 36,
+                color: Colors.blue.shade400,
+              ),
             ),
             Expanded(
               child: AccountBasicInfoWidget(account: noti.account),

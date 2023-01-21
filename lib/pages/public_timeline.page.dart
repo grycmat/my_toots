@@ -13,7 +13,8 @@ class PublicTimelinePage extends StatefulWidget {
   State<PublicTimelinePage> createState() => _PublicTimelinePageState();
 }
 
-class _PublicTimelinePageState extends State<PublicTimelinePage> {
+class _PublicTimelinePageState extends State<PublicTimelinePage>
+    with AutomaticKeepAliveClientMixin {
   List<Status> statuses = [];
   bool _isLoading = true;
   late final ScrollController _scrollController = ScrollController();
@@ -97,4 +98,7 @@ class _PublicTimelinePageState extends State<PublicTimelinePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

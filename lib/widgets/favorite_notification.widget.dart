@@ -17,10 +17,13 @@ class FavoriteNotificationWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.favorite_outline_outlined,
-              size: 25,
-              color: Colors.red.shade400,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.favorite_outline_outlined,
+                size: 36,
+                color: Colors.red.shade400,
+              ),
             ),
             Expanded(
               child: Column(

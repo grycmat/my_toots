@@ -16,8 +16,6 @@ class MentionNotificationWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.message_outlined,
-                color: Colors.purple.shade200, size: 25),
             Expanded(
               child: StatusInNotificationWidget(
                 status: noti.status!,

@@ -108,6 +108,22 @@ class ApiService {
     return (response.data as List).map((e) => Status.fromMap(e)).toList();
   }
 
+  Future<List<Account>> getFollowers(String accountId) async {
+    final response = await Dio()
+        .get('https://$_instance/api/v1/accounts/$accountId/following');
+    final items = response.data as List<dynamic>;
+
+    return items.map((e) => Account.fromMap(e)).toList();
+  }
+
+  Future<List<Account>> getFollowing(String accountId) async {
+    final response = await Dio()
+        .get('https://$_instance/api/v1/accounts/$accountId/following');
+    final items = response.data as List<dynamic>;
+
+    return items.map((e) => Account.fromMap(e)).toList();
+  }
+
   Future<Instance> getInstance() async {
     final response = await Dio().get('https://$_instance/api/v1/instance');
     return Instance.fromMap(response.data);

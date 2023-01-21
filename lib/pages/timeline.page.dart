@@ -14,7 +14,8 @@ class TimelinePage extends StatefulWidget {
   State<TimelinePage> createState() => _TimelinePageState();
 }
 
-class _TimelinePageState extends State<TimelinePage> {
+class _TimelinePageState extends State<TimelinePage>
+    with AutomaticKeepAliveClientMixin {
   List<Status> _statuses = [];
   bool _isLoading = true;
   bool _error = false;
@@ -112,4 +113,7 @@ class _TimelinePageState extends State<TimelinePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

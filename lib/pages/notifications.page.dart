@@ -18,7 +18,8 @@ class NotificationsPage extends StatefulWidget {
   _NotificationsPageState createState() => _NotificationsPageState();
 }
 
-class _NotificationsPageState extends State<NotificationsPage> {
+class _NotificationsPageState extends State<NotificationsPage>
+    with AutomaticKeepAliveClientMixin {
   List<AccountNotification> _notifications = [];
   bool _error = false;
 
@@ -114,4 +115,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

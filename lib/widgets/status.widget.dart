@@ -30,7 +30,7 @@ class StatusWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.only(bottom: 12),
                   child: status.reblog == null
                       ? StatusHtmlTextWidget(status: status)
                       : Center(

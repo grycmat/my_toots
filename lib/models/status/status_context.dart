@@ -10,6 +10,9 @@ class StatusContext {
         ancestors:
             List<Status>.from(data["ancestors"].map((x) => Status.fromMap(x))),
         descendants: List<Status>.from(
-            data["descendants"].map((x) => Status.fromMap(x))),
+          data["descendants"].map(
+            (x) => Status.fromMap(x),
+          ),
+        ),
       );
 }

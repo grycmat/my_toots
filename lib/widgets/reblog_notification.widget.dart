@@ -14,24 +14,32 @@ class ReblogNotificationWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              CupertinoIcons.arrow_turn_up_right,
-              size: 25,
-              color: Theme.of(context).primaryColor,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.loop_outlined,
+                size: 36,
+                color: Colors.green.shade400,
+              ),
             ),
             Expanded(
-              child: StatusAccountRowWidget(account: noti.account),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  StatusAccountRowWidget(account: noti.account),
+                  Card(
+                    elevation: 1,
+                    child: StatusInNotificationWidget(
+                      status: noti.status!,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
-        ),
-        Card(
-          elevation: 1,
-          color: Theme.of(context).primaryColorLight,
-          child: StatusInNotificationWidget(
-            status: noti.status!,
-          ),
         ),
       ],
     );

@@ -40,11 +40,12 @@ class StatusHtmlTextWidget extends StatelessWidget {
                           ),
                         )
                       });
-              ;
             }
             print(context);
             print(attributes);
             print(element);
+            print('display');
+            print(linkToDisplay);
           },
         ),
         linkToDisplay != null

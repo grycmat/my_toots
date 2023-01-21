@@ -82,11 +82,11 @@ class HomePageState extends State<HomePage>
       body: SafeArea(
         child: TabBarView(
           controller: _tabController,
-          children: const [
+          children: [
             Center(child: TimelinePage()),
-            Center(child: NotificationsPage()),
-            Center(child: PublicTimelinePage()),
-            Center(child: Text('Messages')),
+            const Center(child: NotificationsPage()),
+            const Center(child: PublicTimelinePage()),
+            const Center(child: Text('Messages')),
           ],
         ),
       ),

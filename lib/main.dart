@@ -21,7 +21,6 @@ Future<GetIt> configureDependencies() => init(getIt);
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
-  getIt.registerSingleton<ThemeService>(ThemeService());
   runApp(MyToots());
 }
 
