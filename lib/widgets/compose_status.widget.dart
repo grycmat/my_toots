@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_payload.dart';
@@ -19,9 +20,18 @@ class ComposeStatusWidget extends StatefulWidget {
 
 class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   final _textEditingController = TextEditingController();
+  final _focusNode = FocusNode();
   int _chars = 0;
   List<File> _mediaFiles = [];
   final List<String> _mediaIds = [];
+  final List<Account> _autocompleteAccounts = [];
+
+  static const List<String> _kOptions = <String>[
+    'aardvark',
+    'bobcat',
+    'chameleon',
+  ];
+
   @override
   void initState() {
     _textEditingController.addListener(() {
@@ -63,6 +73,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final service = getIt.get<ApiService>();
     return Container(
       height: MediaQuery.of(context).size.height * 0.95,
       color: Theme.of(context).colorScheme.surface,
@@ -76,30 +87,77 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
               (widget.inReplyToStatus == null
                   ? Container()
                   : StatusWidget(status: widget.inReplyToStatus!)),
-              TextField(
-                autofocus: true,
-                controller: _textEditingController,
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    color: Theme.of(context).colorScheme.primary,
-                    onPressed: () async {
-                      if (_textEditingController.text.isEmpty) {
-                        return;
-                      }
-                      showDialog(
-                        context: context,
-                        builder: (context) => const PostingStatusAlertWidget(),
-                      );
-                      await _postStatus().then(
-                        (_) => Navigator.of(context).pop(),
-                      );
-                    },
-                    icon: const Icon(Icons.send_outlined, size: 30),
+              RawAutocomplete<Account>(
+                textEditingController: _textEditingController,
+                focusNode: _focusNode,
+                optionsViewBuilder: (context, onSelected, options) => Align(
+                  alignment: Alignment.topLeft,
+                  child: Material(
+                    elevation: 4.0,
+                    child: Container(
+                      height: 200.0,
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: options.length,
+                        itemBuilder: (context, index) {
+                          final option = options.elementAt(index);
+                          return InkWell(
+                            onTap: () {
+                              onSelected(option);
+                            },
+                            child: ListTile(
+                              title: Text(option.acct),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => const Divider(
+                          thickness: 1,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
-                  border: const OutlineInputBorder(),
-                  hintText: "Let's toot something!",
+                ),
+                optionsBuilder: ((textEditingValue) async {
+                  final splitted = textEditingValue.text.split(' ');
+                  final lastWord = splitted.last;
+                  if (lastWord.length > 2 && lastWord.startsWith('@')) {
+                    final accounts = await service.search(
+                        lastWord.replaceFirst('@', ''), 'accounts');
+                    return accounts as Iterable<Account>;
+                  }
+                  return const Iterable<Account>.empty();
+                }),
+                onSelected: (Account option) {
+                  final currentText = _textEditingController.text;
+                  _textEditingController.text = currentText + ' ' + option.acct;
+                },
+                fieldViewBuilder: (context, textEditingController, focusNode,
+                        onFieldSubmitted) =>
+                    TextField(
+                  focusNode: focusNode,
+                  controller: textEditingController,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () async {
+                        if (textEditingController.text.isEmpty) {
+                          return;
+                        }
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                              const PostingStatusAlertWidget(),
+                        );
+                        await _postStatus().then(
+                          (_) => Navigator.of(context).pop(),
+                        );
+                      },
+                      icon: const Icon(Icons.send_outlined, size: 30),
+                    ),
+                    border: const OutlineInputBorder(),
+                    hintText: "Let's toot something!",
+                  ),
                 ),
               ),
               Row(
@@ -148,7 +206,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
               _mediaFiles.isEmpty
                   ? const SizedBox()
                   : GridView.count(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
                       shrinkWrap: true,
@@ -166,7 +224,8 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                                   ),
                                 ),
                                 IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.close))
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.close))
                               ],
                             ),
                           )

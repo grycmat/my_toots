@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
+import 'package:my_toots/models/hashtag/hashtag.dart';
 import 'package:my_toots/models/instance/instance.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
@@ -99,6 +100,31 @@ class ApiService {
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
     return Account.fromMap(response.data[0]);
+  }
+
+  Future<List<Object>> search(String query, String type) async {
+    final response = await Dio().get(
+      'https://$_instance/api/v2/search',
+      queryParameters: {'q': query, 'type': type},
+      options: Options(
+          headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
+    );
+
+    if (type == 'accounts') {
+      return (response.data['accounts'] as List)
+          .map((e) => Account.fromMap(e))
+          .toList();
+    }
+
+    if (type == 'statuses') {
+      return (response.data['statuses'] as List)
+          .map((e) => Status.fromMap(e))
+          .toList();
+    }
+
+    return (response.data['hashtags'] as List)
+        .map((e) => Hashtag.fromMap(e))
+        .toList();
   }
 
   Future<List<Status>> getPublicTimeline() async {
@@ -337,4 +363,6 @@ class ApiService {
   Future<bool> logout() {
     return _prefs.clear();
   }
+
+  _requestWithToken() {}
 }
