@@ -10,6 +10,7 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/posting_status_alert.widget.dart';
 import 'package:my_toots/widgets/status.widget.dart';
+import 'package:rich_text_controller/rich_text_controller.dart';
 
 class ComposeStatusWidget extends StatefulWidget {
   const ComposeStatusWidget({this.inReplyToStatus, Key? key}) : super(key: key);
@@ -19,21 +20,34 @@ class ComposeStatusWidget extends StatefulWidget {
 }
 
 class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
-  final _textEditingController = TextEditingController();
+  late final RichTextController _textEditingController;
   final _focusNode = FocusNode();
   int _chars = 0;
   List<File> _mediaFiles = [];
+  String preSelectionString = '';
   final List<String> _mediaIds = [];
-  final List<Account> _autocompleteAccounts = [];
-
-  static const List<String> _kOptions = <String>[
-    'aardvark',
-    'bobcat',
-    'chameleon',
-  ];
+  final Map<String, String> _mentions = {};
 
   @override
   void initState() {
+    final mentionStyle = TextStyle(
+      fontWeight: FontWeight.w800,
+      color: Colors.blue.shade200,
+    );
+    _textEditingController = RichTextController(
+      onMatch: (match) {},
+      patternMatchMap: {
+        RegExp(r"\B@[@a-zA-Z0-9\.]+\b"): mentionStyle,
+        RegExp(r"\B#[a-zA-Z0-9]+\b"): mentionStyle,
+      },
+    );
+
+    if (widget.inReplyToStatus != null) {
+      _textEditingController.text = '@${widget.inReplyToStatus!.account.acct} ';
+      _mentions[widget.inReplyToStatus!.account.id] =
+          widget.inReplyToStatus!.account.acct;
+    }
+
     _textEditingController.addListener(() {
       setState(() {
         _chars = _textEditingController.text.length;
@@ -88,6 +102,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                   ? Container()
                   : StatusWidget(status: widget.inReplyToStatus!)),
               RawAutocomplete<Account>(
+                displayStringForOption: (option) => option.acct,
                 textEditingController: _textEditingController,
                 focusNode: _focusNode,
                 optionsViewBuilder: (context, onSelected, options) => Align(
@@ -103,7 +118,17 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                           final option = options.elementAt(index);
                           return InkWell(
                             onTap: () {
-                              onSelected(option);
+                              final splitted =
+                                  _textEditingController.text.split(' ');
+                              splitted.removeAt(splitted.length - 1);
+                              final nextText = splitted.join(' ');
+                              _textEditingController.text =
+                                  '$nextText @${option.acct} ';
+                              _mentions[option.id] = option.acct;
+                              _textEditingController.selection =
+                                  TextSelection.fromPosition(TextPosition(
+                                      offset:
+                                          _textEditingController.text.length));
                             },
                             child: ListTile(
                               title: Text(option.acct),
@@ -112,7 +137,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                         },
                         separatorBuilder: (context, index) => const Divider(
                           thickness: 1,
-                          color: Colors.black,
+                          color: Colors.black38,
                         ),
                       ),
                     ),
@@ -128,13 +153,11 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                   }
                   return const Iterable<Account>.empty();
                 }),
-                onSelected: (Account option) {
-                  final currentText = _textEditingController.text;
-                  _textEditingController.text = currentText + ' ' + option.acct;
-                },
                 fieldViewBuilder: (context, textEditingController, focusNode,
                         onFieldSubmitted) =>
                     TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
                   focusNode: focusNode,
                   controller: textEditingController,
                   decoration: InputDecoration(
@@ -159,49 +182,6 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                     hintText: "Let's toot something!",
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    _chars.toString(),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      FilePicker.platform
-                          .pickFiles(allowMultiple: true)
-                          .then((FilePickerResult? result) {
-                        if (result != null) {
-                          final List<PlatformFile> selectedFiles = result.files;
-                          if (selectedFiles.isEmpty) {
-                            return;
-                          }
-                          final List<File> files =
-                              selectedFiles.map((f) => File(f.path!)).toList();
-                          setState(() {
-                            _mediaFiles = files;
-                          });
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Uploading media aborted'),
-                            ),
-                          );
-                        }
-                      });
-                    },
-                    icon: Icon(Icons.add_photo_alternate_outlined,
-                        color: Theme.of(context).colorScheme.primary, size: 30),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.poll_outlined,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 30,
-                    ),
-                  ),
-                ],
               ),
               _mediaFiles.isEmpty
                   ? const SizedBox()
@@ -231,6 +211,55 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                           )
                           .toList(),
                     ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      _chars.toString(),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        FilePicker.platform
+                            .pickFiles(allowMultiple: true)
+                            .then((FilePickerResult? result) {
+                          if (result != null) {
+                            final List<PlatformFile> selectedFiles =
+                                result.files;
+                            if (selectedFiles.isEmpty) {
+                              return;
+                            }
+                            final List<File> files = selectedFiles
+                                .map((f) => File(f.path!))
+                                .toList();
+                            setState(() {
+                              _mediaFiles = files;
+                            });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Uploading media aborted'),
+                              ),
+                            );
+                          }
+                        });
+                      },
+                      icon: Icon(Icons.add_photo_alternate_outlined,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 30),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.poll_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

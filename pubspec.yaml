@@ -51,6 +51,8 @@ dependencies:
   get_it_mixin: ^3.1.4+2
   material_color_utilities: ^0.1.5
   auto_size_text: ^3.0.0
+  rich_text_controller: ^1.4.0
+  flutter_animate: ^3.0.0
 
 dev_dependencies:
   flutter_test:

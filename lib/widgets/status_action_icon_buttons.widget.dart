@@ -122,6 +122,14 @@ class _StatusActionIconButtonsWidgetState
             ),
           ],
         ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(
+              Icons.more_vert_rounded,
+            ),
+          ],
+        ),
       ],
     );
   }
