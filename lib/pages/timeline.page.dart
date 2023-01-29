@@ -89,7 +89,7 @@ class _TimelinePageState extends State<TimelinePage>
                 padding: const EdgeInsets.all(8),
                 cacheExtent: 200,
                 separatorBuilder: (_, index) =>
-                    const Divider(height: 5, thickness: 2),
+                    const Divider(height: 5, thickness: 1),
                 controller: _scrollController,
                 itemCount: _isLoading ? 20 : _statuses.length + 1,
                 itemBuilder: (_, index) {

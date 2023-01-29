@@ -28,6 +28,9 @@ class WidgetService {
     );
   }
 
-  Widget getComposeWidget({Status? inReplyToStatus}) =>
-      ComposeStatusWidget(inReplyToStatus: inReplyToStatus);
+  Widget getComposeWidget({Status? inReplyToStatus, Status? quotedStatus}) =>
+      ComposeStatusWidget(
+        inReplyToStatus: inReplyToStatus,
+        quotedStatus: quotedStatus,
+      );
 }

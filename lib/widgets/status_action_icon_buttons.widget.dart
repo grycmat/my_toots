@@ -108,17 +108,34 @@ class _StatusActionIconButtonsWidgetState
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(
-              Icons.format_quote_outlined,
+          children: [
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  context: context,
+                  builder: (_) => getIt
+                      .get<WidgetService>()
+                      .getComposeWidget(quotedStatus: widget.status),
+                );
+              },
+              icon: const Icon(
+                Icons.format_quote_outlined,
+              ),
             ),
           ],
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(
-              Icons.share_outlined,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.share_outlined,
+              ),
             ),
           ],
         ),

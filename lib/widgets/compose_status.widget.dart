@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/models/status/status.dart';
@@ -13,8 +14,11 @@ import 'package:my_toots/widgets/status.widget.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 
 class ComposeStatusWidget extends StatefulWidget {
-  const ComposeStatusWidget({this.inReplyToStatus, Key? key}) : super(key: key);
+  const ComposeStatusWidget({this.inReplyToStatus, this.quotedStatus, Key? key})
+      : super(key: key);
   final Status? inReplyToStatus;
+  final Status? quotedStatus;
+
   @override
   State<ComposeStatusWidget> createState() => _ComposeStatusWidgetState();
 }
@@ -37,8 +41,8 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
     _textEditingController = RichTextController(
       onMatch: (match) {},
       patternMatchMap: {
-        RegExp(r"\B@[@a-zA-Z0-9\.]+\b"): mentionStyle,
-        RegExp(r"\B#[a-zA-Z0-9]+\b"): mentionStyle,
+        RegExp(r"\B@[-@a-zA-Z0-9\.]+\b"): mentionStyle,
+        RegExp(r"\B#[-a-zA-Z0-9]+\b"): mentionStyle,
       },
     );
 
@@ -47,6 +51,18 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
       _mentions[widget.inReplyToStatus!.account.id] =
           widget.inReplyToStatus!.account.acct;
     }
+
+    if (widget.quotedStatus != null) {
+      final parsedHtml = parse(widget.quotedStatus!.content);
+      _textEditingController.text =
+          'Quoting @${widget.quotedStatus!.account.acct}\n\n📜 ${parsedHtml.body?.text}\n\n📜 ${widget.quotedStatus!.url}';
+      _mentions[widget.quotedStatus!.account.id] =
+          widget.quotedStatus!.account.acct;
+    }
+
+    setState(() {
+      _chars = _textEditingController.text.length;
+    });
 
     _textEditingController.addListener(() {
       setState(() {
@@ -157,6 +173,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                         onFieldSubmitted) =>
                     TextField(
                   keyboardType: TextInputType.multiline,
+                  autofocus: true,
                   maxLines: 5,
                   focusNode: focusNode,
                   controller: textEditingController,

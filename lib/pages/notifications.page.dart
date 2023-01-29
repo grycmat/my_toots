@@ -110,7 +110,7 @@ class _NotificationsPageState extends State<NotificationsPage>
                   }
                 },
                 separatorBuilder: (context, index) =>
-                    const Divider(height: 5, thickness: 2),
+                    const Divider(height: 5, thickness: 1),
                 itemCount: _notifications.length),
       ),
     );
