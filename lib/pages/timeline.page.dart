@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/divider_separator.dart';
 import 'package:my_toots/widgets/no_connection_icon.widget.dart';
 import 'package:my_toots/widgets/status_container.widget.dart';
 import 'package:my_toots/widgets/status_placeholder.widget.dart';
@@ -88,8 +89,7 @@ class _TimelinePageState extends State<TimelinePage>
                 addAutomaticKeepAlives: true,
                 padding: const EdgeInsets.all(8),
                 cacheExtent: 200,
-                separatorBuilder: (_, index) =>
-                    const Divider(height: 5, thickness: 1),
+                separatorBuilder: (_, index) => const DividerSeparator(),
                 controller: _scrollController,
                 itemCount: _isLoading ? 20 : _statuses.length + 1,
                 itemBuilder: (_, index) {

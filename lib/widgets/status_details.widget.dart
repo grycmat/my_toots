@@ -55,14 +55,20 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                       children: [
                         _ancestors.isNotEmpty
                             ? Container(
-                                color: Colors.black12,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
-                                    children: const [
-                                      Icon(Icons
+                                    children: [
+                                      const Icon(Icons
                                           .subdirectory_arrow_right_outlined),
-                                      Text('In response to'),
+                                      Text('In response to',
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondaryContainer)),
                                     ],
                                   ),
                                 ),
@@ -73,14 +79,22 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                         ),
                         _descendants.length > 1
                             ? Container(
-                                color: Colors.black12,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Text('Replies'),
-                                      Icon(Icons
+                                    children: [
+                                      Text(
+                                        'Replies',
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondaryContainer),
+                                      ),
+                                      const Icon(Icons
                                           .subdirectory_arrow_left_outlined),
                                     ],
                                   ),

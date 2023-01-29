@@ -43,9 +43,8 @@ class _StatusActionIconButtonsWidgetState
                     borderRadius: BorderRadius.circular(10),
                   ),
                   context: context,
-                  builder: (_) => getIt
-                      .get<WidgetService>()
-                      .getComposeWidget(inReplyToStatus: widget.status),
+                  builder: (_) => getIt.get<WidgetService>().getComposeWidget(
+                      context: context, inReplyToStatus: widget.status),
                 );
               },
               icon: const Icon(
@@ -117,9 +116,9 @@ class _StatusActionIconButtonsWidgetState
                     borderRadius: BorderRadius.circular(10),
                   ),
                   context: context,
-                  builder: (_) => getIt
-                      .get<WidgetService>()
-                      .getComposeWidget(quotedStatus: widget.status),
+                  builder: (_) => getIt.get<WidgetService>().getComposeWidget(
+                      context: context,
+                      quotedStatus: widget.status.reblog ?? widget.status),
                 );
               },
               icon: const Icon(

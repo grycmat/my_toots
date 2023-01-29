@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
 import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/divider_separator.dart';
 import 'package:my_toots/widgets/favorite_notification.widget.dart';
 import 'package:my_toots/widgets/follow_notification.widget.dart';
 import 'package:my_toots/widgets/mention_notification.widget.dart';
@@ -109,8 +110,7 @@ class _NotificationsPageState extends State<NotificationsPage>
                           'This type of notification is not implemented yet :(');
                   }
                 },
-                separatorBuilder: (context, index) =>
-                    const Divider(height: 5, thickness: 1),
+                separatorBuilder: (context, index) => const DividerSeparator(),
                 itemCount: _notifications.length),
       ),
     );

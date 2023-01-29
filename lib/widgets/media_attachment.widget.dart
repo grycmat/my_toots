@@ -9,42 +9,26 @@ class MediaAttachmentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (mediaAttachments.length) {
-      case 1:
-        return StatusMediaAttachmentDetailsWidget(
-            mediaAttachment: mediaAttachments.first);
-      case 2:
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: ListView(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              for (var mediaAttachment in mediaAttachments)
-                StatusMediaAttachmentDetailsWidget(
-                    mediaAttachment: mediaAttachment)
-            ],
-          ),
-        );
-      case 3:
-      case 4:
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: GridView.count(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            crossAxisSpacing: 3,
-            mainAxisSpacing: 3,
-            children: <Widget>[
-              for (var mediaAttachment in mediaAttachments)
-                StatusMediaAttachmentDetailsWidget(
-                    mediaAttachment: mediaAttachment)
-            ],
-          ),
-        );
-      default:
-        return Container();
+    if (mediaAttachments.isEmpty) return Container();
+
+    if (mediaAttachments.length == 1) {
+      return StatusMediaAttachmentDetailsWidget(
+          mediaAttachment: mediaAttachments.first);
     }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: GridView.count(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        crossAxisCount: 2,
+        crossAxisSpacing: 3,
+        mainAxisSpacing: 3,
+        children: <Widget>[
+          for (var mediaAttachment in mediaAttachments)
+            StatusMediaAttachmentDetailsWidget(mediaAttachment: mediaAttachment)
+        ],
+      ),
+    );
   }
 }

@@ -39,21 +39,25 @@ class _AccountPageState extends State<AccountPage> {
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               title: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.9),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      bottomLeft: Radius.circular(12),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.tertiaryContainer,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AutoSizeText(
+                    widget.account.acct,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AutoSizeText(
-                      widget.account.acct,
-                      maxLines: 1,
-                    ),
-                  )),
+                ),
+              ),
               background: CachedNetworkImage(
                   imageUrl: widget.account.headerStatic, fit: BoxFit.cover),
             ),

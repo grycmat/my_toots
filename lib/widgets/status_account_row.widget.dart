@@ -58,7 +58,7 @@ class StatusAccountRowWidget extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.6,
                           child: Text(account.acct,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodySmall),

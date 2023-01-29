@@ -28,9 +28,32 @@ class WidgetService {
     );
   }
 
-  Widget getComposeWidget({Status? inReplyToStatus, Status? quotedStatus}) =>
-      ComposeStatusWidget(
-        inReplyToStatus: inReplyToStatus,
-        quotedStatus: quotedStatus,
+  Widget getComposeWidget(
+          {required BuildContext context,
+          Status? inReplyToStatus,
+          Status? quotedStatus}) =>
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.95,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(context).primaryColor,
+                ),
+                width: 70,
+                height: 5,
+              ),
+            ),
+            Expanded(
+              child: ComposeStatusWidget(
+                inReplyToStatus: inReplyToStatus,
+                quotedStatus: quotedStatus,
+              ),
+            ),
+          ],
+        ),
       );
 }

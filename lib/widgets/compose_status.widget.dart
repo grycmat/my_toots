@@ -9,6 +9,7 @@ import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_payload.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/services/api.service.dart';
+import 'package:my_toots/widgets/divider_separator.dart';
 import 'package:my_toots/widgets/posting_status_alert.widget.dart';
 import 'package:my_toots/widgets/status.widget.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
@@ -151,10 +152,8 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                             ),
                           );
                         },
-                        separatorBuilder: (context, index) => const Divider(
-                          thickness: 1,
-                          color: Colors.black38,
-                        ),
+                        separatorBuilder: (context, index) =>
+                            const DividerSeparator(),
                       ),
                     ),
                   ),
