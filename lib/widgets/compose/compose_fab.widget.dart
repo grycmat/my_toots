@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:my_toots/widgets/compose_status.widget.dart';
+import 'package:my_toots/widgets/compose/compose_status.widget.dart';
 
 class ComposeFabWidget extends StatelessWidget {
   const ComposeFabWidget({Key? key}) : super(key: key);

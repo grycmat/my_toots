@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/status.widget.dart';
+import 'package:my_toots/widgets/status/status.widget.dart';
 
 class StatusDetailsWidget extends StatefulWidget {
   final Status status;

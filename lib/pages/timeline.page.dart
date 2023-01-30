@@ -5,8 +5,8 @@ import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/divider_separator.dart';
 import 'package:my_toots/widgets/no_connection_icon.widget.dart';
-import 'package:my_toots/widgets/status_container.widget.dart';
-import 'package:my_toots/widgets/status_placeholder.widget.dart';
+import 'package:my_toots/widgets/status/status_container.widget.dart';
+import 'package:my_toots/widgets/status/status_placeholder.widget.dart';
 
 class TimelinePage extends StatefulWidget {
   const TimelinePage({Key? key}) : super(key: key);

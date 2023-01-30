@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_toots/models/status/status.dart';
-import 'package:my_toots/widgets/compose_status.widget.dart';
-import 'package:my_toots/widgets/status_details.widget.dart';
+import 'package:my_toots/widgets/compose/compose_status.widget.dart';
+import 'package:my_toots/widgets/status/status_details.widget.dart';
 
 @singleton
 class WidgetService {

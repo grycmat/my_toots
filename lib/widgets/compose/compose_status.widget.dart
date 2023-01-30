@@ -4,14 +4,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:my_toots/models/account/account.dart';
-import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_payload.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/divider_separator.dart';
 import 'package:my_toots/widgets/posting_status_alert.widget.dart';
-import 'package:my_toots/widgets/status.widget.dart';
+import 'package:my_toots/widgets/status/status.widget.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 
 class ComposeStatusWidget extends StatefulWidget {

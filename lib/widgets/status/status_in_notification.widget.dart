@@ -3,9 +3,9 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/widget.service.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';
-import 'package:my_toots/widgets/status_account_row.widget.dart';
-import 'package:my_toots/widgets/status_action_icon_buttons.widget.dart';
-import 'package:my_toots/widgets/status_html_text.widget.dart';
+import 'package:my_toots/widgets/status/status_account_row.widget.dart';
+import 'package:my_toots/widgets/status/status_action_icon_buttons.widget.dart';
+import 'package:my_toots/widgets/status/status_html_text.widget.dart';
 
 class StatusInNotificationWidget extends StatelessWidget {
   const StatusInNotificationWidget(

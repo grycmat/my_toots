@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
-import 'package:my_toots/widgets/status_account_row.widget.dart';
-import 'package:my_toots/widgets/status_in_notification.widget.dart';
+import 'package:my_toots/widgets/status/status_account_row.widget.dart';
+import 'package:my_toots/widgets/status/status_in_notification.widget.dart';
 
 class FavoriteNotificationWidget extends StatelessWidget {
   const FavoriteNotificationWidget({required this.noti, Key? key})

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
-import 'package:my_toots/widgets/status_media_attachment_details.widget.dart';
+import 'package:my_toots/widgets/status/status_media_attachment_details.widget.dart';
 
 class MediaAttachmentWidget extends StatelessWidget {
   const MediaAttachmentWidget({required this.mediaAttachments, Key? key})

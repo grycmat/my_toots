@@ -5,7 +5,7 @@ import 'package:my_toots/pages/notifications.page.dart';
 import 'package:my_toots/pages/public_timeline.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
 import 'package:my_toots/services/theme.service.dart';
-import 'package:my_toots/widgets/compose_fab.widget.dart';
+import 'package:my_toots/widgets/compose/compose_fab.widget.dart';
 
 class HomePage extends StatefulWidget with GetItStatefulWidgetMixin {
   HomePage({Key? key}) : super(key: key);

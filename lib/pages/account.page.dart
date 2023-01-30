@@ -7,7 +7,7 @@ import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/account_basic_info.widget.dart';
-import 'package:my_toots/widgets/status_container.widget.dart';
+import 'package:my_toots/widgets/status/status_container.widget.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({required this.account, Key? key}) : super(key: key);

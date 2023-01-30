@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/status/status.dart';
-import 'package:my_toots/widgets/media_attachment.widget.dart';
+import 'package:my_toots/widgets/media/media_attachment.widget.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';
-import 'package:my_toots/widgets/status_account_row.widget.dart';
-import 'package:my_toots/widgets/status_action_icon_buttons.widget.dart';
-import 'package:my_toots/widgets/status_html_text.widget.dart';
+import 'package:my_toots/widgets/status/status_account_row.widget.dart';
+import 'package:my_toots/widgets/status/status_action_icon_buttons.widget.dart';
+import 'package:my_toots/widgets/status/status_html_text.widget.dart';
 
 class StatusWidget extends StatelessWidget {
   final Status status;

@@ -9,8 +9,8 @@ import 'package:my_toots/widgets/mention_notification.widget.dart';
 import 'package:my_toots/widgets/no_connection_icon.widget.dart';
 import 'package:my_toots/widgets/poll_notification.widget.dart';
 import 'package:my_toots/widgets/reblog_notification.widget.dart';
-import 'package:my_toots/widgets/status_account_row.widget.dart';
-import 'package:my_toots/widgets/status_in_notification.widget.dart';
+import 'package:my_toots/widgets/status/status_account_row.widget.dart';
+import 'package:my_toots/widgets/status/status_in_notification.widget.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
