@@ -25,7 +25,9 @@ class ComposeStatusWidget extends StatefulWidget {
 
 class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   late final RichTextController _textEditingController;
+  late final TextEditingController _spoilerTextEditingController;
   final _focusNode = FocusNode();
+  bool _spoilerMode = false;
   int _chars = 0;
   List<File> _mediaFiles = [];
   String preSelectionString = '';
@@ -34,6 +36,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
 
   @override
   void initState() {
+    _spoilerTextEditingController = TextEditingController();
     final mentionStyle = TextStyle(
       fontWeight: FontWeight.w800,
       color: Colors.blue.shade200,
@@ -74,6 +77,8 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
 
   @override
   void dispose() {
+    _focusNode.dispose();
+    _spoilerTextEditingController.dispose();
     _textEditingController.dispose();
     super.dispose();
   }
@@ -85,8 +90,10 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
     final uploadedMediaIds = uploadedMedia
         .map((response) => response.data!['id'] as String)
         .toList();
-    final statusPayload =
-        StatusPayload(status: statusText, mediaIds: uploadedMediaIds);
+    final statusPayload = StatusPayload(
+        status: statusText,
+        mediaIds: uploadedMediaIds,
+        spoilerText: _spoilerTextEditingController.text);
 
     if (widget.inReplyToStatus != null) {
       statusPayload.inReplyToId = widget.inReplyToStatus!.id;
@@ -117,6 +124,18 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
               (widget.inReplyToStatus == null
                   ? Container()
                   : StatusWidget(status: widget.inReplyToStatus!)),
+              _spoilerMode
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextField(
+                        controller: _spoilerTextEditingController,
+                        decoration: const InputDecoration(
+                          labelText: 'Spoiler warning',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               RawAutocomplete<Account>(
                 displayStringForOption: (option) => option.acct,
                 textEditingController: _textEditingController,
@@ -268,6 +287,18 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                       onPressed: () {},
                       icon: Icon(
                         Icons.poll_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 30,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _spoilerMode = !_spoilerMode;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.warning_amber_rounded,
                         color: Theme.of(context).colorScheme.primary,
                         size: 30,
                       ),

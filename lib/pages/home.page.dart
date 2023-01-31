@@ -50,6 +50,14 @@ class HomePageState extends State<HomePage>
       appBar: AppBar(
         scrolledUnderElevation: 1,
         title: Text(_appBarTitle[_pageIndex]),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.toggle_on_rounded),
+            onPressed: () {
+              get<ThemeService>().toggleTheme();
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
           elevation: 5,

@@ -64,18 +64,23 @@ class _StatusDetailsWidgetState extends State<StatusDetailsWidget> {
                                     children: [
                                       const Icon(Icons
                                           .subdirectory_arrow_right_outlined),
-                                      Text('In response to',
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSecondaryContainer)),
+                                      Text(
+                                        'In response to',
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondaryContainer),
+                                      ),
                                     ],
                                   ),
                                 ),
                               )
                             : Container(),
                         Center(
-                          child: StatusWidget(status: _descendants[index]),
+                          child: StatusWidget(
+                            status: _descendants[index],
+                            showSpoiler: true,
+                          ),
                         ),
                         _descendants.length > 1
                             ? Container(

@@ -3,7 +3,6 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/divider_separator.dart';
-import 'package:my_toots/widgets/status/status_container.widget.dart';
 import 'package:my_toots/widgets/status/status_in_notification.widget.dart';
 import 'package:my_toots/widgets/status/status_placeholder.widget.dart';
 
