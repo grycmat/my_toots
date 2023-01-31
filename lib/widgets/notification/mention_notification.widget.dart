@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
-import 'package:my_toots/widgets/status/status_in_notification.widget.dart';
+import 'package:my_toots/widgets/notification/status_in_notification.widget.dart';
 
 class MentionNotificationWidget extends StatelessWidget {
   const MentionNotificationWidget({required this.noti, Key? key})

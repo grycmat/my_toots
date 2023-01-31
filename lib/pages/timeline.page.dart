@@ -19,8 +19,9 @@ class _TimelinePageState extends State<TimelinePage>
     with AutomaticKeepAliveClientMixin {
   List<Status> _statuses = [];
   bool _isLoading = true;
+  bool _isFirstLoad = true;
   bool _error = false;
-  late final ScrollController _scrollController = ScrollController();
+  late final ScrollController _scrollController;
 
   Future<void> _getStatuses() async {
     if (!mounted) {
@@ -33,8 +34,8 @@ class _TimelinePageState extends State<TimelinePage>
       setState(() {
         _statuses = statuses;
         _isLoading = false;
+        _isFirstLoad = false;
       });
-      print('refreshed');
       return Future.value();
     }, onError: (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -51,15 +52,21 @@ class _TimelinePageState extends State<TimelinePage>
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     _getStatuses().then((_) {
       _scrollController.addListener(() {
-        if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent - 200) {
+        if (_scrollController.position.atEdge &&
+            _scrollController.position.pixels != 0 &&
+            !_isLoading) {
+          setState(() {
+            _isLoading = true;
+          });
           getIt
               .get<ApiService>()
               .getHomeTimeline(maxId: _statuses.last.id)
               .then((statuses) {
             setState(() {
+              _isLoading = false;
               _statuses = [..._statuses, ...statuses];
             });
             return Future.value();
@@ -91,23 +98,15 @@ class _TimelinePageState extends State<TimelinePage>
                 cacheExtent: 200,
                 separatorBuilder: (_, index) => const DividerSeparator(),
                 controller: _scrollController,
-                itemCount: _isLoading ? 20 : _statuses.length + 1,
+                itemCount: _isFirstLoad ? 20 : _statuses.length,
                 itemBuilder: (_, index) {
-                  if (index == _statuses.length && !_isLoading) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 24.0),
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                  if (!_isLoading) {
-                    return StatusContainerWidget(
-                      status: _statuses[index],
-                    );
+                  if (_isFirstLoad) {
+                    return const StatusPlaceholderWidget();
                   }
 
-                  return const StatusPlaceholderWidget();
+                  return StatusContainerWidget(
+                    status: _statuses[index],
+                  );
                 },
               ),
       ),

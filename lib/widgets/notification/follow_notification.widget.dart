@@ -20,7 +20,7 @@ class FollowNotificationWidget extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 CupertinoIcons.person_add,
-                size: 36,
+                size: 26,
                 color: Colors.blue.shade400,
               ),
             ),

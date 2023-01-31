@@ -5,9 +5,11 @@ import 'package:my_toots/pages/account.page.dart';
 import 'package:shimmer/shimmer.dart';
 
 class StatusAccountRowWidget extends StatelessWidget {
-  const StatusAccountRowWidget({required this.account, Key? key})
+  const StatusAccountRowWidget(
+      {required this.account, this.avatarSize = 50, Key? key})
       : super(key: key);
   final Account account;
+  final double avatarSize;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,8 +25,8 @@ class StatusAccountRowWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: avatarSize,
+            height: avatarSize,
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,

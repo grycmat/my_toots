@@ -6,6 +6,7 @@ class AccountBasicInfoWidget extends StatelessWidget {
   const AccountBasicInfoWidget({required this.account, Key? key})
       : super(key: key);
   final Account account;
+  final double avatarSize = 50;
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
@@ -14,8 +15,8 @@ class AccountBasicInfoWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: avatarSize,
+            height: avatarSize,
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,

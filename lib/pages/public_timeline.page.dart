@@ -3,7 +3,7 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/divider_separator.dart';
-import 'package:my_toots/widgets/status/status_in_notification.widget.dart';
+import 'package:my_toots/widgets/notification/status_in_notification.widget.dart';
 import 'package:my_toots/widgets/status/status_placeholder.widget.dart';
 
 class PublicTimelinePage extends StatefulWidget {
@@ -15,9 +15,10 @@ class PublicTimelinePage extends StatefulWidget {
 
 class _PublicTimelinePageState extends State<PublicTimelinePage>
     with AutomaticKeepAliveClientMixin {
-  List<Status> statuses = [];
+  List<Status> _statuses = [];
+  bool _isFirstLoad = true;
   bool _isLoading = true;
-  late final ScrollController _scrollController = ScrollController();
+  late final ScrollController _scrollController;
 
   Future<void> _getStatuses() async {
     if (!mounted) {
@@ -27,27 +28,46 @@ class _PublicTimelinePageState extends State<PublicTimelinePage>
       _isLoading = true;
     });
     return getIt.get<ApiService>().getPublicTimeline().then((statuses) {
+      setState(
+        () {
+          _statuses = statuses;
+          _isLoading = false;
+          _isFirstLoad = false;
+        },
+      );
+      return Future.value();
+    }, onError: (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ooops! No internet connection!'),
+        ),
+      );
       setState(() {
-        this.statuses = statuses;
         _isLoading = false;
       });
-      return Future.value();
     });
   }
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+
     _getStatuses().then((_) {
       _scrollController.addListener(() {
-        if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent - 200) {
+        if (_scrollController.position.atEdge &&
+            _scrollController.position.pixels != 0 &&
+            !_isLoading) {
+          setState(() {
+            _isLoading = true;
+          });
           getIt
               .get<ApiService>()
-              .getHomeTimeline(maxId: statuses.last.id)
+              .getHomeTimeline(maxId: _statuses.last.id)
               .then((statuses) {
             setState(() {
-              this.statuses = [...this.statuses, ...statuses];
+              _isLoading = false;
+              _statuses = [..._statuses, ...statuses];
             });
             return Future.value();
           });
@@ -76,22 +96,14 @@ class _PublicTimelinePageState extends State<PublicTimelinePage>
           cacheExtent: 200,
           separatorBuilder: (_, index) => const DividerSeparator(),
           controller: _scrollController,
-          itemCount: _isLoading ? 20 : statuses.length + 1,
+          itemCount: _isLoading ? 20 : _statuses.length,
           itemBuilder: (_, index) {
-            if (index == statuses.length) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24.0),
-                  child: CircularProgressIndicator(),
-                ),
-              );
+            if (_isLoading) {
+              return const StatusPlaceholderWidget();
             }
-            if (!_isLoading) {
-              return StatusInNotificationWidget(
-                status: statuses[index],
-              );
-            }
-            return const StatusPlaceholderWidget();
+            return StatusInNotificationWidget(
+              status: _statuses[index],
+            );
           },
         ),
       ),

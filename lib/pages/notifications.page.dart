@@ -3,14 +3,14 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/divider_separator.dart';
-import 'package:my_toots/widgets/favorite_notification.widget.dart';
-import 'package:my_toots/widgets/follow_notification.widget.dart';
-import 'package:my_toots/widgets/mention_notification.widget.dart';
+import 'package:my_toots/widgets/notification/favorite_notification.widget.dart';
+import 'package:my_toots/widgets/notification/follow_notification.widget.dart';
+import 'package:my_toots/widgets/notification/mention_notification.widget.dart';
 import 'package:my_toots/widgets/no_connection_icon.widget.dart';
 import 'package:my_toots/widgets/poll_notification.widget.dart';
-import 'package:my_toots/widgets/reblog_notification.widget.dart';
+import 'package:my_toots/widgets/notification/reblog_notification.widget.dart';
 import 'package:my_toots/widgets/status/status_account_row.widget.dart';
-import 'package:my_toots/widgets/status/status_in_notification.widget.dart';
+import 'package:my_toots/widgets/notification/status_in_notification.widget.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);

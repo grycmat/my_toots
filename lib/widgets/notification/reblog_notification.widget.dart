@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
 import 'package:my_toots/widgets/status/status_account_row.widget.dart';
-import 'package:my_toots/widgets/status/status_in_notification.widget.dart';
+import 'package:my_toots/widgets/notification/status_in_notification.widget.dart';
 
 class ReblogNotificationWidget extends StatelessWidget {
   const ReblogNotificationWidget({required this.noti, Key? key})
@@ -21,7 +21,7 @@ class ReblogNotificationWidget extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.loop_outlined,
-                size: 36,
+                size: 26,
                 color: Colors.green.shade400,
               ),
             ),

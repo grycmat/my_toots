@@ -7,7 +7,6 @@ import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/application.dart';
 import 'package:my_toots/models/hashtag/hashtag.dart';
 import 'package:my_toots/models/instance/instance.dart';
-import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/models/notification/account_notification.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/models/status/status_context.dart';
@@ -95,7 +94,7 @@ class ApiService {
 
   Future<Account> findUserByUsername(String userInstance, String user) async {
     final response = await Dio().get(
-      'https://$_instance/api/v1/accounts/search?q=$user@$userInstance',
+      'https://$_instance/api/v1/accounts/search?q=$user@$userInstance&limit=1',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
@@ -129,7 +128,7 @@ class ApiService {
 
   Future<List<Status>> getPublicTimeline() async {
     final response =
-        await Dio().get('https://$_instance/api/v1/timelines/public');
+        await Dio().get('https://$_instance/api/v1/timelines/public?limit=40');
 
     return (response.data as List).map((e) => Status.fromMap(e)).toList();
   }
@@ -217,7 +216,7 @@ class ApiService {
 
   Future<List<AccountNotification>> getNotifications() async {
     final response = await Dio().get(
-      'https://$_instance/api/v1/notifications',
+      'https://$_instance/api/v1/notifications?limit=30',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
@@ -229,7 +228,7 @@ class ApiService {
   Future<List<Status>> getHomeTimeline({String? maxId}) async {
     if (maxId != null) {
       final response = await Dio().get(
-        'https://$_instance/api/v1/timelines/home?max_id=$maxId',
+        'https://$_instance/api/v1/timelines/home?max_id=$maxId&limit=40',
         options: Options(
             headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
       );
@@ -239,7 +238,7 @@ class ApiService {
     }
 
     final response = await Dio().get(
-      'https://$_instance/api/v1/timelines/home',
+      'https://$_instance/api/v1/timelines/home?limit=40',
       options: Options(
           headers: {'Authorization': 'Bearer ${_userToken!.accessToken}'}),
     );
