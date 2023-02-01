@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/token.dart';
 import 'package:my_toots/pages/home.page.dart';
+import 'package:my_toots/pages/select_instance.page.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -22,17 +23,35 @@ class _WebLoginPageState extends State<WebLoginPage> {
     super.initState();
   }
 
+  Future<Map<String, Object>> _prepareAppCredentials() =>
+      getIt.get<ApiService>().prepareAppCredentials(widget.instance);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Title'),
+        title: const Text('Log in'),
       ),
       body: FutureBuilder(
-        future: getIt.get<ApiService>().prepareAppCredentials(widget.instance),
+        future: _prepareAppCredentials(),
         builder: (_, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Could not connect to this instance!'),
+                ),
+              );
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const SelectInstancePage(),
+                  ),
+                  (route) => false);
+            });
+            return Container();
           }
           if (snapshot.hasData) {
             return WebView(
@@ -48,11 +67,11 @@ class _WebLoginPageState extends State<WebLoginPage> {
                       getIt.get<ApiService>().userToken =
                           Token.fromMap(value.data);
 
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) => HomePage(),
-                        ),
-                      );
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (_) => HomePage(),
+                          ),
+                          (route) => false);
                     });
                   }
                   return NavigationDecision.navigate;
