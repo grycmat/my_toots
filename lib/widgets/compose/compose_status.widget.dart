@@ -58,9 +58,11 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
     if (widget.quotedStatus != null) {
       final parsedHtml = parse(widget.quotedStatus!.content);
       _textEditingController.text =
-          'Quoting @${widget.quotedStatus!.account.acct}\n\n📜 ${parsedHtml.body?.text}\n\n📜 ${widget.quotedStatus!.url}';
+          '\nQuoting @${widget.quotedStatus!.account.acct}\n\n📜 ${parsedHtml.body?.text}\n\n📜 ${widget.quotedStatus!.url}';
       _mentions[widget.quotedStatus!.account.id] =
           widget.quotedStatus!.account.acct;
+      _textEditingController.selection =
+          TextSelection.fromPosition(TextPosition(offset: 0));
     }
 
     setState(() {

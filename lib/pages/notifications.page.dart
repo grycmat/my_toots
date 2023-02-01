@@ -11,6 +11,7 @@ import 'package:my_toots/widgets/poll_notification.widget.dart';
 import 'package:my_toots/widgets/notification/reblog_notification.widget.dart';
 import 'package:my_toots/widgets/status/status_account_row.widget.dart';
 import 'package:my_toots/widgets/notification/status_in_notification.widget.dart';
+import 'package:my_toots/widgets/status/status_placeholder.widget.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _NotificationsPageState extends State<NotificationsPage>
     with AutomaticKeepAliveClientMixin {
   List<AccountNotification> _notifications = [];
   bool _error = false;
+  bool _isFirstLoad = true;
 
   Future<void> _getNotifications() async {
     if (!mounted) {
@@ -31,6 +33,7 @@ class _NotificationsPageState extends State<NotificationsPage>
     return getIt.get<ApiService>().getNotifications().then((notifications) {
       setState(() {
         _notifications = notifications;
+        _isFirstLoad = false;
       });
       return Future.value();
     }, onError: (error) {
@@ -61,7 +64,12 @@ class _NotificationsPageState extends State<NotificationsPage>
         child: _error
             ? const NoConnectionIconWidget()
             : ListView.separated(
+                padding: const EdgeInsets.all(8),
                 itemBuilder: (context, index) {
+                  if (_isFirstLoad) {
+                    return const StatusPlaceholderWidget();
+                  }
+
                   final noti = _notifications[index];
 
                   switch (noti.type) {

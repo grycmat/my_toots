@@ -18,8 +18,16 @@ class ThemeService extends ChangeNotifier {
     Colors.blueGrey,
   ];
   bool _isDark = false;
+  bool _fabVisible = true;
+
   MaterialColor primarySwatch = Colors.blue;
   bool get isDark => _isDark;
+  bool get fabVisible => _fabVisible;
+
+  setFabVisible(bool value) {
+    _fabVisible = value;
+    notifyListeners();
+  }
 
   setPrimarySwatch(MaterialColor color) {
     primarySwatch = color;

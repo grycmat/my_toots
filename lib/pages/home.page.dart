@@ -1,21 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:my_toots/pages/notifications.page.dart';
 import 'package:my_toots/pages/public_timeline.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
-import 'package:my_toots/services/theme.service.dart';
 import 'package:my_toots/widgets/compose/compose_fab.widget.dart';
+import 'package:my_toots/widgets/settings_widget.dart';
 
-class HomePage extends StatefulWidget with GetItStatefulWidgetMixin {
+class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage>
-    with TickerProviderStateMixin, GetItStateMixin {
+class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _pageIndex = 0;
   late final TabController _tabController;
   final _appBarTitle = [
@@ -52,9 +50,10 @@ class HomePageState extends State<HomePage>
         title: Text(_appBarTitle[_pageIndex]),
         actions: [
           IconButton(
-            icon: const Icon(Icons.toggle_on_rounded),
+            icon: const Icon(Icons.more_vert_outlined),
             onPressed: () {
-              get<ThemeService>().toggleTheme();
+              showModalBottomSheet(
+                  context: context, builder: (context) => SettingsWidget());
             },
           ),
         ],
@@ -94,7 +93,7 @@ class HomePageState extends State<HomePage>
             Center(child: TimelinePage()),
             Center(child: NotificationsPage()),
             Center(child: PublicTimelinePage()),
-            Center(child: Text("I'm working on it:)")),
+            Center(child: Text("👷 I'm working on it 👷")),
           ],
         ),
       ),
