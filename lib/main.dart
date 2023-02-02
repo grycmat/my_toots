@@ -35,11 +35,13 @@ class MyToots extends StatelessWidget with GetItMixin {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        splashColor: lightColorScheme.tertiaryContainer,
         useMaterial3: true,
         colorScheme: lightColorScheme,
         fontFamily: 'Comfortaa',
       ),
       darkTheme: ThemeData(
+        splashColor: darkColorScheme.tertiaryContainer,
         useMaterial3: true,
         colorScheme: darkColorScheme,
         fontFamily: 'Comfortaa',

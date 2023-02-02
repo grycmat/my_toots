@@ -37,33 +37,50 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  prefixText: 'https://',
-                  border: OutlineInputBorder(),
-                  labelText: 'Find Instance',
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.verified_outlined,
+                  size: 100,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => WebLoginPage(_controller.text),
-                    ),
-                  );
-                },
-                child: const Text('Log in selected instance'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                    prefixText: 'https://',
+                    border: OutlineInputBorder(),
+                    labelText: 'Choose Instance',
+                  ),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const WebLoginPage('101010.pl'),
-                    ),
-                  );
-                },
-                child: const Text('Or try 101010.pl!'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => WebLoginPage(_controller.text),
+                      ),
+                    );
+                  },
+                  child: const Text('Log in selected instance'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const WebLoginPage('101010.pl'),
+                      ),
+                    );
+                  },
+                  child: const Text('Or try 101010.pl!'),
+                ),
               )
             ],
           ),

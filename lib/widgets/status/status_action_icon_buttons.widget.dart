@@ -37,8 +37,7 @@ class _StatusActionIconButtonsWidgetState
           children: [
             IconButton(
               onPressed: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
+                showBottomSheet(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
