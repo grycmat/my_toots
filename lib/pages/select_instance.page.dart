@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:my_toots/pages/web_login.page.dart';
 
 class SelectInstancePage extends StatefulWidget {
@@ -43,7 +44,10 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                   Icons.verified_outlined,
                   size: 100,
                   color: Theme.of(context).colorScheme.primary,
-                ),
+                ).animate().fadeIn().slide(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOutCirc,
+                    ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -54,10 +58,14 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                     border: OutlineInputBorder(),
                     labelText: 'Choose Instance',
                   ),
-                ),
+                ).animate().fadeIn().slide(
+                      duration: const Duration(milliseconds: 300),
+                      delay: const Duration(milliseconds: 100),
+                      curve: Curves.easeOutCirc,
+                    ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
@@ -67,7 +75,11 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                     );
                   },
                   child: const Text('Log in selected instance'),
-                ),
+                ).animate().fadeIn().slide(
+                      duration: const Duration(milliseconds: 300),
+                      delay: const Duration(milliseconds: 200),
+                      curve: Curves.easeOutCirc,
+                    ),
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
@@ -80,7 +92,11 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                     );
                   },
                   child: const Text('Or try 101010.pl!'),
-                ),
+                ).animate().fadeIn().slide(
+                      duration: const Duration(milliseconds: 300),
+                      delay: const Duration(milliseconds: 300),
+                      curve: Curves.easeOutCirc,
+                    ),
               )
             ],
           ),

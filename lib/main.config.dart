@@ -32,7 +32,8 @@ Future<_i1.GetIt> init(
     () => registerModule.prefs,
     preResolve: true,
   );
-  gh.singleton<_i4.ThemeService>(_i4.ThemeService());
+  gh.singleton<_i4.ThemeService>(
+      _i4.ThemeService.init(gh<_i3.SharedPreferences>()));
   gh.singleton<_i5.WidgetService>(_i5.WidgetService());
   gh.singleton<_i6.ApiService>(
       _i6.ApiService.init(gh<_i3.SharedPreferences>()));

@@ -117,8 +117,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
       height: MediaQuery.of(context).size.height * 0.95,
       color: Theme.of(context).colorScheme.surface,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(
-            8, 8, 8, MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
