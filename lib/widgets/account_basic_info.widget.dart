@@ -170,7 +170,7 @@ class AccountBasicInfoWidget extends StatelessWidget {
                             Text(
                               account.statusesCount.toString(),
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             Text(
                               'Posts',
@@ -196,7 +196,7 @@ class AccountBasicInfoWidget extends StatelessWidget {
                             Text(
                               account.followersCount.toString(),
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             Text('Followers',
                                 textAlign: TextAlign.center,
@@ -220,7 +220,7 @@ class AccountBasicInfoWidget extends StatelessWidget {
                             Text(
                               account.followingCount.toString(),
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             Text('Following',
                                 textAlign: TextAlign.center,

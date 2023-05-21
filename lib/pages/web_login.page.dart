@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/token.dart';
@@ -17,14 +15,46 @@ class WebLoginPage extends StatefulWidget {
 }
 
 class _WebLoginPageState extends State<WebLoginPage> {
-  @override
-  void initState() {
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
-    super.initState();
-  }
-
+  late WebViewController controller;
   Future<Map<String, Object>> _prepareAppCredentials() =>
       getIt.get<ApiService>().prepareAppCredentials(widget.instance);
+
+  @override
+  void initState() {
+    print(widget.instance);
+    super.initState();
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest navigation) {
+            if (navigation.url.startsWith(REDIRECT_URL)) {
+              NavigationDecision.prevent;
+              var uri = Uri.parse(navigation.url);
+              var code = uri.queryParameters['code'];
+              getIt.get<ApiService>().userAuthCode = code!;
+              getIt.get<ApiService>().authorizeUser(code)!.then((value) {
+                getIt.get<ApiService>().userToken = Token.fromMap(value.data);
+
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (_) => const HomePage(),
+                    ),
+                    (route) => false);
+              });
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,28 +84,11 @@ class _WebLoginPageState extends State<WebLoginPage> {
             return Container();
           }
           if (snapshot.hasData) {
-            return WebView(
-                initialUrl:
-                    getIt.get<ApiService>().getLoginUrl(widget.instance),
-                javascriptMode: JavascriptMode.unrestricted,
-                navigationDelegate: (navigation) async {
-                  if (navigation.url.startsWith(REDIRECT_URL)) {
-                    var uri = Uri.parse(navigation.url);
-                    var code = uri.queryParameters['code'];
-                    getIt.get<ApiService>().userAuthCode = code!;
-                    getIt.get<ApiService>().authorizeUser(code)!.then((value) {
-                      getIt.get<ApiService>().userToken =
-                          Token.fromMap(value.data);
-
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (_) => HomePage(),
-                          ),
-                          (route) => false);
-                    });
-                  }
-                  return NavigationDecision.navigate;
-                });
+            return WebViewWidget(
+              controller: controller
+                ..loadRequest(Uri.parse(
+                    getIt.get<ApiService>().getLoginUrl(widget.instance))),
+            );
           }
           return const Center(
             child: CircularProgressIndicator(),

@@ -26,7 +26,7 @@ class ComposeFabWidget extends StatelessWidget {
           width: _fabDimension,
           child: Center(
             child: Icon(
-              Icons.add,
+              Icons.edit,
               color: Theme.of(context).colorScheme.onSecondary,
             ),
           ),

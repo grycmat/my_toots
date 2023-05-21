@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';

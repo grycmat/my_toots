@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:my_toots/models/account/emoji.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
@@ -25,8 +24,8 @@ class Status {
   int reblogsCount;
   int favouritesCount;
   DateTime? editedAt;
-  bool favourited;
-  bool reblogged;
+  bool? favourited;
+  bool? reblogged;
   bool? muted;
   bool? bookmarked;
   String content;
@@ -95,7 +94,7 @@ class Status {
         editedAt: data['edited_at'] == null
             ? null
             : DateTime.parse(data['edited_at'] as String),
-        favourited: data['favourited'] as bool,
+        favourited: data['favourited'],
         reblogged: data['reblogged'] as bool,
         muted: data['muted'] as bool?,
         bookmarked: data['bookmarked'] as bool?,

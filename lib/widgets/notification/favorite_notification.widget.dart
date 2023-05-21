@@ -34,6 +34,7 @@ class FavoriteNotificationWidget extends StatelessWidget {
                     elevation: 1,
                     child: StatusInNotificationWidget(
                       status: noti.status!,
+                      compactProfile: true,
                     ),
                   ),
                 ],

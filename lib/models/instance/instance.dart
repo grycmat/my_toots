@@ -4,7 +4,6 @@ import 'configuration.dart';
 import 'contact.dart';
 import 'registrations.dart';
 import 'rule.dart';
-import 'thumbnail.dart';
 import 'usage.dart';
 
 class Instance {

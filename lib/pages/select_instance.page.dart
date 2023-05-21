@@ -12,7 +12,7 @@ class SelectInstancePage extends StatefulWidget {
 
 class _SelectInstancePageState extends State<SelectInstancePage> {
   late final TextEditingController _controller;
-  bool _isSearching = false;
+  final bool _isSearching = false;
 
   @override
   initState() {

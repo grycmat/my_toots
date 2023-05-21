@@ -62,7 +62,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
       _mentions[widget.quotedStatus!.account.id] =
           widget.quotedStatus!.account.acct;
       _textEditingController.selection =
-          TextSelection.fromPosition(TextPosition(offset: 0));
+          TextSelection.fromPosition(const TextPosition(offset: 0));
     }
 
     setState(() {
@@ -117,7 +117,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
       height: MediaQuery.of(context).size.height * 0.95,
       color: Theme.of(context).colorScheme.surface,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -145,7 +145,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                   alignment: Alignment.topLeft,
                   child: Material(
                     elevation: 4.0,
-                    child: Container(
+                    child: SizedBox(
                       height: 200.0,
                       child: ListView.separated(
                         padding: const EdgeInsets.all(8.0),
@@ -239,8 +239,9 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                                   ),
                                 ),
                                 IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.close))
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.close),
+                                )
                               ],
                             ),
                           )
@@ -257,8 +258,17 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                     IconButton(
                       onPressed: () {
                         FilePicker.platform
-                            .pickFiles(allowMultiple: true)
+                            .pickFiles(allowMultiple: false)
                             .then((FilePickerResult? result) {
+                          if (_mediaFiles.length >= 4) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text('You can only add up to 4 pics 😔'),
+                              ),
+                            );
+                            return;
+                          }
                           if (result != null) {
                             final List<PlatformFile> selectedFiles =
                                 result.files;
@@ -274,7 +284,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Uploading media aborted'),
+                                content: Text('Uploading aborted'),
                               ),
                             );
                           }

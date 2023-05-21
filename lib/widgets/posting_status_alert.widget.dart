@@ -5,13 +5,13 @@ class PostingStatusAlertWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return const AlertDialog(
       content: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text('posting status'),
             Padding(
               padding: EdgeInsets.only(top: 8.0),

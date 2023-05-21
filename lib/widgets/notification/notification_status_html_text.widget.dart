@@ -15,9 +15,8 @@ class NotificationStatusHtmlTextWidget extends StatelessWidget {
           constraints: const BoxConstraints(maxHeight: 200),
           child: Html(
             data: status.content,
-            onLinkTap: (url, context, attributes, element) {
+            onLinkTap: (url, attributes, element) {
               print(url);
-              print(context);
               print(attributes);
               print(element);
             },

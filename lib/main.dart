@@ -49,7 +49,7 @@ class MyToots extends StatelessWidget with GetItMixin {
       themeMode: watchOnly<ThemeService, ThemeMode>((ThemeService service) =>
           service.isDark ? ThemeMode.dark : ThemeMode.light),
       home: _service.hasUserCredentials()
-          ? HomePage()
+          ? const HomePage()
           : const SelectInstancePage(),
     );
   }

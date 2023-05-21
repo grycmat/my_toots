@@ -21,8 +21,8 @@ class _StatusActionIconButtonsWidgetState
 
   @override
   void initState() {
-    _isReblogged = widget.status.reblogged;
-    _isFavorited = widget.status.favourited;
+    _isReblogged = widget.status.reblogged ?? false;
+    _isFavorited = widget.status.favourited ?? false;
     super.initState();
   }
 
@@ -137,9 +137,9 @@ class _StatusActionIconButtonsWidgetState
             ),
           ],
         ),
-        Row(
+        const Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(
               Icons.more_vert_rounded,
             ),

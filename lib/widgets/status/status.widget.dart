@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/widgets/media/media_attachment.widget.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';

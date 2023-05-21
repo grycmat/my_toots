@@ -9,10 +9,14 @@ import 'package:my_toots/widgets/status/status_html_text.widget.dart';
 
 class StatusInNotificationWidget extends StatelessWidget {
   const StatusInNotificationWidget(
-      {required this.status, this.showActions = false, Key? key})
+      {required this.status,
+      this.showActions = false,
+      this.compactProfile = false,
+      Key? key})
       : super(key: key);
   final Status status;
   final bool showActions;
+  final bool compactProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +32,12 @@ class StatusInNotificationWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
-            child: StatusAccountRowWidget(account: status.account),
-          ),
+          compactProfile
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
+                  child: StatusAccountRowWidget(account: status.account),
+                ),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
             child: Column(

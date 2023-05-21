@@ -24,7 +24,7 @@ class StatusHtmlTextWidget extends StatelessWidget {
       children: [
         Html(
           data: status.content,
-          onLinkTap: (url, renderContext, attributes, element) {
+          onLinkTap: (url, attributes, element) {
             print(context);
             print(attributes);
             print(element);

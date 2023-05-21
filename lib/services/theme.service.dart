@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const IS_DARK = 'application';
+const IS_DARK = 'is_dark';
 
 @singleton
 class ThemeService extends ChangeNotifier {
-  late SharedPreferences _prefs;
+  final SharedPreferences _prefs;
   bool _isDark = false;
   bool _fabVisible = true;
 
   ThemeService({required SharedPreferences prefs, required isDark})
-      : _prefs = prefs;
+      : _prefs = prefs,
+        _isDark = isDark;
 
   @factoryMethod
   factory ThemeService.init(SharedPreferences prefs) {

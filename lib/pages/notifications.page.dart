@@ -7,6 +7,7 @@ import 'package:my_toots/widgets/notification/favorite_notification.widget.dart'
 import 'package:my_toots/widgets/notification/follow_notification.widget.dart';
 import 'package:my_toots/widgets/notification/mention_notification.widget.dart';
 import 'package:my_toots/widgets/no_connection_icon.widget.dart';
+import 'package:my_toots/widgets/notification/status_update_notification.widget.dart';
 import 'package:my_toots/widgets/poll_notification.widget.dart';
 import 'package:my_toots/widgets/notification/reblog_notification.widget.dart';
 import 'package:my_toots/widgets/status/status_account_row.widget.dart';
@@ -65,6 +66,10 @@ class _NotificationsPageState extends State<NotificationsPage>
             ? const NoConnectionIconWidget()
             : ListView.separated(
                 padding: const EdgeInsets.all(8),
+                addAutomaticKeepAlives: true,
+                cacheExtent: 200,
+                separatorBuilder: (_, index) => const DividerSeparator(),
+                itemCount: _isFirstLoad ? 20 : _notifications.length,
                 itemBuilder: (context, index) {
                   if (_isFirstLoad) {
                     return const StatusPlaceholderWidget();
@@ -106,20 +111,13 @@ class _NotificationsPageState extends State<NotificationsPage>
                         ],
                       );
                     case 'update':
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text('Status updated'),
-                          StatusAccountRowWidget(account: noti.account),
-                        ],
-                      );
+                      return StatusUpdateNotificationWidget(noti: noti);
                     default:
                       return const Text(
                           'This type of notification is not implemented yet :(');
                   }
                 },
-                separatorBuilder: (context, index) => const DividerSeparator(),
-                itemCount: _notifications.length),
+              ),
       ),
     );
   }

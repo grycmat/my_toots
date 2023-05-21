@@ -8,7 +8,7 @@ class DividerSeparator extends StatelessWidget {
     return const Divider(
       height: 5,
       thickness: 1,
-      color: Colors.black38,
+      color: Colors.black12,
     );
   }
 }

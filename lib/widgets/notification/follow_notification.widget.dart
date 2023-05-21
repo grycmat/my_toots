@@ -30,7 +30,7 @@ class FollowNotificationWidget extends StatelessWidget {
                 child: Icon(
                   CupertinoIcons.person_add,
                   size: 26,
-                  color: Colors.blue.shade400,
+                  color: Colors.green.shade400,
                 ),
               ),
               Expanded(

@@ -16,13 +16,13 @@ class LinkPreviewWidget extends StatelessWidget {
       child: AnyLinkPreview(
         displayDirection: UIDirection.uiDirectionHorizontal,
         bodyStyle: TextStyle(
-          color: Theme.of(context).textTheme.headline1!.color,
+          color: Theme.of(context).textTheme.displayLarge!.color,
         ),
         titleStyle: TextStyle(
           color: Theme.of(context).textTheme.bodyLarge!.color,
         ),
         errorWidget: const SizedBox(),
-        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         removeElevation: true,
         link: element.attributes['href']!,
       ),

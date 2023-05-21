@@ -7,7 +7,7 @@ import 'package:my_toots/widgets/compose/compose_fab.widget.dart';
 import 'package:my_toots/widgets/settings_widget.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
@@ -92,7 +92,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           children: const [
             Center(child: TimelinePage()),
             Center(child: NotificationsPage()),
-            Center(child: PublicTimelinePage()),
+            // Center(child: PublicTimelinePage()),
+            Center(child: Text("👷 I'm working on it 👷")),
             Center(child: Text("👷 I'm working on it 👷")),
           ],
         ),
