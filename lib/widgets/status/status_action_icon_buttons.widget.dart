@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/services/widget.service.dart';
 import 'package:my_toots/widgets/compose/compose_status.widget.dart';
+import 'package:share_plus/share_plus.dart';
 
 class StatusActionIconButtonsWidget extends StatefulWidget {
   const StatusActionIconButtonsWidget({required this.status, Key? key})
@@ -47,7 +47,7 @@ class _StatusActionIconButtonsWidgetState
                 );
               },
               openBuilder: (BuildContext context, VoidCallback openAction) {
-                return const ComposeStatusWidget();
+                return ComposeStatusWidget(inReplyToStatus: widget.status);
               },
               closedElevation: 0,
             ),
@@ -108,22 +108,20 @@ class _StatusActionIconButtonsWidgetState
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            OpenContainer(
+              closedBuilder: (BuildContext context, VoidCallback openAction) {
+                return IconButton(
+                  onPressed: openAction,
+                  icon: const Icon(
+                    Icons.format_quote_outlined,
                   ),
-                  context: context,
-                  builder: (_) => getIt.get<WidgetService>().getComposeWidget(
-                      context: context,
-                      quotedStatus: widget.status.reblog ?? widget.status),
                 );
               },
-              icon: const Icon(
-                Icons.format_quote_outlined,
-              ),
+              openBuilder: (BuildContext context, VoidCallback openAction) {
+                return ComposeStatusWidget(
+                    quotedStatus: widget.status.reblog ?? widget.status);
+              },
+              closedElevation: 0,
             ),
           ],
         ),
@@ -131,7 +129,9 @@ class _StatusActionIconButtonsWidgetState
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Share.share(widget.status.uri!);
+              },
               icon: const Icon(
                 Icons.share_outlined,
               ),
