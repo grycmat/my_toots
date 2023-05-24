@@ -43,7 +43,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      floatingActionButton: const ComposeFabWidget(),
       appBar: AppBar(
         scrolledUnderElevation: 1,
         title: Text(_appBarTitle[_pageIndex]),
@@ -86,14 +85,23 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ]),
       body: SafeArea(
-        child: TabBarView(
-          controller: _tabController,
-          children: const [
-            Center(child: TimelinePage()),
-            Center(child: NotificationsPage()),
-            // Center(child: PublicTimelinePage()),
-            Center(child: Text("👷 I'm working on it 👷")),
-            Center(child: Text("👷 I'm working on it 👷")),
+        child: Stack(
+          children: [
+            TabBarView(
+              controller: _tabController,
+              children: const [
+                Center(child: TimelinePage()),
+                Center(child: NotificationsPage()),
+                // Center(child: PublicTimelinePage()),
+                Center(child: Text("👷 I'm working on it 👷")),
+                Center(child: Text("👷 I'm working on it 👷")),
+              ],
+            ),
+            const Positioned(
+              right: 16,
+              bottom: 16,
+              child: ComposeFabWidget(),
+            )
           ],
         ),
       ),
