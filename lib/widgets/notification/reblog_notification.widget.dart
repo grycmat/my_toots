@@ -32,6 +32,7 @@ class ReblogNotificationWidget extends StatelessWidget {
                   Card(
                     elevation: 1,
                     child: StatusInNotificationWidget(
+                      compactProfile: true,
                       status: noti.status!,
                     ),
                   ),

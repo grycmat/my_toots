@@ -38,6 +38,7 @@ class _StatusActionIconButtonsWidgetState
           mainAxisSize: MainAxisSize.min,
           children: [
             OpenContainer(
+              closedColor: Colors.transparent,
               closedBuilder: (BuildContext context, VoidCallback openAction) {
                 return IconButton(
                   onPressed: openAction,
@@ -109,6 +110,7 @@ class _StatusActionIconButtonsWidgetState
           mainAxisSize: MainAxisSize.min,
           children: [
             OpenContainer(
+              closedColor: Colors.transparent,
               closedBuilder: (BuildContext context, VoidCallback openAction) {
                 return IconButton(
                   onPressed: openAction,
