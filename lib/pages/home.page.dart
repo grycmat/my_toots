@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/pages/notifications.page.dart';
-import 'package:my_toots/pages/public_timeline.page.dart';
 import 'package:my_toots/pages/timeline.page.dart';
 import 'package:my_toots/widgets/compose/compose_fab.widget.dart';
 import 'package:my_toots/widgets/settings_widget.dart';

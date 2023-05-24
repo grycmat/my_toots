@@ -45,11 +45,12 @@ class StatusWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
-              child: StatusAccountRowWidget(
-                  account: status.reblog == null
-                      ? status.account
-                      : status.reblog!.account)),
+            padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 4),
+            child: StatusAccountRowWidget(
+                account: status.reblog == null
+                    ? status.account
+                    : status.reblog!.account),
+          ),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
             child: Column(

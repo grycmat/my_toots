@@ -29,7 +29,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   final _focusNode = FocusNode();
   bool _spoilerMode = false;
   int _chars = 0;
-  List<File> _mediaFiles = [];
+  final List<File> _mediaFiles = [];
   String preSelectionString = '';
   final List<String> _mediaIds = [];
   final Map<String, String> _mentions = {};
@@ -113,211 +113,215 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   @override
   Widget build(BuildContext context) {
     final service = getIt.get<ApiService>();
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.95,
-      color: Theme.of(context).colorScheme.surface,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              (widget.inReplyToStatus == null
-                  ? Container()
-                  : StatusWidget(status: widget.inReplyToStatus!)),
-              _spoilerMode
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextField(
-                        controller: _spoilerTextEditingController,
-                        decoration: const InputDecoration(
-                          labelText: 'Spoiler warning',
-                          border: OutlineInputBorder(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Compose'),
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height * 0.95,
+        color: Theme.of(context).colorScheme.surface,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                (widget.inReplyToStatus == null
+                    ? Container()
+                    : StatusWidget(status: widget.inReplyToStatus!)),
+                _spoilerMode
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: TextField(
+                          controller: _spoilerTextEditingController,
+                          decoration: const InputDecoration(
+                            labelText: 'Spoiler warning',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+                RawAutocomplete<Account>(
+                  displayStringForOption: (option) => option.acct,
+                  textEditingController: _textEditingController,
+                  focusNode: _focusNode,
+                  optionsViewBuilder: (context, onSelected, options) => Align(
+                    alignment: Alignment.topLeft,
+                    child: Material(
+                      elevation: 4.0,
+                      child: SizedBox(
+                        height: 200.0,
+                        child: ListView.separated(
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: options.length,
+                          itemBuilder: (context, index) {
+                            final option = options.elementAt(index);
+                            return InkWell(
+                              onTap: () {
+                                final splitted =
+                                    _textEditingController.text.split(' ');
+                                splitted.removeAt(splitted.length - 1);
+                                final nextText = splitted.join(' ');
+                                _textEditingController.text =
+                                    '$nextText @${option.acct} ';
+                                _mentions[option.id] = option.acct;
+                                _textEditingController.selection =
+                                    TextSelection.fromPosition(TextPosition(
+                                        offset: _textEditingController
+                                            .text.length));
+                              },
+                              child: ListTile(
+                                title: Text(option.acct),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const DividerSeparator(),
                         ),
                       ),
-                    )
-                  : const SizedBox(),
-              RawAutocomplete<Account>(
-                displayStringForOption: (option) => option.acct,
-                textEditingController: _textEditingController,
-                focusNode: _focusNode,
-                optionsViewBuilder: (context, onSelected, options) => Align(
-                  alignment: Alignment.topLeft,
-                  child: Material(
-                    elevation: 4.0,
-                    child: SizedBox(
-                      height: 200.0,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: options.length,
-                        itemBuilder: (context, index) {
-                          final option = options.elementAt(index);
-                          return InkWell(
-                            onTap: () {
-                              final splitted =
-                                  _textEditingController.text.split(' ');
-                              splitted.removeAt(splitted.length - 1);
-                              final nextText = splitted.join(' ');
-                              _textEditingController.text =
-                                  '$nextText @${option.acct} ';
-                              _mentions[option.id] = option.acct;
-                              _textEditingController.selection =
-                                  TextSelection.fromPosition(TextPosition(
-                                      offset:
-                                          _textEditingController.text.length));
-                            },
-                            child: ListTile(
-                              title: Text(option.acct),
+                    ),
+                  ),
+                  optionsBuilder: ((textEditingValue) async {
+                    final splitted = textEditingValue.text.split(' ');
+                    final lastWord = splitted.last;
+                    if (lastWord.length > 2 && lastWord.startsWith('@')) {
+                      final accounts = await service.search(
+                          lastWord.replaceFirst('@', ''), 'accounts');
+                      return accounts as Iterable<Account>;
+                    }
+                    return const Iterable<Account>.empty();
+                  }),
+                  fieldViewBuilder: (context, textEditingController, focusNode,
+                          onFieldSubmitted) =>
+                      TextField(
+                    keyboardType: TextInputType.multiline,
+                    autofocus: true,
+                    maxLines: 5,
+                    focusNode: focusNode,
+                    controller: textEditingController,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        onPressed: () async {
+                          if (textEditingController.text.isEmpty) {
+                            return;
+                          }
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                const PostingStatusAlertWidget(),
+                          );
+                          await _postStatus().then(
+                            (_) => Navigator.of(context).pop(),
+                          );
+                        },
+                        icon: const Icon(Icons.send_outlined, size: 30),
+                      ),
+                      border: const OutlineInputBorder(),
+                      hintText: "Let's toot something!",
+                    ),
+                  ),
+                ),
+                _mediaFiles.isEmpty
+                    ? const SizedBox()
+                    : GridView.count(
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                        shrinkWrap: true,
+                        crossAxisCount: 4,
+                        children: _mediaFiles
+                            .map(
+                              (File f) => Stack(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    height: 100,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.file(f, fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.close),
+                                  )
+                                ],
+                              ),
+                            )
+                            .toList(),
+                      ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        _chars.toString(),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          FilePicker.platform
+                              .pickFiles(allowMultiple: false)
+                              .then((FilePickerResult? result) {
+                            if (_mediaFiles.length >= 4) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('You can only add up to 4 pics 😔'),
+                                ),
+                              );
+                              return;
+                            }
+                            if (result != null) {
+                              final File file = File(result.files.single.path!);
+                              setState(() {
+                                _mediaFiles.add(file);
+                              });
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Uploading aborted'),
+                                ),
+                              );
+                            }
+                          });
+                        },
+                        icon: Icon(Icons.add_photo_alternate_outlined,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 30),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("👷 I'm working on it 👷"),
                             ),
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            const DividerSeparator(),
-                      ),
-                    ),
-                  ),
-                ),
-                optionsBuilder: ((textEditingValue) async {
-                  final splitted = textEditingValue.text.split(' ');
-                  final lastWord = splitted.last;
-                  if (lastWord.length > 2 && lastWord.startsWith('@')) {
-                    final accounts = await service.search(
-                        lastWord.replaceFirst('@', ''), 'accounts');
-                    return accounts as Iterable<Account>;
-                  }
-                  return const Iterable<Account>.empty();
-                }),
-                fieldViewBuilder: (context, textEditingController, focusNode,
-                        onFieldSubmitted) =>
-                    TextField(
-                  keyboardType: TextInputType.multiline,
-                  autofocus: true,
-                  maxLines: 5,
-                  focusNode: focusNode,
-                  controller: textEditingController,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () async {
-                        if (textEditingController.text.isEmpty) {
-                          return;
-                        }
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              const PostingStatusAlertWidget(),
-                        );
-                        await _postStatus().then(
-                          (_) => Navigator.of(context).pop(),
-                        );
-                      },
-                      icon: const Icon(Icons.send_outlined, size: 30),
-                    ),
-                    border: const OutlineInputBorder(),
-                    hintText: "Let's toot something!",
-                  ),
-                ),
-              ),
-              _mediaFiles.isEmpty
-                  ? const SizedBox()
-                  : GridView.count(
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      shrinkWrap: true,
-                      crossAxisCount: 4,
-                      children: _mediaFiles
-                          .map(
-                            (File f) => Stack(
-                              children: [
-                                SizedBox(
-                                  width: 100,
-                                  height: 100,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.file(f, fit: BoxFit.cover),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.close),
-                                )
-                              ],
-                            ),
-                          )
-                          .toList(),
-                    ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      _chars.toString(),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        FilePicker.platform
-                            .pickFiles(allowMultiple: false)
-                            .then((FilePickerResult? result) {
-                          if (_mediaFiles.length >= 4) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text('You can only add up to 4 pics 😔'),
-                              ),
-                            );
-                            return;
-                          }
-                          if (result != null) {
-                            final List<PlatformFile> selectedFiles =
-                                result.files;
-                            if (selectedFiles.isEmpty) {
-                              return;
-                            }
-                            final List<File> files = selectedFiles
-                                .map((f) => File(f.path!))
-                                .toList();
-                            setState(() {
-                              _mediaFiles = files;
-                            });
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Uploading aborted'),
-                              ),
-                            );
-                          }
-                        });
-                      },
-                      icon: Icon(Icons.add_photo_alternate_outlined,
+                        icon: Icon(
+                          Icons.poll_outlined,
                           color: Theme.of(context).colorScheme.primary,
-                          size: 30),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.poll_outlined,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 30,
+                          size: 30,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _spoilerMode = !_spoilerMode;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.warning_amber_rounded,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 30,
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _spoilerMode = !_spoilerMode;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.warning_amber_rounded,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 30,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -1,8 +1,10 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/services/widget.service.dart';
+import 'package:my_toots/widgets/compose/compose_status.widget.dart';
 
 class StatusActionIconButtonsWidget extends StatefulWidget {
   const StatusActionIconButtonsWidget({required this.status, Key? key})
@@ -35,20 +37,19 @@ class _StatusActionIconButtonsWidgetState
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
-              onPressed: () {
-                showBottomSheet(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            OpenContainer(
+              closedBuilder: (BuildContext context, VoidCallback openAction) {
+                return IconButton(
+                  onPressed: openAction,
+                  icon: const Icon(
+                    Icons.mode_comment_outlined,
                   ),
-                  context: context,
-                  builder: (_) => getIt.get<WidgetService>().getComposeWidget(
-                      context: context, inReplyToStatus: widget.status),
                 );
               },
-              icon: const Icon(
-                Icons.mode_comment_outlined,
-              ),
+              openBuilder: (BuildContext context, VoidCallback openAction) {
+                return const ComposeStatusWidget();
+              },
+              closedElevation: 0,
             ),
             Text(
               widget.status.repliesCount.toString(),
