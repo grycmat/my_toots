@@ -65,8 +65,11 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                     ),
               ),
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(60),
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -82,8 +85,11 @@ class _SelectInstancePageState extends State<SelectInstancePage> {
                     ),
               ),
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(60),
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

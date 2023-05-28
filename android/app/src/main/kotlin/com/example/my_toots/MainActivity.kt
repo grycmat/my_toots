@@ -1,4 +1,4 @@
-package com.example.my_toots
+package com.gigapingu.tootoo
 
 import io.flutter.embedding.android.FlutterActivity
 

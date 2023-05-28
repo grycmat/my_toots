@@ -140,14 +140,15 @@ class _StatusActionIconButtonsWidgetState
             ),
           ],
         ),
-        const Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.more_vert_rounded,
-            ),
-          ],
-        ),
+        // todo implement additional actions
+        // const Row(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     Icon(
+        //       Icons.more_vert_rounded,
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

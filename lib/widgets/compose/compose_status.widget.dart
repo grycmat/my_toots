@@ -24,6 +24,7 @@ class ComposeStatusWidget extends StatefulWidget {
 }
 
 class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
+  final double _mediaSize = 150;
   late final RichTextController _textEditingController;
   late final TextEditingController _spoilerTextEditingController;
   final _focusNode = FocusNode();
@@ -31,7 +32,6 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
   int _chars = 0;
   final List<File> _mediaFiles = [];
   String preSelectionString = '';
-  final List<String> _mediaIds = [];
   final Map<String, String> _mentions = {};
 
   @override
@@ -240,8 +240,8 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                                 (MapEntry<int, File> entry) => Stack(
                                   children: [
                                     SizedBox(
-                                      width: 100,
-                                      height: 100,
+                                      width: _mediaSize,
+                                      height: _mediaSize,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.file(entry.value,
@@ -302,20 +302,21 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                             color: Theme.of(context).colorScheme.primary,
                             size: 30),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("👷 I'm working on it 👷"),
-                            ),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.poll_outlined,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 30,
-                        ),
-                      ),
+                      // todo add poll
+                      // IconButton(
+                      //   onPressed: () {
+                      //     ScaffoldMessenger.of(context).showSnackBar(
+                      //       const SnackBar(
+                      //         content: Text("👷 I'm working on it 👷"),
+                      //       ),
+                      //     );
+                      //   },
+                      //   icon: Icon(
+                      //     Icons.poll_outlined,
+                      //     color: Theme.of(context).colorScheme.primary,
+                      //     size: 30,
+                      //   ),
+                      // ),
                       IconButton(
                         onPressed: () {
                           setState(() {

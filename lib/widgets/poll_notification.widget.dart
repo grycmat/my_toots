@@ -28,11 +28,12 @@ class PollNotificationWidget extends StatelessWidget {
                   children: [
                     for (var option in noti.status!.poll!.options!)
                       ListTile(
+                        dense: true,
                         title: Text('${option.title} (${option.votesCount})'),
                         subtitle: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: LinearProgressIndicator(
-                            minHeight: 20,
+                            minHeight: 15,
                             value: option.votesCount /
                                 noti.status!.poll!.votesCount,
                           ),

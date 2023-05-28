@@ -16,21 +16,19 @@ class WebLoginPage extends StatefulWidget {
 
 class _WebLoginPageState extends State<WebLoginPage> {
   late WebViewController controller;
+  bool _isLoading = false;
   Future<Map<String, Object>> _prepareAppCredentials() =>
       getIt.get<ApiService>().prepareAppCredentials(widget.instance);
 
   @override
   void initState() {
-    print(widget.instance);
     super.initState();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
+      ..setBackgroundColor(Colors.black)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
+          onProgress: (int progress) {},
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
@@ -42,7 +40,9 @@ class _WebLoginPageState extends State<WebLoginPage> {
               getIt.get<ApiService>().userAuthCode = code!;
               getIt.get<ApiService>().authorizeUser(code)!.then((value) {
                 getIt.get<ApiService>().userToken = Token.fromMap(value.data);
-
+                setState(() {
+                  _isLoading = true;
+                });
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (_) => const HomePage(),
@@ -65,6 +65,9 @@ class _WebLoginPageState extends State<WebLoginPage> {
       body: FutureBuilder(
         future: _prepareAppCredentials(),
         builder: (_, AsyncSnapshot snapshot) {
+          if (_isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
