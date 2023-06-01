@@ -30,7 +30,7 @@ class StatusMediaAttachmentDetailsWidget extends StatelessWidget {
             width: double.infinity,
             height: 230,
             fit: BoxFit.cover,
-            // placeholder removed becaus of huge cache list (for better performance)
+            // placeholder removed because of huge cache list (for better performance)
             // placeholder: (context, url) => Shimmer.fromColors(
             //   baseColor: Colors.green.shade100,
             //   highlightColor: Colors.green.shade500,

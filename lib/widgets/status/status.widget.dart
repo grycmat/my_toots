@@ -20,6 +20,7 @@ class StatusWidget extends StatelessWidget {
         StatusActionIconButtonsWidget(status: status)
       ];
     }
+
     return [
       Padding(
         padding: const EdgeInsets.only(bottom: 12),

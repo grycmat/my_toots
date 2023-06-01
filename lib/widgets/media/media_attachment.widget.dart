@@ -11,8 +11,10 @@ class MediaAttachmentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (mediaAttachments.length == 1) {
-      return StatusMediaAttachmentDetailsWidget(
-          mediaAttachment: mediaAttachments.first);
+      return mediaAttachments.first.type == 'image'
+          ? StatusMediaAttachmentDetailsWidget(
+              mediaAttachment: mediaAttachments.first)
+          : Container();
     }
 
     return ClipRRect(
@@ -25,7 +27,10 @@ class MediaAttachmentWidget extends StatelessWidget {
         mainAxisSpacing: 3,
         children: <Widget>[
           for (var mediaAttachment in mediaAttachments)
-            StatusMediaAttachmentDetailsWidget(mediaAttachment: mediaAttachment)
+            mediaAttachment.type == 'image'
+                ? StatusMediaAttachmentDetailsWidget(
+                    mediaAttachment: mediaAttachment)
+                : Container()
         ],
       ),
     );

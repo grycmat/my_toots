@@ -14,10 +14,25 @@ class MediaPreviewPage extends StatelessWidget {
         title: const Text('Media'),
       ),
       body: Center(
-        child: Hero(
-          tag: mediaAttachment.id,
-          child: CachedNetworkImage(
-              imageUrl: mediaAttachment.previewUrl, fit: BoxFit.cover),
+        child: Draggable(
+          onDragEnd: (details) {
+            if (details.offset.dy > 100) {
+              Navigator.of(context).pop();
+            }
+          },
+          axis: Axis.vertical,
+          childWhenDragging: Container(),
+          feedback: CachedNetworkImage(
+              width: MediaQuery.of(context).size.width,
+              imageUrl: mediaAttachment.previewUrl,
+              fit: BoxFit.cover),
+          child: Hero(
+            tag: mediaAttachment.id,
+            child: CachedNetworkImage(
+                width: MediaQuery.of(context).size.width,
+                imageUrl: mediaAttachment.previewUrl,
+                fit: BoxFit.cover),
+          ),
         ),
       ),
     );

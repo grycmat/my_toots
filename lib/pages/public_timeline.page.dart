@@ -94,10 +94,10 @@ class _PublicTimelinePageState extends State<PublicTimelinePage>
           primary: false,
           addAutomaticKeepAlives: true,
           padding: const EdgeInsets.all(8),
-          cacheExtent: 200,
+          cacheExtent: 20000,
           separatorBuilder: (_, index) => const DividerSeparator(),
           controller: _scrollController,
-          itemCount: _isLoading ? 20 : _statuses.length,
+          itemCount: _isLoading ? 10 : _statuses.length,
           itemBuilder: (_, index) {
             if (_isLoading) {
               return const StatusPlaceholderWidget();

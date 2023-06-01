@@ -34,7 +34,7 @@ class MediaAttachment {
         id: data['id'] as String,
         type: data['type'] as String,
         url: data['url'] as String?,
-        previewUrl: data['preview_url'] as String,
+        previewUrl: data['preview_url'] ?? '' as String,
         remoteUrl: data['remote_url'] as String?,
         textUrl: data['text_url'] as String?,
         meta: data['meta'] == null
