@@ -16,10 +16,6 @@ class StatusHtmlTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dom.Document htmlData = parse(status.content);
-    final linkToDisplay =
-        htmlData.querySelector("a[rel='nofollow noopener noreferrer']");
-
     return Column(
       children: [
         Html(
@@ -29,7 +25,6 @@ class StatusHtmlTextWidget extends StatelessWidget {
             print(attributes);
             print(element);
             print('display');
-            print(linkToDisplay);
             if (attributes.containsKey('class')) {
               if (attributes['class']!.contains('hashtag')) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -55,9 +50,6 @@ class StatusHtmlTextWidget extends StatelessWidget {
             }
           },
         ),
-        linkToDisplay != null
-            ? LinkPreviewWidget(element: linkToDisplay)
-            : const SizedBox(),
       ],
     );
   }

@@ -34,14 +34,15 @@ class StatusAccountRowWidget extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: account.avatarStatic,
               fit: BoxFit.cover,
-              placeholder: (_, __) => Shimmer.fromColors(
-                baseColor: Theme.of(context).colorScheme.background,
-                highlightColor: Theme.of(context).colorScheme.onBackground,
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.white70,
-                ),
-              ),
+              // testing performance
+              // placeholder: (_, __) => Shimmer.fromColors(
+              //   baseColor: Theme.of(context).colorScheme.background,
+              //   highlightColor: Theme.of(context).colorScheme.onBackground,
+              //   child: Container(
+              //     width: double.infinity,
+              //     color: Colors.white70,
+              //   ),
+              // ),
             ),
           ),
           Expanded(

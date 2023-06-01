@@ -52,6 +52,7 @@ dependencies:
   rich_text_controller: ^1.4.2
   flutter_animate: ^4.1.1+1
   share_plus: ^7.0.1
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

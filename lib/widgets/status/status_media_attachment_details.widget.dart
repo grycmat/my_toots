@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/pages/media_preview.page.dart';
-import 'package:shimmer/shimmer.dart';
 
 class StatusMediaAttachmentDetailsWidget extends StatelessWidget {
   const StatusMediaAttachmentDetailsWidget(
@@ -31,15 +30,16 @@ class StatusMediaAttachmentDetailsWidget extends StatelessWidget {
             width: double.infinity,
             height: 230,
             fit: BoxFit.cover,
-            placeholder: (context, url) => Shimmer.fromColors(
-              baseColor: Colors.green.shade100,
-              highlightColor: Colors.green.shade500,
-              child: Container(
-                height: 230,
-                width: double.infinity,
-                color: Colors.white38,
-              ),
-            ),
+            // placeholder removed becaus of huge cache list (for better performance)
+            // placeholder: (context, url) => Shimmer.fromColors(
+            //   baseColor: Colors.green.shade100,
+            //   highlightColor: Colors.green.shade500,
+            //   child: Container(
+            //     height: 230,
+            //     width: double.infinity,
+            //     color: Colors.white38,
+            //   ),
+            // ),
           ),
         ),
       ),

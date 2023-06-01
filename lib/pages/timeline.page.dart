@@ -6,6 +6,7 @@ import 'package:my_toots/widgets/divider_separator.dart';
 import 'package:my_toots/widgets/no_connection_icon.widget.dart';
 import 'package:my_toots/widgets/status/status_container.widget.dart';
 import 'package:my_toots/widgets/status/status_placeholder.widget.dart';
+import 'package:my_toots/widgets/timeline_list.widget.dart';
 
 class TimelinePage extends StatefulWidget {
   const TimelinePage({Key? key}) : super(key: key);
@@ -20,15 +21,12 @@ class _TimelinePageState extends State<TimelinePage>
   bool _isLoading = true;
   bool _isFirstLoad = true;
   bool _error = false;
-  late final ScrollController _scrollController;
+  final ScrollController _scrollController = ScrollController();
 
   Future<void> _getStatuses() async {
     if (!mounted) {
       return;
     }
-    setState(() {
-      _isLoading = true;
-    });
     return getIt.get<ApiService>().getHomeTimeline().then((statuses) {
       setState(() {
         _statuses = statuses;
@@ -51,7 +49,6 @@ class _TimelinePageState extends State<TimelinePage>
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
     _getStatuses().then((_) {
       _scrollController.addListener(() {
         if (_scrollController.position.atEdge &&
@@ -66,7 +63,7 @@ class _TimelinePageState extends State<TimelinePage>
               .then((statuses) {
             setState(() {
               _isLoading = false;
-              _statuses = [..._statuses, ...statuses];
+              _statuses.addAll(statuses);
             });
             return Future.value();
           });
@@ -83,32 +80,34 @@ class _TimelinePageState extends State<TimelinePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Center(
       child: RefreshIndicator(
-        backgroundColor: Theme.of(context).primaryColor,
-        color: Colors.white,
-        onRefresh: () => _getStatuses(),
-        child: _error
-            ? const Center(child: NoConnectionIconWidget())
-            : ListView.separated(
-                primary: false,
-                addAutomaticKeepAlives: true,
-                padding: const EdgeInsets.all(8),
-                cacheExtent: 200,
-                separatorBuilder: (_, index) => const DividerSeparator(),
-                controller: _scrollController,
-                itemCount: _isFirstLoad ? 20 : _statuses.length,
-                itemBuilder: (_, index) {
-                  if (_isFirstLoad) {
-                    return const StatusPlaceholderWidget();
-                  }
+          backgroundColor: Theme.of(context).primaryColor,
+          color: Colors.white,
+          onRefresh: () => _getStatuses(),
+          child: _error
+              ? const Center(child: NoConnectionIconWidget())
+              : TimelineListWidget(statuses: _statuses)
+          // : ListView.separated(
+          //     primary: false,
+          //     addAutomaticKeepAlives: true,
+          //     padding: const EdgeInsets.all(8),
+          //     cacheExtent: 200,
+          //     separatorBuilder: (_, index) => const DividerSeparator(),
+          //     controller: _scrollController,
+          //     itemCount: _isFirstLoad ? 20 : _statuses.length,
+          //     itemBuilder: (_, index) {
+          //       if (_isFirstLoad) {
+          //         return const StatusPlaceholderWidget();
+          //       }
 
-                  return StatusContainerWidget(
-                    status: _statuses[index],
-                  );
-                },
-              ),
-      ),
+          //       return StatusContainerWidget(
+          //         status: _statuses[index],
+          //       );
+          //     },
+          //   ),
+          ),
     );
   }
 

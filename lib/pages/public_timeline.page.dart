@@ -67,7 +67,7 @@ class _PublicTimelinePageState extends State<PublicTimelinePage>
               .then((statuses) {
             setState(() {
               _isLoading = false;
-              _statuses = [..._statuses, ...statuses];
+              _statuses.addAll(statuses);
             });
             return Future.value();
           });
@@ -84,6 +84,7 @@ class _PublicTimelinePageState extends State<PublicTimelinePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Center(
       child: RefreshIndicator(
         backgroundColor: Theme.of(context).primaryColor,

@@ -21,6 +21,8 @@ class AccountBasicInfoWidget extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: CachedNetworkImage(
+            width: avatarSize,
+            height: avatarSize,
             imageUrl: account.avatarStatic,
             fit: BoxFit.cover,
           ),

@@ -32,7 +32,9 @@ class StatusWidget extends StatelessWidget {
                 ),
               ),
       ),
-      MediaAttachmentWidget(mediaAttachments: status.mediaAttachments),
+      status.mediaAttachments.isEmpty
+          ? Container()
+          : MediaAttachmentWidget(mediaAttachments: status.mediaAttachments),
       StatusActionIconButtonsWidget(status: status),
     ];
   }

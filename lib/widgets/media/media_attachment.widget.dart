@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/widgets/status/status_media_attachment_details.widget.dart';
@@ -9,8 +10,6 @@ class MediaAttachmentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (mediaAttachments.isEmpty) return Container();
-
     if (mediaAttachments.length == 1) {
       return StatusMediaAttachmentDetailsWidget(
           mediaAttachment: mediaAttachments.first);
