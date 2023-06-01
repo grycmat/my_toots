@@ -25,13 +25,13 @@ class _FavoriteButtonWidgetState extends State<FavoriteButtonWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-            onPressed: () {
+            onPressed: () async {
               final service = getIt.get<ApiService>();
+              await service.toggleFavorite(
+                  status: widget.status, favorite: !_isFavorited);
               setState(() {
                 _isFavorited = !_isFavorited;
               });
-              service.toggleFavorite(
-                  status: widget.status, favorite: _isFavorited);
             },
             icon: _isFavorited
                 ? const Icon(

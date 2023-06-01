@@ -15,6 +15,14 @@ class PollNotificationWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.poll_outlined,
+                size: 26,
+                color: Colors.amber.shade800,
+              ),
+            ),
             Expanded(
                 child: Column(
               mainAxisSize: MainAxisSize.min,

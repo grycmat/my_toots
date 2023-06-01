@@ -24,12 +24,13 @@ class _ReblogButtonWidgetState extends State<ReblogButtonWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          onPressed: () {
+          onPressed: () async {
             final service = getIt.get<ApiService>();
+            await service.toggleReblog(
+                status: widget.status, reblog: !_isReblogged);
             setState(() {
               _isReblogged = !_isReblogged;
             });
-            service.toggleReblog(status: widget.status, reblog: _isReblogged);
           },
           icon: _isReblogged
               ? const Icon(

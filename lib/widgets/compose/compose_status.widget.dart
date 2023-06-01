@@ -278,8 +278,7 @@ class _ComposeStatusWidgetState extends State<ComposeStatusWidget> {
                             if (_mediaFiles.length >= 4) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content:
-                                      Text('You can only add up to 4 pics 😔'),
+                                  content: Text('You can add up to 4 pics 😔'),
                                 ),
                               );
                               return;

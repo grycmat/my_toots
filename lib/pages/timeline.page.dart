@@ -3,6 +3,7 @@ import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/services/api.service.dart';
 import 'package:my_toots/widgets/no_connection_icon.widget.dart';
+import 'package:my_toots/widgets/status/status_placeholder.widget.dart';
 import 'package:my_toots/widgets/timeline_list.widget.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -78,34 +79,41 @@ class _TimelinePageState extends State<TimelinePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Center(
-      child: RefreshIndicator(
-          backgroundColor: Theme.of(context).primaryColor,
-          color: Colors.white,
-          onRefresh: () => _getStatuses(),
-          child: _error
-              ? const Center(child: NoConnectionIconWidget())
-              : TimelineListWidget(statuses: _statuses)
-          // : ListView.separated(
-          //     primary: false,
-          //     addAutomaticKeepAlives: true,
-          //     padding: const EdgeInsets.all(8),
-          //     cacheExtent: 200,
-          //     separatorBuilder: (_, index) => const DividerSeparator(),
-          //     controller: _scrollController,
-          //     itemCount: _isFirstLoad ? 20 : _statuses.length,
-          //     itemBuilder: (_, index) {
-          //       if (_isFirstLoad) {
-          //         return const StatusPlaceholderWidget();
-          //       }
+    return _isFirstLoad
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (var i = 0; i < 2; i++) const StatusPlaceholderWidget()
+            ],
+          )
+        : Center(
+            child: RefreshIndicator(
+                backgroundColor: Theme.of(context).primaryColor,
+                color: Colors.white,
+                onRefresh: () => _getStatuses(),
+                child: _error
+                    ? const Center(child: NoConnectionIconWidget())
+                    : TimelineListWidget(statuses: _statuses)
+                // : ListView.separated(
+                //     primary: false,
+                //     addAutomaticKeepAlives: true,
+                //     padding: const EdgeInsets.all(8),
+                //     cacheExtent: 200,
+                //     separatorBuilder: (_, index) => const DividerSeparator(),
+                //     controller: _scrollController,
+                //     itemCount: _isFirstLoad ? 20 : _statuses.length,
+                //     itemBuilder: (_, index) {
+                //       if (_isFirstLoad) {
+                //         return const StatusPlaceholderWidget();
+                //       }
 
-          //       return StatusContainerWidget(
-          //         status: _statuses[index],
-          //       );
-          //     },
-          //   ),
-          ),
-    );
+                //       return StatusContainerWidget(
+                //         status: _statuses[index],
+                //       );
+                //     },
+                //   ),
+                ),
+          );
   }
 
   @override
