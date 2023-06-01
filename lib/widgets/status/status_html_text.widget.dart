@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:html/dom.dart' as dom;
-import 'package:html/parser.dart';
 import 'package:my_toots/getIt.instance.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/models/status/status.dart';
 import 'package:my_toots/pages/account.page.dart';
 import 'package:my_toots/services/api.service.dart';
-import 'package:my_toots/widgets/link_preview.widget.dart';
 
 class StatusHtmlTextWidget extends StatelessWidget {
   const StatusHtmlTextWidget({required this.status, Key? key})
@@ -21,10 +18,10 @@ class StatusHtmlTextWidget extends StatelessWidget {
         Html(
           data: status.content,
           onLinkTap: (url, attributes, element) {
-            print(context);
-            print(attributes);
-            print(element);
-            print('display');
+            // print(context);
+            // print(attributes);
+            // print(element);
+            // print('display');
             if (attributes.containsKey('class')) {
               if (attributes['class']!.contains('hashtag')) {
                 ScaffoldMessenger.of(context).showSnackBar(

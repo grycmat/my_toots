@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/account/account.dart';
 import 'package:my_toots/pages/account.page.dart';
-import 'package:shimmer/shimmer.dart';
 
 class StatusAccountRowWidget extends StatelessWidget {
   const StatusAccountRowWidget(
