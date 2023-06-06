@@ -15,7 +15,7 @@ class StatusSpoiler extends StatelessWidget {
           Icons.warning_amber_rounded,
           color: Colors.amber.shade600,
         ),
-        Expanded(child: Html(data: status.spoilerText!)),
+        Expanded(child: Html(data: status.spoilerText)),
         const Icon(Icons.read_more_outlined)
       ],
     );

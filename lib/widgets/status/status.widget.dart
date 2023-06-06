@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_toots/models/status/status.dart';
+import 'package:my_toots/widgets/link_preview.widget.dart';
 import 'package:my_toots/widgets/media/media_attachment.widget.dart';
 import 'package:my_toots/widgets/reblog.widget.dart';
 import 'package:my_toots/widgets/status/status_account_row.widget.dart';
@@ -36,6 +37,9 @@ class StatusWidget extends StatelessWidget {
       status.mediaAttachments.isEmpty
           ? Container()
           : MediaAttachmentWidget(mediaAttachments: status.mediaAttachments),
+      status.card != null
+          ? LinkPreviewWidget(previewCard: status.card!)
+          : Container(),
       StatusActionIconButtonsWidget(status: status),
     ];
   }

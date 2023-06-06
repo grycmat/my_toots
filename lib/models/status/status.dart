@@ -4,6 +4,7 @@ import 'package:my_toots/models/account/emoji.dart';
 import 'package:my_toots/models/media_attachment/media_attachment.dart';
 import 'package:my_toots/models/status/mention.dart';
 import 'package:my_toots/models/status/poll.dart';
+import 'package:my_toots/models/status/preview_card.dart';
 import 'package:my_toots/models/status/tag.dart';
 
 import '../account/account.dart';
@@ -37,8 +38,8 @@ class Status {
   List<Mention>? mentions;
   List<Tag>? tags;
   List<Emoji>? emojis;
-  dynamic card;
   Poll? poll;
+  PreviewCard? card;
 
   Status({
     required this.id,
@@ -78,55 +79,56 @@ class Status {
   }
 
   factory Status.fromMap(Map<String, dynamic> data) => Status(
-        id: data['id'] as String,
-        createdAt: DateTime.parse(data['created_at']),
-        inReplyToId: data['in_reply_to_id'] as dynamic,
-        inReplyToAccountId: data['in_reply_to_account_id'] as dynamic,
-        sensitive: data['sensitive'] as bool?,
-        spoilerText: data['spoiler_text'] as String?,
-        visibility: data['visibility'] as String?,
-        language: data['language'] as String?,
-        uri: data['uri'] as String?,
-        url: data['url'] as String?,
-        repliesCount: data['replies_count'] as int,
-        reblogsCount: data['reblogs_count'] as int,
-        favouritesCount: data['favourites_count'] as int,
-        editedAt: data['edited_at'] == null
-            ? null
-            : DateTime.parse(data['edited_at'] as String),
-        favourited: data['favourited'],
-        reblogged: data['reblogged'] as bool,
-        muted: data['muted'] as bool?,
-        bookmarked: data['bookmarked'] as bool?,
-        content: data['content'] as String,
-        filtered: data['filtered'] as List<dynamic>?,
-        reblog: data['reblog'] == null
-            ? null
-            : Status.fromMap(data['reblog'] as Map<String, dynamic>),
-        application: data['application'] == null
-            ? null
-            : StatusApplication.fromMap(
-                data['application'] as Map<String, dynamic>),
-        account: Account.fromMap(data['account'] as Map<String, dynamic>),
-        mediaAttachments: data['media_attachments'] == null
-            ? []
-            : (data['media_attachments'] as List<dynamic>)
-                .map((e) => MediaAttachment.fromMap(e as Map<String, dynamic>))
-                .toList(),
-        mentions: (data['mentions'] as List<dynamic>?)
-            ?.map((e) => Mention.fromMap(e as Map<String, dynamic>))
-            .toList(),
-        tags: (data['tags'] as List<dynamic>?)
-            ?.map((e) => Tag.fromMap(e as Map<String, dynamic>))
-            .toList(),
-        emojis: (data['emojis'] as List<dynamic>?)
-            ?.map((e) => Emoji.fromMap(e as Map<String, dynamic>))
-            .toList(),
-        card: data['card'] as dynamic,
-        poll: data['poll'] == null
-            ? null
-            : Poll.fromMap(data['poll'] as Map<String, dynamic>),
-      );
+      id: data['id'] as String,
+      createdAt: DateTime.parse(data['created_at']),
+      inReplyToId: data['in_reply_to_id'] as dynamic,
+      inReplyToAccountId: data['in_reply_to_account_id'] as dynamic,
+      sensitive: data['sensitive'] as bool?,
+      spoilerText: data['spoiler_text'] as String?,
+      visibility: data['visibility'] as String?,
+      language: data['language'] as String?,
+      uri: data['uri'] as String?,
+      url: data['url'] as String?,
+      repliesCount: data['replies_count'] as int,
+      reblogsCount: data['reblogs_count'] as int,
+      favouritesCount: data['favourites_count'] as int,
+      editedAt: data['edited_at'] == null
+          ? null
+          : DateTime.parse(data['edited_at'] as String),
+      favourited: data['favourited'],
+      reblogged: data['reblogged'] as bool,
+      muted: data['muted'] as bool?,
+      bookmarked: data['bookmarked'] as bool?,
+      content: data['content'] as String,
+      filtered: data['filtered'] as List<dynamic>?,
+      reblog: data['reblog'] == null
+          ? null
+          : Status.fromMap(data['reblog'] as Map<String, dynamic>),
+      application: data['application'] == null
+          ? null
+          : StatusApplication.fromMap(
+              data['application'] as Map<String, dynamic>),
+      account: Account.fromMap(data['account'] as Map<String, dynamic>),
+      mediaAttachments: data['media_attachments'] == null
+          ? []
+          : (data['media_attachments'] as List<dynamic>)
+              .map((e) => MediaAttachment.fromMap(e as Map<String, dynamic>))
+              .toList(),
+      mentions: (data['mentions'] as List<dynamic>?)
+          ?.map((e) => Mention.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      tags: (data['tags'] as List<dynamic>?)
+          ?.map((e) => Tag.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      emojis: (data['emojis'] as List<dynamic>?)
+          ?.map((e) => Emoji.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      poll: data['poll'] == null
+          ? null
+          : Poll.fromMap(data['poll'] as Map<String, dynamic>),
+      card: data['card'] == null
+          ? null
+          : PreviewCard.fromMap(data['card'] as Map<String, dynamic>));
 
   Map<String, dynamic> toMap() => {
         'id': id,

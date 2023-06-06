@@ -1,35 +1,35 @@
 import 'dart:convert';
 
 class PreviewCard {
-  String? url;
-  String? title;
-  String? description;
-  String? type;
-  String? authorName;
-  String? authorUrl;
-  String? providerName;
-  String? providerUrl;
-  String? html;
-  int? width;
-  int? height;
-  dynamic image;
-  String? embedUrl;
-  dynamic blurhash;
+  String url;
+  String title;
+  String description;
+  String type;
+  String authorName;
+  String authorUrl;
+  String providerName;
+  String providerUrl;
+  String html;
+  int width;
+  int height;
+  String? image;
+  String embedUrl;
+  String? blurhash;
 
   PreviewCard({
-    this.url,
-    this.title,
-    this.description,
-    this.type,
-    this.authorName,
-    this.authorUrl,
-    this.providerName,
-    this.providerUrl,
-    this.html,
-    this.width,
-    this.height,
+    required this.url,
+    required this.title,
+    required this.description,
+    required this.type,
+    required this.authorName,
+    required this.authorUrl,
+    required this.providerName,
+    required this.providerUrl,
+    required this.html,
+    required this.width,
+    required this.height,
     this.image,
-    this.embedUrl,
+    required this.embedUrl,
     this.blurhash,
   });
 
@@ -39,20 +39,20 @@ class PreviewCard {
   }
 
   factory PreviewCard.fromMap(Map<String, dynamic> data) => PreviewCard(
-        url: data['url'] as String?,
-        title: data['title'] as String?,
-        description: data['description'] as String?,
-        type: data['type'] as String?,
-        authorName: data['author_name'] as String?,
-        authorUrl: data['author_url'] as String?,
-        providerName: data['provider_name'] as String?,
-        providerUrl: data['provider_url'] as String?,
-        html: data['html'] as String?,
-        width: data['width'] as int?,
-        height: data['height'] as int?,
-        image: data['image'] as dynamic,
-        embedUrl: data['embed_url'] as String?,
-        blurhash: data['blurhash'] as dynamic,
+        url: data['url'] as String,
+        title: data['title'] as String,
+        description: data['description'] as String,
+        type: data['type'] as String,
+        authorName: data['author_name'] as String,
+        authorUrl: data['author_url'] as String,
+        providerName: data['provider_name'] as String,
+        providerUrl: data['provider_url'] as String,
+        html: data['html'] as String,
+        width: data['width'] as int,
+        height: data['height'] as int,
+        image: data['image'] as String?,
+        embedUrl: data['embed_url'] as String,
+        blurhash: data['blurhash'] as String?,
       );
 
   Map<String, dynamic> toMap() => {
